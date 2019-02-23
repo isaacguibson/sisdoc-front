@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+
+  apiUrl: 'http://10.12.1.248:5000',
+  appName: 'Sistema de Gestão do Agropolos',
+  appAlias: 'sgagro',
+  appUUID: 'ea393197-8ef3-4298-82b6-b03a46080518',
 };
 
 /*
