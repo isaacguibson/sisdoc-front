@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DocumentoComponent } from './documento/documento.component';
+import { SetorComponent } from './setor/setor.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 // SERVICES
-import { DocumentoService } from '../services/documento.service'
+import { DocumentoService } from '../services/documento.service';
+import { SetorService } from 'src/services/setor.service';
 
 // HttpClient
 import { HttpClientModule } from '@angular/common/http';
@@ -16,11 +18,14 @@ import { HttpClientModule } from '@angular/common/http';
 //TEXT EDITOR
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
     DocumentoComponent,
     DashboardComponent,
+    SetorComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
     /* Http Client */ HttpClientModule
   ],
-  providers: [DocumentoService],
+  providers: [DocumentoService, SetorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
