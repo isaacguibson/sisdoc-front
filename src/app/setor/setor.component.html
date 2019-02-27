@@ -7,20 +7,35 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Novo Setor</h4>
+                <h4 class="card-title">Lista de Setores</h4>
                 <p class="card-description">
-                  Insira as informações necessárias para criar um novo setor.
+                  
                 </p>
             </div>
             <div class="card-body">
-              <div class="forms-sample">
+              <!-- <div class="forms-sample">
                 <div class="form-group">
                     <label for="exampleInputName1">Nome</label>
                     <input type="text" class="form-control" [(ngModel)]="setor.nome" placeholder="Name">
                 </div>
                 <button (click)="salvar()" class="btn btn-success mr-2">Salvar</button>
                 <button class="btn btn-light">Cancelar</button>
-              </div>
+              </div> -->
+              <table class="table table-hover">
+                <thead class="thead">
+                  <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nome</th>
+                  </tr>
+                </thead>
+                <tbody class="tbody">
+
+                  <tr *ngFor="let item of contentList">
+                    <td scope="row">{{item.id}}</td>
+                    <td>{{item.nome}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

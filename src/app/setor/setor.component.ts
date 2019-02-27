@@ -15,7 +15,9 @@ import { Setor } from '../../models/setor.model'
 })
 export class SetorComponent implements OnInit {
 
-  setor: Setor;  
+  setor: Setor;
+  searchResult = null;
+  contentList = [];
 
   constructor(
     public httpClient: HttpClient,
@@ -23,6 +25,7 @@ export class SetorComponent implements OnInit {
   ) {
 
     this.setor = this.newSetor();
+    this.pesquisar();
 
    }
 
@@ -30,15 +33,31 @@ export class SetorComponent implements OnInit {
   }
 
   newSetor(){
+
     return {
       id: null,
       nome: null
     }
+
+  }
+
+  pesquisar(){
+    
+    this.setorService.pesquisar().then(data => {
+          console.log(data);
+          this.searchResult = data;
+          this.contentList = this.searchResult['content'];
+      }).catch(error =>{
+          console.log(error);
+          this.contentList = [];
+      })
+    
   }
 
   salvar(){
-    console.log(this.setor)
+
     this.setorService.save(this.setor);
-  }  
+
+  }
 
 }

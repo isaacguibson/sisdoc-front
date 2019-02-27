@@ -7,7 +7,7 @@ export class SetorService {
     constructor(
         public httpClient: HttpClient
     ) { 
-          
+        
     }
 
     save(setor){
@@ -19,6 +19,20 @@ export class SetorService {
         }).catch(error =>{
             console.log(error)
         })
+
+    }
+
+    pesquisar(){
+
+        return this.httpClient.get('http://localhost:8082/sisdoc-0.0.1-SNAPSHOT/setor')
+        .toPromise();
+        // .then(data => {
+        //     console.log(data);
+        //     return data;
+        // }).catch(error =>{
+        //     console.log(error);
+        //     return {content: []}
+        // })
 
     }
 
