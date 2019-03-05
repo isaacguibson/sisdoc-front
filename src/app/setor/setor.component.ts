@@ -8,6 +8,8 @@ import { SetorService } from '../../services/setor.service'
 // Interfaces
 import { Setor } from '../../models/setor.model'
 
+import {Router} from "@angular/router"
+
 @Component({
   selector: 'app-setor',
   templateUrl: './setor.component.html',
@@ -21,11 +23,12 @@ export class SetorComponent implements OnInit {
 
   constructor(
     public httpClient: HttpClient,
-    public setorService: SetorService
+    public setorService: SetorService,
+    public router: Router
   ) {
 
     this.setor = this.newSetor();
-    this.pesquisar();
+    // this.pesquisar();
 
    }
 
@@ -39,6 +42,10 @@ export class SetorComponent implements OnInit {
       nome: null
     }
 
+  }
+
+  adicionarNovo(){
+    this.router.navigate(['/setor-add']);
   }
 
   pesquisar(){

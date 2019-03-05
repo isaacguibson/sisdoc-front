@@ -1,7 +1,35 @@
 <div class="content-wrapper">
-  <div class="row">
 
+    <div class="row">
+
+      <!-- Inicio do conteudo do documento -->
+      <div class="col-lg-12 d-flex align-items-stretch grid-margin">
+        <div class="row flex-grow">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                  <h4 class="card-title">Formulário de Pesquisa</h4>
+              </div>
+              <div class="card-body">
+                <div class="forms-sample">
+                  <div class="form-group">
+                      <label for="exampleInputName1">Nome</label>
+                      <input type="text" class="form-control" placeholder="Nome">
+                  </div>
+                  <button (click)="pesquisar()" class="btn btn-info mr-2">Pesquisar</button>
+                  <button (click)="adicionarNovo()" class="btn btn-success">Adicionar +</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fim do conteudo do documento -->
+    </div>
+
+  <div class="row">
     <!-- Inicio do conteudo do documento -->
+
     <div class="col-lg-12 d-flex align-items-stretch grid-margin">
       <div class="row flex-grow">
         <div class="col-12">
@@ -13,15 +41,10 @@
                 </p>
             </div>
             <div class="card-body">
-              <!-- <div class="forms-sample">
-                <div class="form-group">
-                    <label for="exampleInputName1">Nome</label>
-                    <input type="text" class="form-control" [(ngModel)]="setor.nome" placeholder="Name">
-                </div>
-                <button (click)="salvar()" class="btn btn-success mr-2">Salvar</button>
-                <button class="btn btn-light">Cancelar</button>
-              </div> -->
-              <table class="table table-hover">
+              
+              <div class="rounded border border-danger not-found-div" *ngIf="contentList.length == 0">NOT FOUND</div>
+
+              <table class="table table-hover" *ngIf="contentList.length > 0">
                 <thead class="thead">
                   <tr>
                     <th scope="col">Código</th>

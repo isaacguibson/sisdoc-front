@@ -4,8 +4,13 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { DocumentoComponent } from './documento/documento.component';
+
 import { SetorComponent } from './setor/setor.component';
+import { SetorAddComponent } from './setor/add/setor-add.component';
+
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 // SERVICES
@@ -26,6 +31,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     DocumentoComponent,
     DashboardComponent,
     SetorComponent,
+    SetorAddComponent
   ],
   imports: [
     BrowserModule,
