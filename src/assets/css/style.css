@@ -14225,10 +14225,11 @@ html {
   flex-grow: 1; }
 
 .not-found-div{
-  background: #eb988d;
+  background: #f5c7c1;
   padding: 2%;
   border-width:4px !important;
   text-align: center;
+  font-weight: bold;
 }
 
 .container-scroller {
