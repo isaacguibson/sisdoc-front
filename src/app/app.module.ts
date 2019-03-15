@@ -10,12 +10,14 @@ import { DocumentoComponent } from './documento/documento.component';
 import { SetorComponent } from './setor/setor.component';
 import { SetorAddComponent } from './setor/add/setor-add.component';
 
+import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 // SERVICES
 import { DocumentoService } from '../services/documento.service';
 import { SetorService } from 'src/services/setor.service';
+import { TipoDocumentoService } from 'src/services/tipo-documento.service';
 
 // HttpClient
 import { HttpClientModule } from '@angular/common/http';
@@ -31,7 +33,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     DocumentoComponent,
     DashboardComponent,
     SetorComponent,
-    SetorAddComponent
+    SetorAddComponent,
+    TipoDocumentoComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
     /* Http Client */ HttpClientModule
   ],
-  providers: [DocumentoService, SetorService],
+  providers: [DocumentoService, SetorService, TipoDocumentoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

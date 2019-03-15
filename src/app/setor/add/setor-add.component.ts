@@ -9,6 +9,7 @@ import { SetorService } from '../../../services/setor.service'
 import { Setor } from '../../../models/setor.model'
 
 import {Router} from "@angular/router"
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-setor-add',
@@ -44,7 +45,12 @@ export class SetorAddComponent implements OnInit {
   salvar(){
 
     this.setorService.save(this.setor);
+    this.showSavedMessage();
     this.router.navigate(['/setor']);
+  }
+
+  showSavedMessage(){
+    swal.fire('Registro Salvo', 'Um novo setor foi criado com sucesso', 'success');
   }
 
   voltar(){

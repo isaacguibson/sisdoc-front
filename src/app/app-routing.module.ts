@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DocumentoComponent } from './documento/documento.component'
 import { SetorComponent } from './setor/setor.component'
 import { SetorAddComponent } from './setor/add/setor-add.component'
+import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
 
 const routes: Routes = [
@@ -21,6 +22,10 @@ const routes: Routes = [
   },
   { path: 'setor-add', 
     component: SetorAddComponent 
+  },
+  
+  { path: 'tipo-documento', 
+    component: TipoDocumentoComponent 
   }
 
 ];
