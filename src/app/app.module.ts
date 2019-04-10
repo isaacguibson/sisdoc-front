@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { DocumentoComponent } from './documento/documento.component';
+import { OficioComponent } from './documento/add-oficio/oficio.component'
 
 import { SetorComponent } from './setor/setor.component';
 import { SetorAddComponent } from './setor/add/setor-add.component';
@@ -31,6 +32,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
   declarations: [
     AppComponent,
     DocumentoComponent,
+    OficioComponent,
     DashboardComponent,
     SetorComponent,
     SetorAddComponent,

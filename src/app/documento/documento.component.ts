@@ -7,7 +7,7 @@ import { DocumentoService } from '../../services/documento.service'
 // Interfaces
 import { Documento } from '../../models/documento.model'
 
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {Router} from "@angular/router"
 
 @Component({
   selector: 'app-documento',
@@ -16,16 +16,16 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class DocumentoComponent implements OnInit {
 
-  public Editor = ClassicEditor;
-
   documento: Documento;
+  searchResult = null;
+  contentList = [];
 
   constructor(
     public httpClient: HttpClient,
-    public documentoService: DocumentoService
+    public documentoService: DocumentoService,
+    public router: Router
   ) {
-
-    this.documento = this.newDocumento()
+    this.documento = this.newDocumento();
    }
 
   ngOnInit() {
@@ -38,8 +38,51 @@ export class DocumentoComponent implements OnInit {
     };
   }
 
-  salvar(){
-    this.documentoService.save(this.documento);
+  adicionarNovo(){
+    this.router.navigate(['/oficio-add']);
+  }
+
+  pesquisar(){
+    
+    this.documentoService.pesquisar().then(data => {
+          console.log(data);
+          this.searchResult = data;
+          this.contentList = this.searchResult['content'];
+      }).catch(error =>{
+          console.log(error);
+          this.contentList = [];
+      })
+    
+  }
+
+  downloadDocument(idTipoDocumento, idDocumento, tipoDocumentoNome){
+    this.documentoService.download(idTipoDocumento, idDocumento).then(response => {
+      
+      var newBlob = new Blob([response], { type: "application/pdf" });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(newBlob);
+          return;
+      }
+
+      const data = window.URL.createObjectURL(newBlob);
+
+      var link = document.createElement('a');
+      link.href = data;
+      link.download = "Documento_"+tipoDocumentoNome+"_"+idDocumento+".pdf";
+      
+      // this is necessary as link.click() does not work on the latest firefox
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+      setTimeout(function () {
+          // For Firefox it is necessary to delay revoking the ObjectURL
+          window.URL.revokeObjectURL(data);
+          link.remove();
+      }, 100);
+
+    }).catch(error =>{
+      console.log(error);
+    });
   }
 
 }

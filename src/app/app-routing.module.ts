@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DocumentoComponent } from './documento/documento.component'
+import { OficioComponent } from './documento/add-oficio/oficio.component'
 import { SetorComponent } from './setor/setor.component'
 import { SetorAddComponent } from './setor/add/setor-add.component'
 import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.component'
@@ -15,6 +16,10 @@ const routes: Routes = [
 
   { path: 'documento', 
     component: DocumentoComponent 
+  },
+
+  { path: 'oficio-add', 
+    component: OficioComponent 
   },
 
   { path: 'setor', 
