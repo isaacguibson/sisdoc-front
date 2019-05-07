@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 //Services
-import { DocumentoService } from '../../services/documento.service'
+import { DocumentoService } from '../../../services/documento.service'
 
 // Interfaces
-import { Documento } from '../../models/documento.model'
+import { Documento } from '../../../models/documento.model'
 
 import {Router} from "@angular/router"
 
@@ -43,11 +43,24 @@ export class DocumentoComponent implements OnInit {
   }
 
   pesquisar(){
-    
+
+    let pageableObj = {
+      size:null,
+      number:null,
+      totalPages:null
+    }
+
     this.documentoService.pesquisar().then(data => {
           console.log(data);
+
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
+
+          pageableObj.size = this.searchResult['size'];
+          pageableObj.number = this.searchResult['number'];
+          pageableObj.totalPages = this.searchResult['totalPages'];
+
+          console.log(pageableObj );
       }).catch(error =>{
           console.log(error);
           this.contentList = [];

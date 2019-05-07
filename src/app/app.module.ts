@@ -5,15 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { DocumentoComponent } from './documento/documento.component';
-import { OficioComponent } from './documento/add-oficio/oficio.component'
-
-import { SetorComponent } from './setor/setor.component';
-import { SetorAddComponent } from './setor/add/setor-add.component';
-
-import { TipoDocumentoComponent } from './tipo-documento/tipo-documento.component';
-
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DocumentoComponent } from './sisdoc/documento/documento.component';
+import { OficioComponent } from './sisdoc/documento/add-oficio/oficio.component'
+import { SetorComponent } from './sisdoc/setor/setor.component';
+import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component';
+import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.component';
+import { DashboardComponent } from './sisdoc/dashboard/dashboard.component';
+import { SisdocComponent } from './sisdoc/sisdoc.component';
 
 // SERVICES
 import { DocumentoService } from '../services/documento.service';
@@ -26,8 +24,6 @@ import { HttpClientModule } from '@angular/common/http';
 //TEXT EDITOR
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +32,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     DashboardComponent,
     SetorComponent,
     SetorAddComponent,
-    TipoDocumentoComponent
+    TipoDocumentoComponent,
+    SisdocComponent
   ],
   imports: [
     BrowserModule,

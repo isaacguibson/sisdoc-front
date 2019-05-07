@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 //Services
-import { DocumentoService } from '../../../services/documento.service'
+import { DocumentoService } from '../../../../services/documento.service'
 
 // Interfaces
-import { Documento } from '../../../models/documento.model'
+import { Documento } from '../../../../models/documento.model'
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 

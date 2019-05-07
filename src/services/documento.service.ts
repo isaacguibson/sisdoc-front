@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class DocumentoService {
+
+    apiUrl = environment.apiUrl;
 
     constructor(
         public httpClient: HttpClient
@@ -12,7 +15,7 @@ export class DocumentoService {
 
     save(documento){
 
-        this.httpClient.post('http://localhost:8082/sisdoc-0.0.1-SNAPSHOT/documento', documento)
+        this.httpClient.post(this.apiUrl+'documento', documento)
         .toPromise()
         .then(data => {
             console.log(data);
@@ -24,7 +27,7 @@ export class DocumentoService {
 
     pesquisar(){
 
-        return this.httpClient.get('http://localhost:8082/sisdoc-0.0.1-SNAPSHOT/documento')
+        return this.httpClient.get(this.apiUrl+'documento')
         .toPromise();
 
     }
@@ -44,7 +47,7 @@ export class DocumentoService {
     }
 
     downloadOficio(idDocumento){
-        return this.httpClient.get('http://localhost:8082/sisdoc-0.0.1-SNAPSHOT/documento/oficio/'+idDocumento, { responseType: 'blob' })
+        return this.httpClient.get(this.apiUrl+'documento/oficio/'+idDocumento, { responseType: 'blob' })
                 .toPromise();
     }
 

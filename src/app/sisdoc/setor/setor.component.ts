@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 //Services
-import { SetorService } from '../../services/setor.service'
+import { SetorService } from '../../../services/setor.service'
 
 // Interfaces
-import { Setor } from '../../models/setor.model'
+import { Setor } from '../../../models/setor.model'
 
 import {Router} from "@angular/router"
 

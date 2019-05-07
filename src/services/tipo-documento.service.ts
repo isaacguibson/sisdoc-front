@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class TipoDocumentoService {
+
+    apiUrl = environment.apiUrl;
 
     constructor(
         public httpClient: HttpClient
@@ -12,7 +15,7 @@ export class TipoDocumentoService {
 
     pesquisar(){
 
-        return this.httpClient.get('http://localhost:8082/sisdoc-0.0.1-SNAPSHOT/tipo_documento')
+        return this.httpClient.get(this.apiUrl+'tipo_documento')
         .toPromise();
 
     }

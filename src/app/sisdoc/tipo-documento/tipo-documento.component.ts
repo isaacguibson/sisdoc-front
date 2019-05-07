@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 //Services
-import { TipoDocumentoService } from '../../services/tipo-documento.service'
+import { TipoDocumentoService } from '../../../services/tipo-documento.service'
 
 // Interfaces
-import { TipoDocumento } from '../../models/tipo-documento.model'
+import { TipoDocumento } from '../../../models/tipo-documento.model'
 
 import {Router} from "@angular/router"
 
