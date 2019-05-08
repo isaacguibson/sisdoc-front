@@ -14,6 +14,7 @@ import { DashboardComponent } from './sisdoc/dashboard/dashboard.component';
 import { SisdocComponent } from './sisdoc/sisdoc.component';
 
 // SERVICES
+import { LoginService } from 'src/services/login.service';
 import { DocumentoService } from '../services/documento.service';
 import { SetorService } from 'src/services/setor.service';
 import { TipoDocumentoService } from 'src/services/tipo-documento.service';
@@ -44,7 +45,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
     /* Http Client */ HttpClientModule
   ],
-  providers: [DocumentoService, SetorService, TipoDocumentoService],
+  providers: [LoginService, DocumentoService, SetorService, TipoDocumentoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
