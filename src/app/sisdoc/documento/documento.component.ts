@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 //Services
 import { DocumentoService } from '../../../services/documento.service'
+import { PaginatorService } from '../../../services/paginator.service'
 
 // Interfaces
 import { Documento } from '../../../models/documento.model'
@@ -20,12 +21,16 @@ export class DocumentoComponent implements OnInit {
   searchResult = null;
   contentList = [];
 
+  paginator = null;
+
   constructor(
     public httpClient: HttpClient,
     public documentoService: DocumentoService,
+    public paginatorService: PaginatorService,
     public router: Router
   ) {
     this.documento = this.newDocumento();
+    this.paginator = this.paginatorService.newPaginator();
    }
 
   ngOnInit() {
@@ -42,25 +47,23 @@ export class DocumentoComponent implements OnInit {
     this.router.navigate(['/oficio-add']);
   }
 
-  pesquisar(){
+  pesquisar(page){
 
-    let pageableObj = {
-      size:null,
-      number:null,
-      totalPages:null
-    }
+    this.paginator.currentPage = page;
 
-    this.documentoService.pesquisar().then(data => {
+    this.documentoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
           console.log(data);
 
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
 
-          pageableObj.size = this.searchResult['size'];
-          pageableObj.number = this.searchResult['number'];
-          pageableObj.totalPages = this.searchResult['totalPages'];
+          this.paginator 
+            = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
+                                                  this.searchResult['totalElements'],
+                                                  this.paginator.currentPage,
+                                                  this.paginator.size);
 
-          console.log(pageableObj );
+            console.log(this.paginator);                                                  
       }).catch(error =>{
           console.log(error);
           this.contentList = [];

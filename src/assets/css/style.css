@@ -14508,7 +14508,7 @@ pre {
       background-image: -webkit-linear-gradient(left, #d209fa 1%, #4f81d4 100%);
       background-image: -moz-linear-gradient(left, #d209fa 1%, #4f81d4 100%);
       background-image: -o-linear-gradient(left, #d209fa 1%, #4f81d4 100%);
-      background-image: linear-gradient(left, #d209fa 1%, #4f81d4 100%);
+      background-image: linear-gradient(to left, #d209fa 1%, #4f81d4 100%);
       color: #ffffff;
       border: none;
       line-height: 1;
@@ -16288,23 +16288,11 @@ ul {
   .auth.theme-two .banner-section .slide-content {
     width: 100%; }
     .auth.theme-two .banner-section .slide-content.bg-1 {
-      background: url("../images/auth/login_2.jpg") no-repeat center center;
+      /* background: url("../images/auth/login_2.jpg") no-repeat center center; */
       background-size: cover; }
     .auth.theme-two .banner-section .slide-content.bg-2 {
-      background: url("../images/auth/register_2.jpg") no-repeat center center;
+      /* background: url("../images/auth/register_2.jpg") no-repeat center center; */
       background-size: cover; }
-
-/* Error */
-.error-page h1 {
-  font-size: 9.375rem;
-  line-height: 1; }
-  @media (max-width: 991px) {
-    .error-page h1 {
-      font-size: 8rem; } }
-
-.error-page h2 {
-  font-size: 4.375rem;
-  line-height: 1; }
 
 @media (min-width: 992px) {
   .error-page .error-page-divider {

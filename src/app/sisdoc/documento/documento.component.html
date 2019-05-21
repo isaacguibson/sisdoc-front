@@ -16,7 +16,7 @@
                     <label for="exampleInputName1">Texto</label>
                     <input type="text" class="form-control" placeholder="Nome">
                 </div>
-                <button (click)="pesquisar()" class="btn btn-info mr-2">Pesquisar</button>
+                <button (click)="pesquisar(0)" class="btn btn-info mr-2">Pesquisar</button>
                 <button (click)="adicionarNovo()" class="btn btn-success">Adicionar +</button>
               </div>
             </div>
@@ -69,16 +69,32 @@
                     </tr>
                   </tbody>
                 </table>
-                <nav aria-label="Page navigation example">
+                <br />
+                <nav aria-label="Page navigation example" *ngIf="contentList.length > 0">
                   <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#" tabindex="-1">Anterior</a>
+                   <li class="page-item">
+                      <a class="page-link" (click)="pesquisar(0)" >Primeira</a>
                     </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
-                      <a class="page-link" href="#">Próximo</a>
+                        <a class="page-link" *ngIf="paginator.previousPrevPage">{{paginator.previousPrevPage - 1}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" (click)="pesquisar(paginator.previousPage)" *ngIf="paginator.previousPage != null && paginator.previousPage >= 0">{{paginator.previousPage + 1}}</a>
+                    </li>
+                    <li class="page-item disabled">
+                      <a class="page-link" tabindex="-1">{{paginator.currentPage + 1}}</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" (click)="pesquisar(paginator.nextPage)" *ngIf="paginator.nextPage">{{paginator.nextPage + 1}}</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" *ngIf="paginator.nextNextPage">{{paginator.nextNextPage + 1}}</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" (click)="pesquisar(paginator.totalPages - 1)">Última</a>
+                    </li>
+                    <li class="page-item" style="margin-left: 1%;">
+                      <small>página {{paginator.currentPage + 1}} de {{paginator.totalPages}}</small>
                     </li>
                   </ul>
                 </nav>

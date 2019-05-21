@@ -1,37 +1,41 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DocumentoComponent } from './sisdoc/documento/documento.component'
-import { OficioComponent } from './sisdoc/documento/add-oficio/oficio.component'
-import { SetorComponent } from './sisdoc/setor/setor.component'
-import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component'
-import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.component'
-import { DashboardComponent } from './sisdoc/dashboard/dashboard.component'
-import { SisdocComponent } from './sisdoc/sisdoc.component'
+import { AuthGuardService as AuthGuard } from '../services/auth-guard.service';
+
+import { DashboardComponent } from './sisdoc/dashboard/dashboard.component';
+import { SisdocComponent } from './sisdoc/sisdoc.component';
+import { DocumentoComponent } from './sisdoc/documento/documento.component';
+import { OficioComponent } from './sisdoc/documento/add-oficio/oficio.component';
+import { SetorComponent } from './sisdoc/setor/setor.component';
+import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component';
+import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.component';
 
 const routes: Routes = [
+
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   {
     path: 'login',
     loadChildren: './login/login.module#LoginModule'
   },
 
-  { path: '', redirectTo: 'sisdoc/dashboard', pathMatch: 'full' },
-
-  { path: 'sisdoc', redirectTo: 'sisdoc/dashboard', pathMatch: 'full' },
-
   { path: 'sisdoc',
     component: SisdocComponent,
     children: [
+
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+
       { path: 'dashboard', 
-        component: DashboardComponent 
+        component: DashboardComponent
       },
 
       { path: 'documento', 
         component: DocumentoComponent
+        
       },
 
       { path: 'oficio-add', 
-        component: OficioComponent 
+        component: OficioComponent
       },
 
       { path: 'setor', 
@@ -39,13 +43,14 @@ const routes: Routes = [
       },
 
       { path: 'setor-add', 
-        component: SetorAddComponent 
+        component: SetorAddComponent
       },
       
       { path: 'tipo-documento', 
-        component: TipoDocumentoComponent 
+        component: TipoDocumentoComponent
       }
     ]
+    //, canActivate: [AuthGuard]
   }
 
 ];

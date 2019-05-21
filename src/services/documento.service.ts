@@ -25,11 +25,16 @@ export class DocumentoService {
 
     }
 
-    pesquisar(){
+    pesquisar(page, size){
 
-        return this.httpClient.get(this.apiUrl+'documento')
-        .toPromise();
-
+        let apiURLPaginated = this.apiUrl+'documento';
+        if(page != null && size!= null){
+            apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
+        }
+        return this.httpClient.get(apiURLPaginated,
+            {headers:
+                {'Authorization':localStorage.getItem("token")}
+            }).toPromise();
     }
 
 

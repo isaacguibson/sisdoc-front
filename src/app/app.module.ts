@@ -5,19 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { DocumentoComponent } from './sisdoc/documento/documento.component';
-import { OficioComponent } from './sisdoc/documento/add-oficio/oficio.component'
-import { SetorComponent } from './sisdoc/setor/setor.component';
-import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component';
-import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.component';
-import { DashboardComponent } from './sisdoc/dashboard/dashboard.component';
-import { SisdocComponent } from './sisdoc/sisdoc.component';
-
 // SERVICES
 import { LoginService } from 'src/services/login.service';
 import { DocumentoService } from '../services/documento.service';
+import { PaginatorService } from '../services/paginator.service';
 import { SetorService } from 'src/services/setor.service';
 import { TipoDocumentoService } from 'src/services/tipo-documento.service';
+import { AuthGuardService } from 'src/services/auth-guard.service';
+import { AuthService } from 'src/services/auth.service';
+import { JwtHelperService, JwtModule} from '@auth0/angular-jwt';
 
 // HttpClient
 import { HttpClientModule } from '@angular/common/http';
@@ -25,16 +21,26 @@ import { HttpClientModule } from '@angular/common/http';
 //TEXT EDITOR
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
+//Components
+import { SisdocComponent } from './sisdoc/sisdoc.component';
+import { DashboardComponent } from './sisdoc/dashboard/dashboard.component';
+import { DocumentoComponent } from './sisdoc/documento/documento.component';
+import { SetorComponent } from './sisdoc/setor/setor.component';
+import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.component';
+import { OficioComponent } from './sisdoc/documento/add-oficio/oficio.component';
+import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component';
+
 @NgModule({
+  
   declarations: [
     AppComponent,
-    DocumentoComponent,
-    OficioComponent,
+    SisdocComponent,
     DashboardComponent,
+    DocumentoComponent,
     SetorComponent,
     SetorAddComponent,
     TipoDocumentoComponent,
-    SisdocComponent
+    OficioComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +49,24 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
     /* TEXT EDITOR */ CKEditorModule,
 
-    /* Http Client */ HttpClientModule
+    /* Http Client */ HttpClientModule,
+
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        }
+      }
+    })
   ],
-  providers: [LoginService, DocumentoService, SetorService, TipoDocumentoService],
+  providers: [LoginService,
+    PaginatorService,
+    DocumentoService,
+    SetorService,
+    TipoDocumentoService,
+    AuthGuardService,
+    AuthService,
+    JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

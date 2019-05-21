@@ -19,9 +19,7 @@ export class LoginCoreComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginObject);
-    this.loginService.doLogin(this.loginObject).then(data => {
-      console.log(data);
-    });
+    this.loginService.doLogin(this.loginObject);
   }
 
 }
