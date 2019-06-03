@@ -39,7 +39,7 @@
     "popper.js": "1.12.9",
     "rxjs": "~6.3.3",
     "simple-line-icons": "2.4.1",
-    "sweetalert2": "^8.2.6",
+    "sweetalert2": "^8.11.7",
     "tslib": "^1.9.3",
     "zone.js": "~0.8.26"
   },
