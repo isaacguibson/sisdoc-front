@@ -31,6 +31,7 @@ export class DocumentoService {
         if(page != null && size!= null){
             apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
         }
+        
         return this.httpClient.get(apiURLPaginated,
             {headers:
                 {'Authorization':localStorage.getItem("token")}

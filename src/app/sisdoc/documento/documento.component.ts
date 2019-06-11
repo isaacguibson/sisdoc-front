@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 //Services
-import { DocumentoService } from '../../../services/documento.service'
-import { PaginatorService } from '../../../services/paginator.service'
+import { DocumentoService } from '../../../services/documento.service';
+import { PaginatorService } from '../../../services/paginator.service';
 
 // Interfaces
-import { Documento } from '../../../models/documento.model'
+import { Documento } from '../../../models/documento.model';
 
-import {Router} from "@angular/router"
+import {Router} from "@angular/router";
+
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-documento',
@@ -51,6 +53,15 @@ export class DocumentoComponent implements OnInit {
 
     this.paginator.currentPage = page;
 
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+
     this.documentoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
           console.log(data);
 
@@ -63,10 +74,12 @@ export class DocumentoComponent implements OnInit {
                                                   this.paginator.currentPage,
                                                   this.paginator.size);
 
-            console.log(this.paginator);                                                  
+          Swal.close();
+                                                              
       }).catch(error =>{
           console.log(error);
           this.contentList = [];
+          Swal.close();
       })
     
   }

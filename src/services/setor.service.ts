@@ -25,9 +25,17 @@ export class SetorService {
 
     }
 
-    pesquisar(){
+    pesquisar(page, size){
 
-        return this.httpClient.get(this.apiUrl+'setor')
+        let apiURLPaginated = this.apiUrl+'setor';
+        if(page != null && size!= null){
+            apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
+        }
+
+        return this.httpClient.get(apiURLPaginated,
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        })
         .toPromise();
 
     }

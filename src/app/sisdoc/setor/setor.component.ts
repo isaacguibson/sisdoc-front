@@ -10,6 +10,9 @@ import { Setor } from '../../../models/setor.model'
 
 import {Router} from "@angular/router"
 
+import { PaginatorService } from '../../../services/paginator.service';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-setor',
   templateUrl: './setor.component.html',
@@ -21,15 +24,18 @@ export class SetorComponent implements OnInit {
   searchResult = null;
   contentList = [];
 
+  paginator = null;
+
   constructor(
     public httpClient: HttpClient,
     public setorService: SetorService,
+    public paginatorService: PaginatorService,
     public router: Router
   ) {
 
     this.setor = this.newSetor();
     // this.pesquisar();
-
+    this.paginator = this.paginatorService.newPaginator();
    }
 
    ngOnInit() {
@@ -48,15 +54,35 @@ export class SetorComponent implements OnInit {
     this.router.navigate(['/setor-add']);
   }
 
-  pesquisar(){
+  pesquisar(page){
+
+    this.paginator.currentPage = page;
     
-    this.setorService.pesquisar().then(data => {
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+
+    this.setorService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
           console.log(data);
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
+
+          this.paginator 
+            = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
+                                                  this.searchResult['totalElements'],
+                                                  this.paginator.currentPage,
+                                                  this.paginator.size);
+
+          Swal.close();
       }).catch(error =>{
           console.log(error);
           this.contentList = [];
+          Swal.close();
       })
     
   }
