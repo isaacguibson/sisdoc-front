@@ -8,7 +8,8 @@ import { SetorService } from '../../../../services/setor.service'
 // Interfaces
 import { Setor } from '../../../../models/setor.model'
 
-import {Router} from "@angular/router"
+import {Router} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import swal from 'sweetalert2';
 
 @Component({
@@ -23,10 +24,23 @@ export class SetorAddComponent implements OnInit {
   constructor(
     public httpClient: HttpClient,
     public setorService: SetorService,
-    public router: Router
+    public router: Router,
+    public activeRoute: ActivatedRoute
   ) {
-
     this.setor = this.newSetor();
+
+    let id = this.activeRoute.snapshot.paramMap.get("id");
+
+    if(id){
+      this.setorService.get(id).then(data => {
+
+        this.setor.id=data["id"];
+        this.setor.nome=data["nome"];
+        
+      });
+    } else {
+      this.setor = this.newSetor();
+    }
 
    }
 
@@ -45,16 +59,14 @@ export class SetorAddComponent implements OnInit {
   salvar(){
 
     this.setorService.save(this.setor);
-    this.showSavedMessage();
-    this.router.navigate(['/setor']);
+    
+    this.router.navigate(['/sisdoc/setor']);
   }
 
-  showSavedMessage(){
-    swal.fire('Registro Salvo', 'Um novo setor foi criado com sucesso', 'success');
-  }
+  
 
   voltar(){
-    this.router.navigate(['/setor']);
+    this.router.navigate(['/sisdoc/setor']);
   }
 
 }

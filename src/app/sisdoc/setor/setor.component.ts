@@ -51,7 +51,7 @@ export class SetorComponent implements OnInit {
   }
 
   adicionarNovo(){
-    this.router.navigate(['/setor-add']);
+    this.router.navigate(['/sisdoc/setor-add']);
   }
 
   pesquisar(page){
@@ -80,7 +80,7 @@ export class SetorComponent implements OnInit {
 
           Swal.close();
       }).catch(error =>{
-          console.log(error);
+          // console.log(error);
           this.contentList = [];
           Swal.close();
       })
@@ -90,6 +90,28 @@ export class SetorComponent implements OnInit {
   salvar(){
 
     this.setorService.save(this.setor);
+
+  }
+
+  editar(id){
+
+    this.router.navigate(['/sisdoc/setor-edit/'+id]);
+  }
+
+  deletar(id){
+
+    Swal.fire({
+      title: 'Tem certeza, que deseja deletar este registro?',
+      text: "Esta operação não pode ser desfeita",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!',
+      cancelButtonText: 'Não'
+    }).then((result) => {
+      this.setorService.deletar(id);
+    });
 
   }
 

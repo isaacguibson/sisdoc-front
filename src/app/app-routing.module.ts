@@ -42,6 +42,10 @@ const routes: Routes = [
         component: SetorComponent
       },
 
+      { path: 'setor-edit/:id', 
+        component: SetorAddComponent
+      },
+
       { path: 'setor-add', 
         component: SetorAddComponent
       },

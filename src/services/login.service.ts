@@ -33,6 +33,8 @@ export class LoginService {
 
             
         }).catch(reason => {
+            
+            console.log(reason);
 
             Swal.fire({
                 title: 'Erro',

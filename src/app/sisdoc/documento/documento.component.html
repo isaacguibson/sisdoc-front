@@ -76,19 +76,19 @@
                       <a class="page-link" (click)="pesquisar(0)" >Primeira</a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" *ngIf="paginator.previousPrevPage">{{paginator.previousPrevPage - 1}}</a>
+                        <a class="page-link" *ngIf="paginator.previousPrevPage != null" (click)="pesquisar(paginator.previousPrevPage)">{{paginator.previousPrevPage + 1}}</a>
                     </li>
                     <li class="page-item">
                         <a class="page-link" (click)="pesquisar(paginator.previousPage)" *ngIf="paginator.previousPage != null && paginator.previousPage >= 0">{{paginator.previousPage + 1}}</a>
                     </li>
                     <li class="page-item disabled">
-                      <a class="page-link" tabindex="-1">{{paginator.currentPage + 1}}</a>
+                      <a class="page-link text-primary" tabindex="-1">{{paginator.currentPage + 1}}</a>
                     </li>
                     <li class="page-item">
                         <a class="page-link" (click)="pesquisar(paginator.nextPage)" *ngIf="paginator.nextPage">{{paginator.nextPage + 1}}</a>
                     </li>
                     <li class="page-item">
-                      <a class="page-link" *ngIf="paginator.nextNextPage">{{paginator.nextNextPage + 1}}</a>
+                      <a class="page-link" *ngIf="paginator.nextNextPage" (click)="pesquisar(paginator.nextNextPage)">{{paginator.nextNextPage + 1}}</a>
                     </li>
                     <li class="page-item">
                       <a class="page-link" (click)="pesquisar(paginator.totalPages - 1)">Última</a>
