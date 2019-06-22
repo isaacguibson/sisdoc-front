@@ -110,7 +110,11 @@ export class SetorComponent implements OnInit {
       confirmButtonText: 'Sim, deletar!',
       cancelButtonText: 'Não'
     }).then((result) => {
-      this.setorService.deletar(id);
+
+      //Delete apenas se usuario clicar em sim
+      if(result.dismiss != Swal.DismissReason.cancel){
+        this.setorService.deletar(id);
+      }
     });
 
   }
