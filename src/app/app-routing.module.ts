@@ -9,6 +9,7 @@ import { OficioComponent } from './sisdoc/documento/add-oficio/oficio.component'
 import { SetorComponent } from './sisdoc/setor/setor.component';
 import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component';
 import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.component';
+import { CargoComponent } from './sisdoc/cargo/cargo.component';
 
 const routes: Routes = [
 
@@ -40,6 +41,10 @@ const routes: Routes = [
 
       { path: 'setor', 
         component: SetorComponent
+      },
+
+      { path: 'cargo', 
+        component: CargoComponent
       },
 
       { path: 'setor-edit/:id', 
