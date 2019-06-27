@@ -53,7 +53,7 @@ export class CargoComponent implements OnInit {
   }
 
   adicionarNovo(){
-    // this.router.navigate(['/sisdoc/setor-add']);
+    this.router.navigate(['/sisdoc/cargo-add']);
   }
 
   pesquisar(page){
@@ -120,5 +120,4 @@ export class CargoComponent implements OnInit {
     });
 
   }
-
 }

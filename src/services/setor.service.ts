@@ -105,6 +105,13 @@ export class SetorService {
         .toPromise();
     }
 
+    listAll(){
+        return this.httpClient.get(this.apiUrl+'setor/listaSetores',
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        }).toPromise();
+    }
+
     pesquisar(page, size){
 
         let apiURLPaginated = this.apiUrl+'setor';

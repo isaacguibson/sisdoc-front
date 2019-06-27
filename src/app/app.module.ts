@@ -31,6 +31,7 @@ import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.c
 import { OficioComponent } from './sisdoc/documento/add-oficio/oficio.component';
 import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component';
 import { CargoComponent } from './sisdoc/cargo/cargo.component';
+import { CargoAddComponent } from './sisdoc/cargo/add/add.component';
 
 @NgModule({
   
@@ -43,7 +44,8 @@ import { CargoComponent } from './sisdoc/cargo/cargo.component';
     SetorAddComponent,
     TipoDocumentoComponent,
     OficioComponent,
-    CargoComponent
+    CargoComponent,
+    CargoAddComponent
   ],
   imports: [
     BrowserModule,

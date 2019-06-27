@@ -1,0 +1,43 @@
+<div class="content-wrapper" style="height: 100%; width: 100%;">
+  <div class="row">
+
+    <!-- Inicio do conteudo do documento -->
+    <div class="col-lg-12 d-flex align-items-stretch grid-margin">
+      <div class="row flex-grow">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Adicionar novo cargo</h4>
+                <p class="card-description">
+                  
+                </p>
+            </div>
+            <div class="card-body">
+              <div class="forms-sample">
+                <div class="form-group">
+                  <div class="row">
+                      <div class="col-6">
+                          <label>Nome</label>
+                          <input type="text" class="form-control" [(ngModel)]="cargo.nome" placeholder="Name">
+                      </div>
+                      <div class="col-6">
+                          <label>Setor</label>
+                          <select class="custom-select">
+                              <option value="">Selecione</option>
+                              <option *ngFor="let item of listSetores" value="item.id">{{item.nome}}</option>
+                            </select>                      
+                      </div>
+                  </div>
+                </div>
+                <button (click)="salvar()" class="btn btn-success mr-2">Salvar</button>
+                <button (click)="voltar()" class="btn btn-light">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fim do conteudo do documento -->
+  </div>
+</div>
+
