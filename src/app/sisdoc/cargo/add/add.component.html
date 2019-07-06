@@ -22,10 +22,10 @@
                       </div>
                       <div class="col-6">
                           <label>Setor</label>
-                          <select class="custom-select">
-                              <option value="">Selecione</option>
-                              <option *ngFor="let item of listSetores" value="item.id">{{item.nome}}</option>
-                            </select>                      
+                          <select class="custom-select" [(ngModel)]="cargo.setorId">
+                              <option value="null">Selecione</option>
+                              <option *ngFor="let item of listSetores" value="{{item.id}}">{{item.nome}}</option>
+                          </select>                      
                       </div>
                   </div>
                 </div>

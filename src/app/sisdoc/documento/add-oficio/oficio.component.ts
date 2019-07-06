@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {Router} from "@angular/router";
 
 //Services
 import { DocumentoService } from '../../../../services/documento.service'
@@ -22,7 +23,8 @@ export class OficioComponent implements OnInit {
 
   constructor(
     public httpClient: HttpClient,
-    public documentoService: DocumentoService
+    public documentoService: DocumentoService,
+    public router: Router
   ) {
 
     this.documento = this.newOficio()
@@ -34,12 +36,17 @@ export class OficioComponent implements OnInit {
 
   newOficio(): Documento{
     return {
-      texto: null
+      conteudo: null
     };
   }
 
   salvar(){
-    this.documentoService.save(this.documento);
+
+    this.documentoService.save(this.documento, 'oficio');
+  }
+
+  cancelar(){
+    this.router.navigate(['/sisdoc/documento']);
   }
 
 }

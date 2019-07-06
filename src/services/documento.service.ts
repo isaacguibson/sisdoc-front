@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import swal from 'sweetalert2';
 
 @Injectable()
 export class DocumentoService {
@@ -13,15 +14,59 @@ export class DocumentoService {
           
     }
 
-    save(documento){
+    save(documento, tipo){
 
-        this.httpClient.post(this.apiUrl+'documento', documento)
-        .toPromise()
-        .then(data => {
-            console.log(data);
-        }).catch(error =>{
-            console.log(error)
-        })
+
+        if(tipo === 'oficio'){
+            documento.tipoDocumentoId = 1;
+        }
+
+        documento.usuarioId = localStorage.getItem("userId");
+
+        swal.fire({
+            title: 'Aguarde...',
+            onBeforeOpen: () => {
+              swal.showLoading();
+            },
+            allowOutsideClick: false,
+            showConfirmButton: false
+        });
+        
+        if(documento.id){
+            //EDITANDO
+            this.httpClient.put(this.apiUrl+'documento/'+tipo, documento,
+                {headers:
+                    {'Authorization':localStorage.getItem("token")}
+                })
+                .toPromise()
+                .then(data => {
+                    console.log(data);
+                    swal.close();
+                    this.showEditedMessage(tipo);
+                    
+                }).catch(error =>{
+                    console.log(error);
+                    swal.close();
+                    this.showErrorMessage();
+                })
+        } else {
+            //INSERINDO
+            this.httpClient.post(this.apiUrl+'documento/'+tipo, documento,
+                {headers:
+                    {'Authorization':localStorage.getItem("token")}
+                })
+                .toPromise()
+                .then(data => {
+                    console.log(data);
+                    swal.close();
+                    this.showSavedMessage(tipo);
+                    
+                }).catch(error =>{
+                    console.log(error);
+                    swal.close();
+                    this.showErrorMessage();
+                })
+        }
 
     }
 
@@ -43,7 +88,7 @@ export class DocumentoService {
 
         switch (idTipoDocumento) {
             case 1: //Oficio
-                return this.downloadOficio(idDocumento);
+                return this.downloadTipo(idDocumento, 'oficio');
             default:
                 break;
         }
@@ -52,9 +97,33 @@ export class DocumentoService {
         
     }
 
-    downloadOficio(idDocumento){
-        return this.httpClient.get(this.apiUrl+'documento/oficio/'+idDocumento, { responseType: 'blob' })
+    downloadTipo(idDocumento, tipo){
+
+        return this.httpClient.get(this.apiUrl+'documento/'+tipo+'/'+idDocumento,
+                    {headers: 
+                        {
+                            Authorization: localStorage.getItem("token")
+                        },
+                        responseType: 'blob'
+                    })
                 .toPromise();
+    }
+
+
+    showSavedMessage(tipo){
+        swal.fire('Registro Salvo', 'Um novo' + tipo + 'foi criado com sucesso', 'success');
+    }
+
+    showEditedMessage(tipo){
+        swal.fire('Registro Salvo', tipo + 'editado sucesso', 'success');
+    }
+
+    showDeletedMessage(){
+        swal.fire('Registro deletado', 'Operação de deleção realizada com sucesso', 'success');
+    }
+
+    showErrorMessage(){
+        swal.fire('Oops!', 'Algo de errado aconteceu.', 'error');
     }
 
 }

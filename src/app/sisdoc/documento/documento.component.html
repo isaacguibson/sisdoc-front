@@ -62,9 +62,14 @@
                       <td>{{item.tipoDocumento.nome}}</td>
                       <td>{{item.dataCriacao}}</td>
                       <td>
-                          <button type="button" class="btn btn-sm btn-outline-info" (click)="downloadDocument(item.tipoDocumento.id, item.id, item.tipoDocumento.nome)">PDF</button>
-    
-                          <button type="button" style="margin-left: 2%" class="btn btn-sm btn-outline-danger">Deletar</button>
+                          <button type="button" class="btn btn-sm btn-outline-info" 
+                                  style="padding: 1px; text-align: center; margin-right: 4%"
+                                  (click)="downloadDocument(item.tipoDocumento.id, item.id, item.tipoDocumento.nome)">
+                              <i class="mdi mdi-file-pdf" style="margin: 0; text-align: center;"></i>
+                          </button>
+                          <button class="btn btn-sm btn-danger" style="padding: 1px; text-align: center;" (click)="deletar(item.id)">
+                              <i class="mdi mdi-delete" style="margin: 0; text-align: center;"></i>
+                          </button>
                       </td>
                     </tr>
                   </tbody>

@@ -33,7 +33,6 @@ const routes: Routes = [
 
       { path: 'documento', 
         component: DocumentoComponent
-        
       },
 
       { path: 'oficio-add', 
@@ -57,6 +56,10 @@ const routes: Routes = [
       },
 
       { path: 'cargo-add', 
+        component: CargoAddComponent
+      },
+
+      { path: 'cargo-edit/:id', 
         component: CargoAddComponent
       },
       

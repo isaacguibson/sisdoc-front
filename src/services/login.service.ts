@@ -28,6 +28,8 @@ export class LoginService {
             }).then(value => {
                 localStorage.setItem("token", data['JWT']);
 
+                localStorage.setItem("userId", data['usuario']["id"]);
+
                 this.router.navigate(['/sisdoc/dashboard']);
             })
 

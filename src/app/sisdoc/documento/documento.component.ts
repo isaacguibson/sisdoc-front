@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 //Services
 import { DocumentoService } from '../../../services/documento.service';
+import { TipoDocumentoService } from '../../../services/tipo-documento.service';
 import { PaginatorService } from '../../../services/paginator.service';
 
 // Interfaces
@@ -23,12 +24,16 @@ export class DocumentoComponent implements OnInit {
   searchResult = null;
   contentList = [];
 
+  tipoDocsList:any = [];
+  htmlSelectString = null;
+
   paginator = null;
 
   constructor(
     public httpClient: HttpClient,
     public documentoService: DocumentoService,
     public paginatorService: PaginatorService,
+    public tipoDocumentoService: TipoDocumentoService,
     public router: Router
   ) {
     this.documento = this.newDocumento();
@@ -37,16 +42,41 @@ export class DocumentoComponent implements OnInit {
 
   ngOnInit() {
     /* ON INIT FUNCTION */
+    this.fillTipoDocLit();
   }
 
   newDocumento(): Documento{
     return {
-      texto: null
+      conteudo: null
     };
   }
 
   adicionarNovo(){
-    this.router.navigate(['/oficio-add']);
+
+    Swal.fire({
+      title: 'Escolha o tipo de documento',
+      type: 'info',
+      html: this.htmlSelectString,
+      showCloseButton: true,
+      showCancelButton: true,
+      focusConfirm: false,
+      confirmButtonText:
+        'OK',
+      confirmButtonAriaLabel: 'Thumbs up, great!',
+      cancelButtonText:
+        'Cancelar',
+      cancelButtonAriaLabel: 'Thumbs down',
+    }).then(result => {
+
+      var element = document.getElementById("selectTipoDoc");
+      var value = element['options'][element['selectedIndex']].value;
+
+      switch (value) {
+        case '1':
+          this.router.navigate(['/sisdoc/oficio-add']);
+          break;
+      }
+    });
   }
 
   pesquisar(page){
@@ -85,6 +115,16 @@ export class DocumentoComponent implements OnInit {
   }
 
   downloadDocument(idTipoDocumento, idDocumento, tipoDocumentoNome){
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+
     this.documentoService.download(idTipoDocumento, idDocumento).then(response => {
       
       var newBlob = new Blob([response], { type: "application/pdf" });
@@ -109,9 +149,29 @@ export class DocumentoComponent implements OnInit {
           link.remove();
       }, 100);
 
+      Swal.close();
     }).catch(error =>{
       console.log(error);
     });
+  }
+
+  fillTipoDocLit(){
+    this.tipoDocumentoService.listar().then(data => {
+      this.tipoDocsList = data;
+      this.buildHtmlSelect();
+    });
+  }
+
+  buildHtmlSelect(){
+
+    this.htmlSelectString = '<select id="selectTipoDoc" class="custom-select">';
+    this.htmlSelectString += '<option value="">Selecione</option>';
+
+    for (let index in this.tipoDocsList){
+      this.htmlSelectString += '<option value="'+this.tipoDocsList[index]['id']+'">'+this.tipoDocsList[index]['nome']+'</option>';
+    }
+
+    this.htmlSelectString += '</select>';
   }
 
 }

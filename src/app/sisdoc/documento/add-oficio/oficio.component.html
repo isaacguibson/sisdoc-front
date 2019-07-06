@@ -16,10 +16,10 @@
               <div class="card-body">
                 <div class="forms-sample">
                   <div class="form-group add-new-post">
-                      <ckeditor [(ngModel)]="documento.texto" [editor]="Editor"></ckeditor>
+                      <ckeditor [(ngModel)]="documento.conteudo" [editor]="Editor"></ckeditor>
                   </div>
                   <button (click)="salvar()" class="btn btn-success mr-2">Salvar</button>
-                  <button class="btn btn-light">Cancelar</button>
+                  <button class="btn btn-light" (click)="cancelar()">Cancelar</button>
                 </div>
               </div>
             </div>

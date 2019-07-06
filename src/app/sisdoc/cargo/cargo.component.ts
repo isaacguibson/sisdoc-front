@@ -44,7 +44,7 @@ export class CargoComponent implements OnInit {
     return {
       id: null,
       nome: null,
-      id_setor: null
+      setorId: null
     }
 
   }
@@ -70,7 +70,7 @@ export class CargoComponent implements OnInit {
     });
 
     this.cargoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
-          console.log(data);
+          
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
 
@@ -82,7 +82,7 @@ export class CargoComponent implements OnInit {
 
           Swal.close();
       }).catch(error =>{
-          // console.log(error);
+        
           this.contentList = [];
           Swal.close();
       })
@@ -97,7 +97,7 @@ export class CargoComponent implements OnInit {
 
   editar(id){
 
-    // this.router.navigate(['/sisdoc/setor-edit/'+id]);
+    this.router.navigate(['/sisdoc/cargo-edit/'+id]);
   }
 
   deletar(id){
