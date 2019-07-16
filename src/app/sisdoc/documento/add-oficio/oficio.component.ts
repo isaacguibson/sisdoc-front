@@ -9,6 +9,7 @@ import { DocumentoService } from '../../../../services/documento.service'
 import { Documento } from '../../../../models/documento.model'
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 
 @Component({
   selector: 'app-oficio',
@@ -27,7 +28,7 @@ export class OficioComponent implements OnInit {
     public router: Router
   ) {
 
-    this.documento = this.newOficio()
+    this.documento = this.newOficio();
    }
 
   ngOnInit() {

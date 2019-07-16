@@ -68,7 +68,7 @@ export class SetorComponent implements OnInit {
     });
 
     this.setorService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
-          console.log(data);
+          
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
 
@@ -113,10 +113,32 @@ export class SetorComponent implements OnInit {
 
       //Delete apenas se usuario clicar em sim
       if(result.dismiss != Swal.DismissReason.cancel){
-        this.setorService.deletar(id);
+        this.setorService.deletar(id)
+        .then(data => {
+            
+            Swal.close();
+            this.setorService.showDeletedMessage();
+            this.pesquisaAposDelecao();
+            
+        }).catch(error =>{
+            console.log(error);
+            Swal.close();
+            this.setorService.showErrorMessage();
+        });
       }
     });
 
+  }
+
+  pesquisaAposDelecao(){
+    console.log(this.paginator);
+    if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
+      if((this.paginator.totalElements % this.paginator.size) == 1){
+        this.pesquisar(this.paginator.currentPage - 1);
+      }
+    } else {
+      this.pesquisar(this.paginator.currentPage);
+    }
   }
 
 }

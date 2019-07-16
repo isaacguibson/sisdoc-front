@@ -80,21 +80,11 @@ export class SetorService {
 
         this.showLoad();
 
-        this.httpClient.delete(this.apiUrl+'setor/'+id,
+        return this.httpClient.delete(this.apiUrl+'setor/'+id,
         {headers:
             {'Authorization':localStorage.getItem("token")}
         })
-        .toPromise()
-        .then(data => {
-            console.log(data);
-            swal.close();
-            this.showDeletedMessage();
-            
-        }).catch(error =>{
-            console.log(error);
-            swal.close();
-            this.showErrorMessage();
-        })
+        .toPromise();
     }
 
     get(id){

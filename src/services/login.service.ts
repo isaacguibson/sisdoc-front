@@ -18,7 +18,18 @@ export class LoginService {
 
     doLogin(loginObject){
 
+        Swal.fire({
+            title: 'Aguarde...',
+            onBeforeOpen: () => {
+              Swal.showLoading();
+            },
+            allowOutsideClick: false,
+            showConfirmButton: false
+          });
+
         this.httpClient.post(this.apiUrl+'login', loginObject).toPromise().then(data=>{
+
+            Swal.close();
 
             Swal.fire({
                 title: 'Sucesso',
@@ -38,6 +49,7 @@ export class LoginService {
             
             console.log(reason);
 
+            Swal.close();
             Swal.fire({
                 title: 'Erro',
                 text: 'Não foi possível realizar login',

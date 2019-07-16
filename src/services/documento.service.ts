@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import swal from 'sweetalert2';
+import {Router} from "@angular/router"
 
 @Injectable()
 export class DocumentoService {
@@ -9,7 +10,8 @@ export class DocumentoService {
     apiUrl = environment.apiUrl;
 
     constructor(
-        public httpClient: HttpClient
+        public httpClient: HttpClient,
+        public router: Router
     ) { 
           
     }
@@ -43,11 +45,13 @@ export class DocumentoService {
                     console.log(data);
                     swal.close();
                     this.showEditedMessage(tipo);
+                    this.router.navigate(['/sisdoc/documento']);
                     
                 }).catch(error =>{
                     console.log(error);
                     swal.close();
                     this.showErrorMessage();
+                    this.router.navigate(['/sisdoc/documento']);
                 })
         } else {
             //INSERINDO
@@ -60,11 +64,13 @@ export class DocumentoService {
                     console.log(data);
                     swal.close();
                     this.showSavedMessage(tipo);
+                    this.router.navigate(['/sisdoc/documento']);
                     
                 }).catch(error =>{
                     console.log(error);
                     swal.close();
                     this.showErrorMessage();
+                    this.router.navigate(['/sisdoc/documento']);
                 })
         }
 
@@ -111,11 +117,11 @@ export class DocumentoService {
 
 
     showSavedMessage(tipo){
-        swal.fire('Registro Salvo', 'Um novo' + tipo + 'foi criado com sucesso', 'success');
+        swal.fire('Registro Salvo', 'Um novo ' + tipo + ' foi criado com sucesso', 'success');
     }
 
     showEditedMessage(tipo){
-        swal.fire('Registro Salvo', tipo + 'editado sucesso', 'success');
+        swal.fire('Registro Salvo ', tipo + ' editado sucesso', 'success');
     }
 
     showDeletedMessage(){
