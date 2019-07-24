@@ -93,8 +93,7 @@ export class DocumentoComponent implements OnInit {
     });
 
     this.documentoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
-          console.log(data);
-
+          
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
 
@@ -153,6 +152,47 @@ export class DocumentoComponent implements OnInit {
     }).catch(error =>{
       console.log(error);
     });
+  }
+
+  deletar(id){
+
+    Swal.fire({
+      title: 'Tem certeza, que deseja deletar este registro?',
+      text: "Esta operação não pode ser desfeita",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!',
+      cancelButtonText: 'Não'
+    }).then((result) => {
+
+      //Delete apenas se usuario clicar em sim
+      if(result.dismiss != Swal.DismissReason.cancel){
+        this.documentoService.deletar(id).then(data => {
+            
+          Swal.close();
+          this.documentoService.showDeletedMessage();
+          this.pesquisaAposDelecao();
+          
+      }).catch(error =>{
+          console.log(error);
+          Swal.close();
+          this.documentoService.showErrorMessage();
+      });
+      }
+    });
+
+  }
+
+  pesquisaAposDelecao(){
+    if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
+      if((this.paginator.totalElements % this.paginator.size) == 1){
+        this.pesquisar(this.paginator.currentPage - 1);
+      }
+    } else {
+      this.pesquisar(this.paginator.currentPage);
+    }
   }
 
   fillTipoDocLit(){

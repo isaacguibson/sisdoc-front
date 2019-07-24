@@ -41,7 +41,6 @@ export class CargoAddComponent implements OnInit {
       this.cargo = this.newCargo();
     }
 
-    console.log(this.cargo);
   }
 
   newCargo(){
@@ -60,14 +59,12 @@ export class CargoAddComponent implements OnInit {
 
   loadListSetores(){
     this.setorService.listAll().then(data => {
-      console.log(data);
+      
       this.listSetores = data;
     });
   }
 
   salvar(){
-
-    console.log(this.cargo);
 
     this.cargoService.save(this.cargo);
 

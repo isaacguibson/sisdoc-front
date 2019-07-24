@@ -16,6 +16,17 @@ export class DocumentoService {
           
     }
 
+    showLoad(){
+        swal.fire({
+            title: 'Aguarde...',
+            onBeforeOpen: () => {
+              swal.showLoading();
+            },
+            allowOutsideClick: false,
+            showConfirmButton: false
+          });
+    }
+
     save(documento, tipo){
 
 
@@ -42,7 +53,6 @@ export class DocumentoService {
                 })
                 .toPromise()
                 .then(data => {
-                    console.log(data);
                     swal.close();
                     this.showEditedMessage(tipo);
                     this.router.navigate(['/sisdoc/documento']);
@@ -61,7 +71,6 @@ export class DocumentoService {
                 })
                 .toPromise()
                 .then(data => {
-                    console.log(data);
                     swal.close();
                     this.showSavedMessage(tipo);
                     this.router.navigate(['/sisdoc/documento']);
@@ -89,6 +98,16 @@ export class DocumentoService {
             }).toPromise();
     }
 
+    deletar(id){
+
+        this.showLoad();
+
+        return this.httpClient.delete(this.apiUrl+'documento/'+id,
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        })
+        .toPromise();
+    }
 
     download(idTipoDocumento, idDocumento){
 

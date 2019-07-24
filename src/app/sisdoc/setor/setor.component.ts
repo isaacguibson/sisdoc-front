@@ -68,7 +68,7 @@ export class SetorComponent implements OnInit {
     });
 
     this.setorService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
-          
+          console.log(data);
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
 
@@ -80,7 +80,7 @@ export class SetorComponent implements OnInit {
 
           Swal.close();
       }).catch(error =>{
-          // console.log(error);
+          console.log(error);
           this.contentList = [];
           Swal.close();
       })
@@ -131,9 +131,9 @@ export class SetorComponent implements OnInit {
   }
 
   pesquisaAposDelecao(){
-    console.log(this.paginator);
     if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
       if((this.paginator.totalElements % this.paginator.size) == 1){
+        console.log("AQUIIII");
         this.pesquisar(this.paginator.currentPage - 1);
       }
     } else {

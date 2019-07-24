@@ -115,9 +115,29 @@ export class CargoComponent implements OnInit {
 
       //Delete apenas se usuario clicar em sim
       if(result.dismiss != Swal.DismissReason.cancel){
-        this.cargoService.deletar(id);
+        this.cargoService.deletar(id).then(data => {
+            
+          Swal.close();
+          // this.cargoService.showDeletedMessage();
+          Swal.fire('Registro deletado', 'Operação de deleção realizada com sucesso', 'success');
+          this.pesquisaAposDelecao();
+          
+      }).catch(error =>{
+          Swal.close();
+          this.cargoService.showErrorMessage();
+      });
       }
     });
 
+  }
+
+  pesquisaAposDelecao(){
+    if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
+      if((this.paginator.totalElements % this.paginator.size) == 1){
+        this.pesquisar(this.paginator.currentPage - 1);
+      }
+    } else {
+      this.pesquisar(this.paginator.currentPage);
+    }
   }
 }

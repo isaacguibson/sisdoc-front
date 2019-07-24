@@ -44,7 +44,6 @@ export class CargoService {
                 })
                 .toPromise()
                 .then(data => {
-                    console.log(data);
                     swal.close();
                     this.showEditedMessage();
                     
@@ -61,7 +60,6 @@ export class CargoService {
                 })
                 .toPromise()
                 .then(data => {
-                    console.log(data);
                     swal.close();
                     this.showSavedMessage();
                     
@@ -80,21 +78,11 @@ export class CargoService {
 
         this.showLoad();
 
-        this.httpClient.delete(this.apiUrl+'cargo/'+id,
+        return this.httpClient.delete(this.apiUrl+'cargo/'+id,
         {headers:
             {'Authorization':localStorage.getItem("token")}
         })
-        .toPromise()
-        .then(data => {
-            console.log(data);
-            swal.close();
-            this.showDeletedMessage();
-            
-        }).catch(error =>{
-            console.log(error);
-            swal.close();
-            this.showErrorMessage();
-        })
+        .toPromise();
     }
 
     get(id){

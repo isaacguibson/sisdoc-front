@@ -44,7 +44,6 @@ export class SetorService {
                 })
                 .toPromise()
                 .then(data => {
-                    console.log(data);
                     swal.close();
                     this.showEditedMessage();
                     
@@ -61,7 +60,6 @@ export class SetorService {
                 })
                 .toPromise()
                 .then(data => {
-                    console.log(data);
                     swal.close();
                     this.showSavedMessage();
                     
@@ -71,9 +69,6 @@ export class SetorService {
                     this.showErrorMessage();
                 })
         }
-        
-        
-
     }
 
     deletar(id){
