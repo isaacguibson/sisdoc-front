@@ -63,7 +63,7 @@ const routes: Routes = [
         component: CargoAddComponent
       },
       
-      { path: 'tipo-documento', 
+      { path: 'tipo-doc', 
         component: TipoDocumentoComponent
       }
     ]

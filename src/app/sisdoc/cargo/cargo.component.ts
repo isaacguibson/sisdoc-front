@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 //Services
 import { CargoService } from '../../../services/cargo.service'
+import { SetorService } from '../../../services/setor.service';
 
 // Interfaces
 import { Cargo } from '../../../models/cargo.model'
@@ -23,12 +24,14 @@ export class CargoComponent implements OnInit {
   cargo: Cargo;
   searchResult = null;
   contentList = [];
+  listSetores;
 
   paginator = null;
 
   constructor(
     public httpClient: HttpClient,
     public cargoService: CargoService,
+    public setorService :SetorService,
     public paginatorService: PaginatorService,
     public router: Router
   ) { 
@@ -50,6 +53,7 @@ export class CargoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadListSetores();
   }
 
   adicionarNovo(){
@@ -73,7 +77,7 @@ export class CargoComponent implements OnInit {
           
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
-
+          
           this.paginator 
             = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
                                                   this.searchResult['totalElements'],
@@ -118,8 +122,6 @@ export class CargoComponent implements OnInit {
         this.cargoService.deletar(id).then(data => {
             
           Swal.close();
-          // this.cargoService.showDeletedMessage();
-          Swal.fire('Registro deletado', 'Operação de deleção realizada com sucesso', 'success');
           this.pesquisaAposDelecao();
           
       }).catch(error =>{
@@ -132,12 +134,45 @@ export class CargoComponent implements OnInit {
   }
 
   pesquisaAposDelecao(){
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+
     if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
       if((this.paginator.totalElements % this.paginator.size) == 1){
-        this.pesquisar(this.paginator.currentPage - 1);
+
+        this.paginator.currentPage = this.paginator.currentPage - 1;
       }
-    } else {
-      this.pesquisar(this.paginator.currentPage);
     }
+
+    this.cargoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
+          
+      this.searchResult = data;
+      this.contentList = this.searchResult['content'];
+
+        this.paginator 
+          = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
+                                              this.searchResult['totalElements'],
+                                              this.paginator.currentPage,
+                                              this.paginator.size);
+        Swal.close();
+        this.cargoService.showDeletedMessage();
+    }).catch(error =>{
+        
+        this.contentList = [];
+    });
+  }
+
+  loadListSetores(){
+    this.setorService.listAll().then(data => {
+      
+      this.listSetores = data;
+    });
   }
 }

@@ -72,7 +72,7 @@ export class DocumentoComponent implements OnInit {
       var value = element['options'][element['selectedIndex']].value;
 
       switch (value) {
-        case '1':
+        case '1': //Oficio
           this.router.navigate(['/sisdoc/oficio-add']);
           break;
       }
@@ -172,11 +172,9 @@ export class DocumentoComponent implements OnInit {
         this.documentoService.deletar(id).then(data => {
             
           Swal.close();
-          this.documentoService.showDeletedMessage();
           this.pesquisaAposDelecao();
           
       }).catch(error =>{
-          console.log(error);
           Swal.close();
           this.documentoService.showErrorMessage();
       });
@@ -186,13 +184,38 @@ export class DocumentoComponent implements OnInit {
   }
 
   pesquisaAposDelecao(){
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+
     if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
       if((this.paginator.totalElements % this.paginator.size) == 1){
-        this.pesquisar(this.paginator.currentPage - 1);
+        this.paginator.currentPage = this.paginator.currentPage - 1;
       }
-    } else {
-      this.pesquisar(this.paginator.currentPage);
     }
+
+    this.documentoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
+          
+      this.searchResult = data;
+      this.contentList = this.searchResult['content'];
+
+        this.paginator 
+          = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
+                                              this.searchResult['totalElements'],
+                                              this.paginator.currentPage,
+                                              this.paginator.size);
+        Swal.close();
+        this.documentoService.showDeletedMessage();
+    }).catch(error =>{
+        
+        this.contentList = [];
+    });
   }
 
   fillTipoDocLit(){

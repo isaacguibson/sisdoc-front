@@ -13703,7 +13703,7 @@ input:focus {
       padding: 16px 35px;
       white-space: nowrap;
       height: 52px;
-      color: #4a4a4a; }
+      color: #4a4a4a; /**/ }
       .sidebar .nav .nav-item .nav-link i.menu-arrow {
         margin-left: auto;
         margin-right: 0;
@@ -13755,7 +13755,7 @@ input:focus {
       .sidebar .nav .nav-item .nav-link:hover {
         color: #3d3d3d; }
     .sidebar .nav .nav-item.active > .nav-link {
-      color: #308ee0; }
+      color: #E80909; /*#308EE0*/}
       .sidebar .nav .nav-item.active > .nav-link .menu-title,
       .sidebar .nav .nav-item.active > .nav-link i {
         color: inherit; }
@@ -13786,8 +13786,13 @@ input:focus {
           .sidebar .nav .nav-item.nav-profile .nav-link .user-wrapper .text-wrapper .designation {
             margin-right: 3px; }
     .sidebar .nav:not(.sub-menu) > .nav-item:hover:not(.nav-profile) > .nav-link {
-      background: #fafbfc;
-      color: #4a4a4a; }
+      background: #E80909; /*#fafbfc*/
+      color: #ffffff; /*#4a4a4a*/
+    }
+    .sidebar .nav:not(.sub-menu) > .nav-item:hover:not(.nav-profile) > .nav-link > .menu-icon{
+      background: #E80909; /*#fafbfc*/
+      color: #ffffff; /*#4a4a4a*/
+    }
     .sidebar .nav.sub-menu {
       margin-bottom: 0;
       padding: 0 0 0 4rem; }
@@ -13822,7 +13827,7 @@ input:focus {
       .sidebar-dark .sidebar .nav .nav-item .nav-link i.menu-arrow:before {
         color: rgba(160, 160, 160, 0.5); }
     .sidebar-dark .sidebar .nav .nav-item .nav-link:hover {
-      color: #939393; }
+      color: #939393; /*939393*/ }
   .sidebar-dark .sidebar .nav .nav-item.nav-profile .profile-name .name {
     color: #404852; }
   .sidebar-dark .sidebar .nav .nav-item.nav-profile .profile-name .designation {
@@ -13870,7 +13875,7 @@ input:focus {
 /* Navbar */
 .navbar.default-layout {
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(120deg, #00e4d0, #5983e8);
+  background: linear-gradient(120deg, #72C260, #4C9C3A);
   transition: background 0.25s ease;
   -webkit-transition: background 0.25s ease;
   -moz-transition: background 0.25s ease;
@@ -14206,7 +14211,7 @@ html {
 .main-panel {
   transition: width 0.25s ease, margin 0.25s ease;
   width: calc(100% - 255px);
-  background: #bcd5da;
+  background: #E3E3E3; /*bcd5da*/
   min-height: calc(100vh - 63px);
   display: -webkit-flex;
   display: flex;
@@ -14218,7 +14223,7 @@ html {
       width: 100%; } }
 
 .content-wrapper {
-  background: #bcd5da;
+  background: #E3E3E3; /*bcd5da*/
   padding: 1.5rem 1.7rem;
   width: 100%;
   -webkit-flex-grow: 1;

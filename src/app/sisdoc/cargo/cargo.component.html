@@ -13,8 +13,23 @@
             <div class="card-body">
               <div class="forms-sample">
                 <div class="form-group">
-                    <label for="exampleInputName1">Nome</label>
-                    <input type="text" class="form-control" placeholder="Nome">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="exampleInputName1">Código</label>
+                            <input type="text" class="form-control" placeholder="Código">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="exampleInputName1">Nome</label>
+                            <input type="text" class="form-control" placeholder="Nome">
+                        </div>
+                        <div class="col-md-4">
+                            <label>Setor</label>
+                            <select class="form-control custom-select" [(ngModel)]="cargo.setorId">
+                              <option value="null">Selecione</option>
+                              <option *ngFor="let item of listSetores" value="{{item.id}}">{{item.nome}}</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <button (click)="pesquisar(0)" class="btn btn-info mr-2">Pesquisar</button>
                 <button (click)="adicionarNovo()" class="btn btn-success">Adicionar +</button>
@@ -48,7 +63,8 @@
                 <thead class="thead">
                   <tr>
                     <th scope="col">Código</th>
-                    <th scope="col">Nome</th>
+                    <th scope="col">Cargo</th>
+                    <th scope="col">Setor</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
@@ -56,6 +72,7 @@
                   <tr *ngFor="let item of contentList">
                     <td scope="row">{{item.id}}</td>
                     <td>{{item.nome}}</td>
+                    <td>{{item.setor.nome}}</td>
                     <td>
                         <button class="btn btn-sm btn-info" style="padding: 1px; text-align: center; margin-right: 4%" (click)="editar(item.id)">
                             <i class="mdi mdi-tooltip-edit" style="margin: 0; text-align: center;"></i>

@@ -56,8 +56,6 @@ export class PaginatorService {
         if(paginator.currentPage - 2 >= 0){
             paginator.previousPrevPage = paginator.currentPage - 2;
         }
-
-        console.log(paginator);
         return paginator;
     }
 

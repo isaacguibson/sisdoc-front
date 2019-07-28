@@ -11,6 +11,7 @@ import { DocumentoService } from '../services/documento.service';
 import { PaginatorService } from '../services/paginator.service';
 import { SetorService } from 'src/services/setor.service';
 import { CargoService } from 'src/services/cargo.service';
+import { UsuarioService } from 'src/services/usuario.service';
 import { TipoDocumentoService } from 'src/services/tipo-documento.service';
 import { AuthGuardService } from 'src/services/auth-guard.service';
 import { AuthService } from 'src/services/auth.service';
@@ -69,6 +70,7 @@ import { CargoAddComponent } from './sisdoc/cargo/add/add.component';
     DocumentoService,
     CargoService,
     SetorService,
+    UsuarioService,
     TipoDocumentoService,
     AuthGuardService,
     AuthService,

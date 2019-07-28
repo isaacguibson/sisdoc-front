@@ -40,6 +40,11 @@ export class LoginService {
                 localStorage.setItem("token", data['JWT']);
 
                 localStorage.setItem("userId", data['usuario']["id"]);
+                localStorage.setItem("userEmail", data['usuario']["email"]);
+                localStorage.setItem("userName", data['usuario']["nome"]);
+                localStorage.setItem("userTreatment", data['usuario']["tratamento"]);
+                localStorage.setItem("userOffice", data['usuario']["cargo"]);
+                localStorage.setItem("userDepartment", data['usuario']["setor"]);
 
                 this.router.navigate(['/sisdoc/dashboard']);
             })

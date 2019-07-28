@@ -13,8 +13,16 @@
               <div class="card-body">
                 <div class="forms-sample">
                   <div class="form-group">
-                      <label for="exampleInputName1">Nome</label>
-                      <input type="text" class="form-control" placeholder="Nome">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <label for="exampleInputName1">Código</label>
+                              <input type="text" class="form-control" placeholder="Código">
+                          </div>
+                          <div class="col-md-6">
+                              <label for="exampleInputName1">Nome</label>
+                              <input type="text" class="form-control" placeholder="Nome">
+                          </div>
+                      </div>
                   </div>
                   <button (click)="pesquisar(0)" class="btn btn-info mr-2">Pesquisar</button>
                   <button (click)="adicionarNovo()" class="btn btn-success">Adicionar +</button>

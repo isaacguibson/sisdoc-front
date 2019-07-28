@@ -2,10 +2,10 @@
   <!-- partial:partials/_navbar.html -->
   <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-      <a class="navbar-brand brand-logo" routerLink="/dashboard">
+      <a class="navbar-brand brand-logo" href="sisdoc/dashboard">
         <img src="./assets/images/logo.svg" alt="logo" />
       </a>
-      <a class="navbar-brand brand-logo-mini" routerLink="/dashboard">
+      <a class="navbar-brand brand-logo-mini" href="sisdoc/dashboard">
         <img src="./assets/images/logo-mini.svg" alt="logo" />
       </a>
     </div>
@@ -138,7 +138,7 @@
         </li> -->
         <li class="nav-item dropdown d-none d-xl-inline-block">
           <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-            <span class="profile-text">Bem vindo, Supremo</span>
+            <span class="profile-text">Bem vindo, {{usuario.nome}}</span>
             <img class="img-xs rounded-circle" src="./assets/images/faces/face1.jpg" alt="Profile image">
           </a>
           <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
@@ -187,9 +187,9 @@
                 <img src="./assets/images/faces/face1.jpg" alt="profile image">
               </div>
               <div class="text-wrapper">
-                <p class="profile-name">Supremo</p>
+                <p class="profile-name">{{usuario.nomeCargo}}</p>
                 <div>
-                  <small class="designation text-muted">Supremo</small>
+                  <small class="designation text-muted">{{usuario.nomeSetor}}</small>
                   <span class="status-indicator online"></span>
                 </div>
               </div>
@@ -201,31 +201,31 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="sisdoc/dashboard">
-            <i class="menu-icon mdi mdi-television"></i>
+            <i class="menu-icon mdi mdi-home"></i>
             <span class="menu-title">Home</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="sisdoc/documento">
-            <i class="menu-icon mdi mdi-television"></i>
+            <i class="menu-icon mdi mdi-file-document-box"></i>
             <span class="menu-title">Documento</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="sisdoc/setor">
-            <i class="menu-icon mdi mdi-television"></i>
+            <i class="menu-icon mdi mdi-library"></i>
             <span class="menu-title">Setor</span>
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="sisdoc/cargo">
-            <i class="menu-icon mdi mdi-television"></i>
+            <i class="menu-icon mdi mdi-tie"></i>
             <span class="menu-title">Cargo</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="sisdoc/tipo-documento">
-            <i class="menu-icon mdi mdi-television"></i>
+          <a class="nav-link" href="sisdoc/tipo-doc">
+            <i class="menu-icon mdi mdi-library-books"></i>
             <span class="menu-title">Tipos de Documento</span>
           </a>
         </li>
