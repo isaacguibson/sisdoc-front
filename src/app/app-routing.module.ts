@@ -11,10 +11,11 @@ import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component';
 import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.component';
 import { CargoComponent } from './sisdoc/cargo/cargo.component';
 import { CargoAddComponent } from './sisdoc/cargo/add/add.component';
+import { PerfilComponent } from './sisdoc/perfil/perfil.component';
 
 const routes: Routes = [
-
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  
+  { path: '', redirectTo: 'sisdoc', pathMatch: 'full' },
 
   {
     path: 'login',
@@ -65,6 +66,10 @@ const routes: Routes = [
       
       { path: 'tipo-doc', 
         component: TipoDocumentoComponent
+      },
+
+      { path: 'perfil', 
+        component: PerfilComponent
       }
     ]
     //, canActivate: [AuthGuard]
