@@ -72,7 +72,7 @@ const routes: Routes = [
         component: PerfilComponent
       }
     ]
-    //, canActivate: [AuthGuard]
+    , canActivate: [AuthGuard]
   }
 
 ];

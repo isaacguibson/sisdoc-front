@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 import Swal from 'sweetalert2';
 
 @Injectable()
@@ -11,9 +12,12 @@ export class LoginService {
 
     constructor(
         public httpClient: HttpClient,
+        public auth: AuthService,
         public router: Router
     ) { 
-        
+        if (this.auth.isAuthenticated()) {
+            this.router.navigate(['sisdoc/dashboard']);
+        }
     }
 
     doLogin(loginObject){

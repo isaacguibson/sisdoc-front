@@ -16,7 +16,7 @@
                     <label for="exampleInputName1">Texto</label>
                     <input type="text" class="form-control" placeholder="Nome">
                 </div>
-                <button (click)="pesquisar(0)" class="btn btn-info mr-2">Pesquisar</button>
+                <button (click)="pesquisar(0, 'ambos')" class="btn btn-info mr-2">Pesquisar</button>
                 <button (click)="adicionarNovo()" class="btn btn-success">Adicionar +</button>
               </div>
             </div>
@@ -41,69 +41,171 @@
           </div>
           <div class="card-body">
             
-            <div class="rounded border border-danger not-found-div text-danger" *ngIf="contentList.length == 0">SEM RESULTADOS</div>
+            <div class="rounded border border-danger not-found-div text-danger" 
+                  *ngIf="contentList.length == 0">SEM RESULTADOS</div>
             
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered" *ngIf="contentList.length > 0">
-                  <thead class="thead">
-                    <tr>
-                      <th scope="col">Código</th>
-                      <th scope="col">Identificador</th>
-                      <th scope="col">Tipo</th>
-                      <th scope="col">Data</th>
-                      <th scope="col">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody class="tbody">
-    
-                    <tr *ngFor="let item of contentList">
-                      <td scope="row">{{item.id}}</td>
-                      <td>{{item.identificador}}</td>
-                      <td>{{item.tipoDocumento.nome}}</td>
-                      <td>{{item.dataCriacao | date:"dd/MM/yyyy HH:mm:ss"}}</td>
-                      <td>
-                          <button type="button" class="btn btn-sm btn-outline-info" 
-                                  style="padding: 1px; text-align: center; margin-right: 4%"
-                                  (click)="downloadDocument(item.tipoDocumento.id, item.id, item.tipoDocumento.nome)">
-                              <i class="mdi mdi-file-pdf" style="margin: 0; text-align: center;"></i>
-                          </button>
-                          <button class="btn btn-sm btn-danger" style="padding: 1px; text-align: center;" (click)="deletar(item.id)">
-                              <i class="mdi mdi-delete" style="margin: 0; text-align: center;"></i>
-                          </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <br />
-                <nav aria-label="Page navigation example" *ngIf="contentList.length > 0">
-                  <ul class="pagination justify-content-center">
-                   <li class="page-item">
-                      <a class="page-link" (click)="pesquisar(0)" >Primeira</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" *ngIf="paginator.previousPrevPage != null" (click)="pesquisar(paginator.previousPrevPage)">{{paginator.previousPrevPage + 1}}</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" (click)="pesquisar(paginator.previousPage)" *ngIf="paginator.previousPage != null && paginator.previousPage >= 0">{{paginator.previousPage + 1}}</a>
-                    </li>
-                    <li class="page-item disabled">
-                      <a class="page-link text-primary" tabindex="-1">{{paginator.currentPage + 1}}</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" (click)="pesquisar(paginator.nextPage)" *ngIf="paginator.nextPage">{{paginator.nextPage + 1}}</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" *ngIf="paginator.nextNextPage" (click)="pesquisar(paginator.nextNextPage)">{{paginator.nextNextPage + 1}}</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" (click)="pesquisar(paginator.totalPages - 1)">Última</a>
-                    </li>
-                    <li class="page-item" style="margin-left: 1%;">
-                      <small>página {{paginator.currentPage + 1}} de {{paginator.totalPages}}</small>
-                    </li>
-                  </ul>
-                </nav>
+            <ul class="nav nav-tabs" id="docTab" role="tablist" *ngIf="contentList.length > 0">
+              <li class="nav-item">
+                <a class="nav-link active" id="enviados-tab" data-toggle="tab"
+                  href="#enviados-content" role="tab" aria-controls="enviados-content" 
+                  aria-selected="true">
+                  Enviados
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="recebidos-tab" data-toggle="tab" 
+                  href="#recebidos-content" role="tab" aria-controls="recebidos-content" 
+                  aria-selected="false">
+                  Recebidos
+                </a>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="enviados-content"
+                      role="tabpanel" aria-labelledby="enviados-tab">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered" *ngIf="contentList.length > 0">
+                          <thead class="thead">
+                            <tr>
+                              <th scope="col">Código</th>
+                              <th scope="col">Identificador</th>
+                              <th scope="col">Tipo</th>
+                              <th scope="col">Data</th>
+                              <th scope="col">Ações</th>
+                            </tr>
+                          </thead>
+                          <tbody class="tbody">
+                            <tr *ngFor="let item of contentList">
+                              <td scope="row">{{item.id}}</td>
+                              <td>{{item.identificador}}</td>
+                              <td>{{item.tipoDocumento.nome}}</td>
+                              <td>{{item.dataCriacao | date:"dd/MM/yyyy HH:mm:ss"}}</td>
+                              <td>
+                                  <button type="button" class="btn btn-sm btn-outline-info" 
+                                          style="padding: 1px; text-align: center; margin-right: 4%"
+                                          (click)="downloadDocument(item.tipoDocumento.id, item.id, item.tipoDocumento.nome)">
+                                      <i class="mdi mdi-file-pdf" style="margin: 0; text-align: center;"></i>
+                                  </button>
+                                  <button class="btn btn-sm btn-danger" style="padding: 1px; text-align: center;" (click)="deletar(item.id)">
+                                      <i class="mdi mdi-delete" style="margin: 0; text-align: center;"></i>
+                                  </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <br />
+                        <nav aria-label="Page navigation example" *ngIf="contentList.length > 0">
+                          <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                              <a class="page-link" (click)="pesquisar(0, 'enviados')" >Primeira</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" *ngIf="paginator.previousPrevPage != null" (click)="pesquisar(paginator.previousPrevPage, 'enviados')">{{paginator.previousPrevPage + 1}}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="pesquisar(paginator.previousPage, 'enviados')" *ngIf="paginator.previousPage != null && paginator.previousPage >= 0">{{paginator.previousPage + 1}}</a>
+                            </li>
+                            <li class="page-item disabled">
+                              <a class="page-link text-primary" tabindex="-1">{{paginator.currentPage + 1}}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="pesquisar(paginator.nextPage, 'enviados')" *ngIf="paginator.nextPage">{{paginator.nextPage + 1}}</a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" *ngIf="paginator.nextNextPage" (click)="pesquisar(paginator.nextNextPage, 'enviados')">{{paginator.nextNextPage + 1}}</a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" (click)="pesquisar(paginator.totalPages - 1, 'enviados')">Última</a>
+                            </li>
+                            <li class="page-item" style="margin-left: 1%;">
+                              <small>página {{paginator.currentPage + 1}} de {{paginator.totalPages}}</small>
+                            </li>
+                          </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="recebidos-content" role="tabpanel" 
+                    aria-labelledby="recebidos-tab">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered" *ngIf="contentList.length > 0">
+                          <thead class="thead">
+                            <tr>
+                              <th scope="col">Código</th>
+                              <th scope="col">Identificador</th>
+                              <th scope="col">Tipo</th>
+                              <th scope="col">Data</th>
+                              <th scope="col">Usuario</th>
+                              <th scope="col">Ações</th>
+                            </tr>
+                          </thead>
+                          <tbody class="tbody">
+                            <tr *ngFor="let item of contentReceivedList">
+                              <td scope="row">{{item.id}}</td>
+                              <td>{{item.identificador}}</td>
+                              <td>{{item.tipoDocumento.nome}}</td>
+                              <td>{{item.dataCriacao | date:"dd/MM/yyyy HH:mm:ss"}}</td>
+                              <td>{{item.usuario.nome}}</td>
+                              <td>
+                                  <button type="button" class="btn btn-sm btn-outline-info" 
+                                          style="padding: 1px; text-align: center; margin-right: 4%"
+                                          (click)="downloadDocument(item.tipoDocumento.id, item.id, item.tipoDocumento.nome)">
+                                      <i class="mdi mdi-file-pdf" style="margin: 0; text-align: center;"></i>
+                                  </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <br />
+                        <nav aria-label="Page navigation example" *ngIf="contentList.length > 0">
+                          <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                              <a class="page-link" (click)="pesquisar(0, 'recebidos')" >Primeira</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" *ngIf="paginatorRecebidos.previousPrevPage != null" 
+                                    (click)="pesquisar(paginatorRecebidos.previousPrevPage, 'recebidos')">
+                                    {{paginatorRecebidos.previousPrevPage + 1}}
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" 
+                                  (click)="pesquisar(paginatorRecebidos.previousPage, 'recebidos')" 
+                                  *ngIf="paginatorRecebidos.previousPage != null && paginatorRecebidos.previousPage >= 0">
+                                    {{paginatorRecebidos.previousPage + 1}}
+                                </a>
+                            </li>
+                            <li class="page-item disabled">
+                              <a class="page-link text-primary" tabindex="-1">{{paginatorRecebidos.currentPage + 1}}</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                  (click)="pesquisar(paginatorRecebidos.nextPage, 'recebidos')" 
+                                  *ngIf="paginatorRecebidos.nextPage">
+                                    {{paginatorRecebidos.nextPage + 1}}
+                                </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" *ngIf="paginatorRecebidos.nextNextPage" 
+                                (click)="pesquisar(paginatorRecebidos.nextNextPage, 'recebidos')">
+                                  {{paginatorRecebidos.nextNextPage + 1}}
+                              </a>
+                            </li>
+                            <li class="page-item">
+                              <a class="page-link" 
+                                (click)="pesquisar(paginatorRecebidos.totalPages - 1, 'recebidos')">
+                                  Última
+                              </a>
+                            </li>
+                            <li class="page-item" style="margin-left: 1%;">
+                              <small>página {{paginatorRecebidos.currentPage + 1}} de {{paginatorRecebidos.totalPages}}</small>
+                            </li>
+                          </ul>
+                        </nav>
+                    </div>
+                </div>
             </div>
+            
           </div>
         </div>
   </div>

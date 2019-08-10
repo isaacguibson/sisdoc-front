@@ -23,11 +23,13 @@ export class DocumentoComponent implements OnInit {
   documento: Documento;
   searchResult = null;
   contentList = [];
+  contentReceivedList = [];
 
   tipoDocsList:any = [];
   htmlSelectString = null;
 
   paginator = null;
+  paginatorRecebidos = null;
 
   constructor(
     public httpClient: HttpClient,
@@ -38,6 +40,7 @@ export class DocumentoComponent implements OnInit {
   ) {
     this.documento = this.newDocumento();
     this.paginator = this.paginatorService.newPaginator();
+    this.paginatorRecebidos = this.paginatorService.newPaginator();
    }
 
   ngOnInit() {
@@ -79,9 +82,10 @@ export class DocumentoComponent implements OnInit {
     });
   }
 
-  pesquisar(page){
-
-    this.paginator.currentPage = page;
+  /**
+  * tipoLista: [ambos, enviados, recebidos]
+  */
+  pesquisar(page, tipoLista){
 
     Swal.fire({
       title: 'Aguarde...',
@@ -92,24 +96,23 @@ export class DocumentoComponent implements OnInit {
       showConfirmButton: false
     });
 
-    this.documentoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
-          
-          this.searchResult = data;
-          this.contentList = this.searchResult['content'];
-
-          this.paginator 
-            = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
-                                                  this.searchResult['totalElements'],
-                                                  this.paginator.currentPage,
-                                                  this.paginator.size);
-
-          Swal.close();
-                                                              
-      }).catch(error =>{
-          console.log(error);
-          this.contentList = [];
-          Swal.close();
-      })
+    switch (tipoLista) {
+      case 'ambos':
+        console.log('AMBOS');
+        this.pesquisarEnviados(page);
+        this.pesquisarRecebidos(page);
+        break;
+      case 'enviados':
+        console.log('ENVIADOS');
+        this.pesquisarEnviados(page);
+        break;
+      case 'recebidos':
+        console.log('RECEBIDOS');
+        this.pesquisarRecebidos(page);
+        break;
+      default:
+        Swal.close();
+    }
     
   }
 
@@ -200,22 +203,24 @@ export class DocumentoComponent implements OnInit {
       }
     }
 
-    this.documentoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
-          
-      this.searchResult = data;
-      this.contentList = this.searchResult['content'];
+    this.pesquisarEnviados(this.paginator.currentPage);
 
-        this.paginator 
-          = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
-                                              this.searchResult['totalElements'],
-                                              this.paginator.currentPage,
-                                              this.paginator.size);
-        Swal.close();
-        this.documentoService.showDeletedMessage();
-    }).catch(error =>{
+    // this.documentoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
+          
+    //   this.searchResult = data;
+    //   this.contentList = this.searchResult['content'];
+
+    //     this.paginator 
+    //       = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
+    //                                           this.searchResult['totalElements'],
+    //                                           this.paginator.currentPage,
+    //                                           this.paginator.size);
+    //     Swal.close();
+    //     this.documentoService.showDeletedMessage();
+    // }).catch(error =>{
         
-        this.contentList = [];
-    });
+    //     this.contentList = [];
+    // });
   }
 
   fillTipoDocLit(){
@@ -223,6 +228,60 @@ export class DocumentoComponent implements OnInit {
       this.tipoDocsList = data;
       this.buildHtmlSelect();
     });
+  }
+
+  pesquisarEnviados(page){
+
+    this.paginator.currentPage = page;
+
+    this.documentoService.pesquisarEnviados(this.paginator.currentPage, 
+      this.paginator.size, localStorage.getItem('userId')).then(data => {
+        
+        this.searchResult = data;
+        this.contentList = this.searchResult['content'];
+
+        this.paginator 
+          = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
+                                                this.searchResult['totalElements'],
+                                                this.paginator.currentPage,
+                                                this.paginator.size);
+
+        Swal.close();
+                                                            
+    }).catch(error =>{
+        console.log(error);
+        this.contentList = [];
+        Swal.close();
+    });
+
+  }
+
+  pesquisarRecebidos(page){
+
+    this.paginatorRecebidos.currentPage = page;
+
+    this.documentoService.pesquisarRecebidos(this.paginatorRecebidos.currentPage, 
+      this.paginatorRecebidos.size, localStorage.getItem('userId')).then(data => {
+        
+        this.searchResult = data;
+        this.contentReceivedList = this.searchResult['content'];
+
+        console.log(this.searchResult['content']);
+
+        this.paginatorRecebidos
+          = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
+                                                this.searchResult['totalElements'],
+                                                this.paginatorRecebidos.currentPage,
+                                                this.paginatorRecebidos.size);
+
+        Swal.close();
+                                                            
+    }).catch(error =>{
+        console.log(error);
+        this.contentList = [];
+        Swal.close();
+    });
+
   }
 
   buildHtmlSelect(){

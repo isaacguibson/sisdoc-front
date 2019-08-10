@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Usuario } from 'src/models/usuario.model';
+import {Router} from "@angular/router";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-sisdoc',
@@ -10,7 +12,10 @@ export class SisdocComponent {
 
   usuario :Usuario
 
-  constructor() { 
+  constructor(
+    public router: Router,
+    public location: Location
+  ) { 
 
     this.usuario = this.getUserLogado();
 
@@ -27,6 +32,11 @@ export class SisdocComponent {
       nomeSetor: localStorage.getItem("userDepartment"),
       nomeCargo: localStorage.getItem("userOffice")
     }
+  }
+
+  logout() {
+    localStorage.clear();
+    location.reload();
   }
 
 }

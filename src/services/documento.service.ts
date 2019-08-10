@@ -98,6 +98,32 @@ export class DocumentoService {
             }).toPromise();
     }
 
+    pesquisarEnviados(page, size, userId){
+
+        let apiURLPaginated = this.apiUrl+'documento/from-user/'+userId;
+        if(page != null && size!= null){
+            apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
+        }
+        
+        return this.httpClient.get(apiURLPaginated,
+            {headers:
+                {'Authorization':localStorage.getItem("token")}
+            }).toPromise();
+    }
+
+    pesquisarRecebidos(page, size, userId){
+
+        let apiURLPaginated = this.apiUrl+'documento/to-user/'+userId;
+        if(page != null && size!= null){
+            apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
+        }
+        
+        return this.httpClient.get(apiURLPaginated,
+            {headers:
+                {'Authorization':localStorage.getItem("token")}
+            }).toPromise();
+    }
+
     deletar(id){
 
         this.showLoad();
