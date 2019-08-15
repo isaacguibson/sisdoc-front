@@ -13,8 +13,27 @@
             <div class="card-body">
               <div class="forms-sample">
                 <div class="form-group">
-                    <label for="exampleInputName1">Texto</label>
-                    <input type="text" class="form-control" placeholder="Nome">
+                  <div class="row">
+                    <div class="col-md-3">
+                        <label>Tipo</label>
+                        <select class="custom-select form-control">
+                            <option value="">Selecione</option>
+                            <option value="item.id" *ngFor="let item of tipoDocsList">{{item.nome}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Identificador</label>
+                        <input type="text" class="form-control" placeholder="99/9999">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Data Inicial</label>
+                        <input type="date" class="form-control date" placeholder="00/00/0000">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Data Final</label>
+                        <input type="date" class="form-control date" placeholder="00/00/0000">
+                    </div>
+                  </div>
                 </div>
                 <button (click)="pesquisar(0, 'ambos')" class="btn btn-info mr-2">Pesquisar</button>
                 <button (click)="adicionarNovo()" class="btn btn-success">Adicionar +</button>

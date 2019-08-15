@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
 export class SetorComponent implements OnInit {
 
   setor: Setor;
+  setorSearch: Setor;
   searchResult = null;
   contentList = [];
 
@@ -34,6 +35,7 @@ export class SetorComponent implements OnInit {
   ) {
 
     this.setor = this.newSetor();
+    this.setorSearch = this.newSetor();
     // this.pesquisar();
     this.paginator = this.paginatorService.newPaginator();
    }
@@ -67,7 +69,7 @@ export class SetorComponent implements OnInit {
       showConfirmButton: false
     });
 
-    this.setorService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
+    this.setorService.pesquisar(this.paginator.currentPage, this.paginator.size, this.setorSearch).then(data => {
           console.log(data);
           this.searchResult = data;
           this.contentList = this.searchResult['content'];

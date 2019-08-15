@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { Setor } from '../models/setor.model';
 import swal from 'sweetalert2';
 
 @Injectable()
@@ -97,11 +98,27 @@ export class SetorService {
         }).toPromise();
     }
 
-    pesquisar(page, size){
+    pesquisar(page, size, setor: Setor){
 
         let apiURLPaginated = this.apiUrl+'setor';
         if(page != null && size!= null){
             apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
+        }
+
+        if(setor.id){
+            if(apiURLPaginated.includes('?')){
+                apiURLPaginated = apiURLPaginated + '&id='+setor.id;
+            } else {
+                apiURLPaginated = apiURLPaginated + '?id='+setor.id;
+            }
+        }
+
+        if(setor.nome){
+            if(apiURLPaginated.includes('?')){
+                apiURLPaginated = apiURLPaginated + '&nome='+setor.nome;
+            } else {
+                apiURLPaginated = apiURLPaginated + '?nome='+setor.nome;
+            }
         }
 
         return this.httpClient.get(apiURLPaginated,
