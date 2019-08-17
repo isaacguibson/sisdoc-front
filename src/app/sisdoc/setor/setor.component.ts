@@ -135,7 +135,6 @@ export class SetorComponent implements OnInit {
   pesquisaAposDelecao(){
     if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
       if((this.paginator.totalElements % this.paginator.size) == 1){
-        console.log("AQUIIII");
         this.pesquisar(this.paginator.currentPage - 1);
       }
     } else {

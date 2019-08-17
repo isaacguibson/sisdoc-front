@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { Cargo } from '../models/cargo.model';
 import swal from 'sweetalert2';
 
 @Injectable()
@@ -93,11 +94,23 @@ export class CargoService {
         .toPromise();
     }
 
-    pesquisar(page, size){
+    pesquisar(page, size, cargo: Cargo){
 
-        let apiURLPaginated = this.apiUrl+'cargo';
+        let apiURLPaginated = this.apiUrl+'cargo?';
         if(page != null && size!= null){
-            apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
+            apiURLPaginated = apiURLPaginated + 'page='+page+'&size='+size;
+        }
+
+        if(cargo.id){
+            apiURLPaginated = apiURLPaginated + '&id='+cargo.id;
+        }
+
+        if(cargo.nome !== null && cargo.nome !== ''){
+            apiURLPaginated = apiURLPaginated + '&nome='+cargo.nome;
+        }
+
+        if(cargo.setorId){
+            apiURLPaginated = apiURLPaginated + '&setorId='+cargo.setorId;
         }
 
         return this.httpClient.get(apiURLPaginated,

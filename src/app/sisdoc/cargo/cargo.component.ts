@@ -22,6 +22,7 @@ import Swal from 'sweetalert2';
 export class CargoComponent implements OnInit {
 
   cargo: Cargo;
+  cargoSearch: Cargo;
   searchResult = null;
   contentList = [];
   listSetores;
@@ -37,6 +38,7 @@ export class CargoComponent implements OnInit {
   ) { 
 
     this.cargo = this.newCargo();
+    this.cargoSearch = this.newCargo();
     // this.pesquisar();
     this.paginator = this.paginatorService.newPaginator();
 
@@ -73,7 +75,8 @@ export class CargoComponent implements OnInit {
       showConfirmButton: false
     });
 
-    this.cargoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
+    console.log(this.cargoSearch);
+    this.cargoService.pesquisar(this.paginator.currentPage, this.paginator.size, this.cargoSearch).then(data => {
           
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
@@ -134,39 +137,13 @@ export class CargoComponent implements OnInit {
   }
 
   pesquisaAposDelecao(){
-
-    Swal.fire({
-      title: 'Aguarde...',
-      onBeforeOpen: () => {
-        Swal.showLoading();
-      },
-      allowOutsideClick: false,
-      showConfirmButton: false
-    });
-
     if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
       if((this.paginator.totalElements % this.paginator.size) == 1){
-
-        this.paginator.currentPage = this.paginator.currentPage - 1;
+        this.pesquisar(this.paginator.currentPage - 1);
       }
+    } else {
+      this.pesquisar(this.paginator.currentPage);
     }
-
-    this.cargoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
-          
-      this.searchResult = data;
-      this.contentList = this.searchResult['content'];
-
-        this.paginator 
-          = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
-                                              this.searchResult['totalElements'],
-                                              this.paginator.currentPage,
-                                              this.paginator.size);
-        Swal.close();
-        this.cargoService.showDeletedMessage();
-    }).catch(error =>{
-        
-        this.contentList = [];
-    });
   }
 
   loadListSetores(){

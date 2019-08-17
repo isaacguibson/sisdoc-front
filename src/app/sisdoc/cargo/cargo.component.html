@@ -15,16 +15,16 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="exampleInputName1">Código</label>
-                            <input type="text" class="form-control" placeholder="Código">
+                            <label>Código</label>
+                            <input type="text" class="form-control" placeholder="Código" [(ngModel)]="cargoSearch.id">
                         </div>
                         <div class="col-md-4">
-                            <label for="exampleInputName1">Nome</label>
-                            <input type="text" class="form-control" placeholder="Nome">
+                            <label>Nome</label>
+                            <input type="text" class="form-control" placeholder="Nome" [(ngModel)]="cargoSearch.nome">
                         </div>
                         <div class="col-md-4">
                             <label>Setor</label>
-                            <select class="form-control custom-select" [(ngModel)]="cargo.setorId">
+                            <select class="form-control custom-select" [(ngModel)]="cargoSearch.setorId">
                               <option value="null">Selecione</option>
                               <option *ngFor="let item of listSetores" value="{{item.id}}">{{item.nome}}</option>
                             </select>
