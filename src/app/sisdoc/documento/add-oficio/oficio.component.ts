@@ -37,7 +37,12 @@ export class OficioComponent implements OnInit {
 
   newOficio(): Documento{
     return {
-      conteudo: null
+      id: null,
+      conteudo: null,
+      identificador: null,
+      dataInicial: null,
+      dataFinal: null,
+      tipoDocumentoId: null
     };
   }
 

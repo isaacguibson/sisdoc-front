@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import swal from 'sweetalert2';
+import { TipoDocumento } from 'src/models/tipo-documento.model';
 
 @Injectable()
 export class TipoDocumentoService {
@@ -93,11 +94,19 @@ export class TipoDocumentoService {
         .toPromise();
     }
 
-    pesquisar(page, size){
+    pesquisar(page, size, tipoDocumento:TipoDocumento){
 
-        let apiURLPaginated = this.apiUrl+'tipo_documento';
+        let apiURLPaginated = this.apiUrl+'tipo_documento?';
         if(page != null && size!= null){
-            apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
+            apiURLPaginated = apiURLPaginated + 'page='+page+'&size='+size;
+        }
+
+        if(tipoDocumento.id){
+            apiURLPaginated = apiURLPaginated + '&id='+tipoDocumento.id;
+        }
+
+        if(tipoDocumento.nome !== null && tipoDocumento.nome !== ''){
+            apiURLPaginated = apiURLPaginated + '&nome='+tipoDocumento.nome;
         }
 
         return this.httpClient.get(apiURLPaginated,

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import swal from 'sweetalert2';
 import {Router} from "@angular/router"
+import { Documento } from 'src/models/documento.model';
 
 @Injectable()
 export class DocumentoService {
@@ -98,11 +99,27 @@ export class DocumentoService {
             }).toPromise();
     }
 
-    pesquisarEnviados(page, size, userId){
+    pesquisarEnviados(page, size, userId, documento:Documento){
 
-        let apiURLPaginated = this.apiUrl+'documento/from-user/'+userId;
+        let apiURLPaginated = this.apiUrl+'documento/from-user/'+userId+'?';
         if(page != null && size!= null){
-            apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
+            apiURLPaginated = apiURLPaginated + 'page='+page+'&size='+size;
+        }
+
+        if(documento.identificador !== null && documento.identificador !== ""){
+            apiURLPaginated = apiURLPaginated + '&identificador='+documento.identificador;
+        }
+
+        if(documento.dataInicial !== null){
+            apiURLPaginated = apiURLPaginated + '&dataInicial='+documento.dataInicial;
+        }
+
+        if(documento.dataFinal !== null){
+            apiURLPaginated = apiURLPaginated + '&dataFinal='+documento.dataFinal;
+        }
+
+        if(documento.tipoDocumentoId !== null){
+            apiURLPaginated = apiURLPaginated + '&tipoDocumentoId='+documento.tipoDocumentoId;
         }
         
         return this.httpClient.get(apiURLPaginated,

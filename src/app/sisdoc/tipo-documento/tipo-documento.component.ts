@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
 export class TipoDocumentoComponent implements OnInit {
 
   tipoDocumento: TipoDocumento;
+  tipoDocumentoSearch: TipoDocumento;
   searchResult = null;
   contentList = [];
 
@@ -34,6 +35,7 @@ export class TipoDocumentoComponent implements OnInit {
   ) {
 
     this.tipoDocumento = this.newTipoDocumento();
+    this.tipoDocumentoSearch = this.newTipoDocumento();
 
     this.paginator = this.paginatorService.newPaginator();
 
@@ -68,7 +70,7 @@ export class TipoDocumentoComponent implements OnInit {
       showConfirmButton: false
     });
     
-    this.tipoDocumentoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
+    this.tipoDocumentoService.pesquisar(this.paginator.currentPage, this.paginator.size, this.tipoDocumentoSearch).then(data => {
           
           this.searchResult = data;
           this.contentList = this.searchResult['content'];

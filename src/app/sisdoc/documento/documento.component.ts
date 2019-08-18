@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
 export class DocumentoComponent implements OnInit {
 
   documento: Documento;
+  documentoSearch: Documento;
   searchResult = null;
   contentList = [];
   contentReceivedList = [];
@@ -39,6 +40,7 @@ export class DocumentoComponent implements OnInit {
     public router: Router
   ) {
     this.documento = this.newDocumento();
+    this.documentoSearch = this.newDocumento();
     this.paginator = this.paginatorService.newPaginator();
     this.paginatorRecebidos = this.paginatorService.newPaginator();
    }
@@ -50,7 +52,12 @@ export class DocumentoComponent implements OnInit {
 
   newDocumento(): Documento{
     return {
-      conteudo: null
+      id: null,
+      conteudo: null,
+      identificador: null,
+      dataInicial: null,
+      dataFinal: null,
+      tipoDocumentoId: null
     };
   }
 
@@ -235,7 +242,7 @@ export class DocumentoComponent implements OnInit {
     this.paginator.currentPage = page;
 
     this.documentoService.pesquisarEnviados(this.paginator.currentPage, 
-      this.paginator.size, localStorage.getItem('userId')).then(data => {
+      this.paginator.size, localStorage.getItem('userId'), this.documentoSearch).then(data => {
         
         this.searchResult = data;
         this.contentList = this.searchResult['content'];
