@@ -268,7 +268,7 @@ export class DocumentoComponent implements OnInit {
     this.paginatorRecebidos.currentPage = page;
 
     this.documentoService.pesquisarRecebidos(this.paginatorRecebidos.currentPage, 
-      this.paginatorRecebidos.size, localStorage.getItem('userId')).then(data => {
+      this.paginatorRecebidos.size, localStorage.getItem('userId'), this.documentoSearch).then(data => {
         
         this.searchResult = data;
         this.contentReceivedList = this.searchResult['content'];

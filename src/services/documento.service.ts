@@ -128,11 +128,27 @@ export class DocumentoService {
             }).toPromise();
     }
 
-    pesquisarRecebidos(page, size, userId){
+    pesquisarRecebidos(page, size, userId, documento:Documento){
 
-        let apiURLPaginated = this.apiUrl+'documento/to-user/'+userId;
+        let apiURLPaginated = this.apiUrl+'documento/to-user/'+userId+'?';
         if(page != null && size!= null){
-            apiURLPaginated = apiURLPaginated + '?page='+page+'&size='+size;
+            apiURLPaginated = apiURLPaginated + 'page='+page+'&size='+size;
+        }
+
+        if(documento.identificador !== null && documento.identificador !== ""){
+            apiURLPaginated = apiURLPaginated + '&identificador='+documento.identificador;
+        }
+
+        if(documento.dataInicial !== null){
+            apiURLPaginated = apiURLPaginated + '&dataInicial='+documento.dataInicial;
+        }
+
+        if(documento.dataFinal !== null){
+            apiURLPaginated = apiURLPaginated + '&dataFinal='+documento.dataFinal;
+        }
+
+        if(documento.tipoDocumentoId !== null){
+            apiURLPaginated = apiURLPaginated + '&tipoDocumentoId='+documento.tipoDocumentoId;
         }
         
         return this.httpClient.get(apiURLPaginated,
