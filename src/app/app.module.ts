@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -51,6 +52,7 @@ import { PerfilComponent } from './sisdoc/perfil/perfil.component';
     PerfilComponent
   ],
   imports: [
+    NgSelectModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

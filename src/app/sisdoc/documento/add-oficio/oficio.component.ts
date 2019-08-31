@@ -22,6 +22,17 @@ export class OficioComponent implements OnInit {
 
   documento: Documento;
 
+  cities2 = [
+    {id: 1, name: 'Vilnius'},
+    {id: 2, name: 'Kaunas'},
+    {id: 3, name: 'Pavilnys', disabled: true},
+    {id: 4, name: 'Pabradė'},
+    {id: 5, name: 'Klaipėda'}
+  ];
+
+  selectedCityIds: string[];
+  allUsersSelect = false;
+
   constructor(
     public httpClient: HttpClient,
     public documentoService: DocumentoService,
@@ -53,6 +64,14 @@ export class OficioComponent implements OnInit {
 
   cancelar(){
     this.router.navigate(['/sisdoc/documento']);
+  }
+
+  selectAllUsers(){
+    if(this.allUsersSelect === true){
+
+    } else {
+
+    }
   }
 
 }

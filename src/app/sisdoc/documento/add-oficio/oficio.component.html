@@ -1,6 +1,6 @@
 <div class="content-wrapper">
+    
     <div class="row">
-
       <!-- Inicio do conteudo do documento -->
       <div class="col-lg-12 d-flex align-items-stretch grid-margin">
         <div class="row flex-grow">
@@ -15,6 +15,31 @@
               </div>
               <div class="card-body">
                 <div class="forms-sample">
+
+                  <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="all-users" [(ngModel)]="allUsersSelect" (change)="selectAllUsers()">
+                                <label class="custom-control-label" style="vertical-align: middle" for="all-users">Enviar para todos</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <ng-select [items]="cities2"
+                              bindLabel="name"
+                              bindValue="id"
+                              [multiple]="true"
+                              placeholder="Para quem vai enviar este documento?"
+                              [(ngModel)]="selectedCityIds"
+                              [disabled]="allUsersSelect">
+                           </ng-select>
+                        </div>
+                    </div>
+                  </div>
+                  
                   <div class="form-group add-new-post">
                       <ckeditor [(ngModel)]="documento.conteudo" [editor]="Editor"></ckeditor>
                   </div>

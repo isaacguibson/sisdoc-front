@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@ng-select/ng-select/scss/default.theme.scss",
               "src/styles.css",
               "src/assets/css/login-style.css",
               "src/assets/css/style.css"
