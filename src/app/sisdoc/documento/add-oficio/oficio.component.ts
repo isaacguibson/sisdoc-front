@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Router} from "@angular/router";
+import { UsuarioService } from '../../../../services/usuario.service';
 
 //Services
 import { DocumentoService } from '../../../../services/documento.service'
@@ -22,28 +23,33 @@ export class OficioComponent implements OnInit {
 
   documento: Documento;
 
-  cities2 = [
-    {id: 1, name: 'Vilnius'},
-    {id: 2, name: 'Kaunas'},
-    {id: 3, name: 'Pavilnys', disabled: true},
-    {id: 4, name: 'Pabradė'},
-    {id: 5, name: 'Klaipėda'}
-  ];
+  usersForList;
 
-  selectedCityIds: string[];
+  selectUsersIds: number[];
   allUsersSelect = false;
 
   constructor(
     public httpClient: HttpClient,
     public documentoService: DocumentoService,
-    public router: Router
+    public router: Router,
+    public usuarioService: UsuarioService
   ) {
 
     this.documento = this.newOficio();
+    this.usersForList=[];
+    this.initUsersForList();
    }
 
   ngOnInit() {
     /* ON INIT FUNCTION */
+  }
+
+  initUsersForList(){
+    this.usuarioService.listAllForList().then(result => {
+      this.usersForList = result;
+    }).catch(error => {
+      this.usersForList = error;
+    })
   }
 
   newOficio(): Documento{
@@ -58,7 +64,6 @@ export class OficioComponent implements OnInit {
   }
 
   salvar(){
-
     this.documentoService.save(this.documento, 'oficio');
   }
 
@@ -67,6 +72,7 @@ export class OficioComponent implements OnInit {
   }
 
   selectAllUsers(){
+
     if(this.allUsersSelect === true){
 
     } else {
