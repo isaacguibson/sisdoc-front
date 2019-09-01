@@ -57,7 +57,8 @@ export class DocumentoComponent implements OnInit {
       identificador: null,
       dataInicial: null,
       dataFinal: null,
-      tipoDocumentoId: null
+      tipoDocumentoId: null,
+      destinatariosIds: []
     };
   }
 

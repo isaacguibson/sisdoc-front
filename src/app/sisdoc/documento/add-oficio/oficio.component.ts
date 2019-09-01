@@ -11,6 +11,7 @@ import { Documento } from '../../../../models/documento.model'
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-oficio',
@@ -24,8 +25,6 @@ export class OficioComponent implements OnInit {
   documento: Documento;
 
   usersForList;
-
-  selectUsersIds: number[];
   allUsersSelect = false;
 
   constructor(
@@ -59,11 +58,22 @@ export class OficioComponent implements OnInit {
       identificador: null,
       dataInicial: null,
       dataFinal: null,
-      tipoDocumentoId: null
+      tipoDocumentoId: null,
+      destinatariosIds: []
     };
   }
 
   salvar(){
+  
+    if(this.allUsersSelect === false && this.documento.destinatariosIds.length === 0){
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de escolher pelo menos uma pessoa para enviar este documento.', 'error');
+      return;
+    }
+
+    if (this.allUsersSelect === true){
+      this.documento.destinatariosIds = [];
+    }
+
     this.documentoService.save(this.documento, 'oficio');
   }
 

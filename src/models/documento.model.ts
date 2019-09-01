@@ -5,4 +5,5 @@ export interface Documento{
     dataInicial:Date;
     dataFinal:Date;
     tipoDocumentoId:number;
+    destinatariosIds: [];
 }
