@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 export class LoginService {
 
     apiUrl = environment.apiUrl;
+    htmlSelectString = '';
 
     constructor(
         public httpClient: HttpClient,
@@ -41,16 +42,57 @@ export class LoginService {
                 type: 'success',
                 confirmButtonText: 'OK'
             }).then(value => {
-                localStorage.setItem("token", data['JWT']);
 
-                localStorage.setItem("userId", data['usuario']["id"]);
-                localStorage.setItem("userEmail", data['usuario']["email"]);
-                localStorage.setItem("userName", data['usuario']["nome"]);
-                localStorage.setItem("userTreatment", data['usuario']["tratamento"]);
-                localStorage.setItem("userOffice", data['usuario']["cargo"]);
-                localStorage.setItem("userDepartment", data['usuario']["setor"]);
+                if(data['usuario']['cargos'].length > 1){
+                    this.buildHtmlSelect(data['usuario']['cargos']);
+                    Swal.fire({
+                        title: 'Em qual cargo você deseja se logar?',
+                        type: 'info',
+                        html: this.htmlSelectString,
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        focusConfirm: false,
+                        confirmButtonText:
+                          'OK',
+                        confirmButtonAriaLabel: 'Thumbs up, great!',
+                        cancelButtonText:
+                          'Cancelar',
+                        cancelButtonAriaLabel: 'Thumbs down',
+                      }).then(result => {
+                        
+                        var element = document.getElementById("selectCargo");
+                        var value = element['options'][element['selectedIndex']].value;
 
-                this.router.navigate(['/sisdoc/dashboard']);
+                        if(value != null && value !== '' && value != undefined){
+                            localStorage.setItem("token", data['JWT']);
+                            localStorage.setItem("userId", data['usuario']["id"]);
+                            localStorage.setItem("userEmail", data['usuario']["email"]);
+                            localStorage.setItem("userName", data['usuario']["nome"]);
+                            localStorage.setItem("userTreatment", data['usuario']["tratamento"]);
+                            localStorage.setItem("userOfficeId", data['usuario']['cargos'][value]['cargoId']);
+                            localStorage.setItem("userDepartmentId", data['usuario']['cargos'][value]['setor']['setorId']);
+                            localStorage.setItem("userOffice", data['usuario']['cargos'][value]['cargoNome']);
+                            localStorage.setItem("userDepartment", data['usuario']['cargos'][value]['setor']['setorNome']);
+                        
+                            this.router.navigate(['/sisdoc/dashboard']);
+                        } else {
+                            return;
+                        }
+                    });
+
+                } else {
+                    localStorage.setItem("token", data['JWT']);
+                    localStorage.setItem("userId", data['usuario']["id"]);
+                    localStorage.setItem("userEmail", data['usuario']["email"]);
+                    localStorage.setItem("userName", data['usuario']["nome"]);
+                    localStorage.setItem("userTreatment", data['usuario']["tratamento"]);
+                    localStorage.setItem("userOfficeId", data['usuario']['cargos'][0]['cargoId']);
+                    localStorage.setItem("userDepartmentId", data['usuario']['cargos'][0]['setor']['setorId']);
+                    localStorage.setItem("userOffice", data['usuario']['cargos'][0]['cargoNome']);
+                    localStorage.setItem("userDepartment", data['usuario']['cargos'][0]['setor']['setorNome']);
+                
+                    this.router.navigate(['/sisdoc/dashboard']);
+                }
             })
 
             
@@ -69,6 +111,18 @@ export class LoginService {
         });
 
         return null;
+    }
+
+    buildHtmlSelect(cargoList){
+
+        this.htmlSelectString = '<select id="selectCargo" class="custom-select">';
+        this.htmlSelectString += '<option value="">Selecione</option>';
+    
+        for (let index in cargoList){
+          this.htmlSelectString += '<option value="'+index+'">'+cargoList[index]['cargoNome']+' - '+cargoList[index]['setor']['setorNome']+'</option>';
+        }
+    
+        this.htmlSelectString += '</select>';
     }
 
 }
