@@ -48,7 +48,7 @@ export class DocumentoService {
         
         if(documento.id){
             //EDITANDO
-            this.httpClient.put(this.apiUrl+'documento/'+tipo, documento,
+            this.httpClient.put(this.apiUrl+'documento', documento,
                 {headers:
                     {'Authorization':localStorage.getItem("token")}
                 })
@@ -83,6 +83,16 @@ export class DocumentoService {
                     this.router.navigate(['/sisdoc/documento']);
                 })
         }
+
+    }
+    
+    get(id){
+
+        return this.httpClient.get(this.apiUrl+'documento/'+id,
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        })
+        .toPromise();
 
     }
 

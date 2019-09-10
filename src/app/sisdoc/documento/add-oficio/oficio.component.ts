@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Router} from "@angular/router";
 import { UsuarioService } from '../../../../services/usuario.service';
+import { ActivatedRoute } from "@angular/router";
 
 //Services
 import { DocumentoService } from '../../../../services/documento.service'
@@ -31,10 +32,26 @@ export class OficioComponent implements OnInit {
     public httpClient: HttpClient,
     public documentoService: DocumentoService,
     public router: Router,
-    public usuarioService: UsuarioService
+    public usuarioService: UsuarioService,
+    public activeRoute: ActivatedRoute
   ) {
 
     this.documento = this.newOficio();
+    let id = this.activeRoute.snapshot.paramMap.get("id");
+
+    if(id){
+      this.documentoService.get(id).then(data => {
+
+        console.log(data);
+        this.documento.conteudo = data['conteudo'];
+        this.documento.destinatariosIds = data['destinatariosIds'];
+        this.documento.id = data['id'];
+        
+      });
+    } else {
+
+    }
+    
     this.usersForList=[];
     this.initUsersForList();
    }

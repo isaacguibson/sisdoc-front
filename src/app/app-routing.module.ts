@@ -40,6 +40,10 @@ const routes: Routes = [
         component: OficioComponent
       },
 
+      { path: 'oficio-add/:id', 
+        component: OficioComponent
+      },
+
       { path: 'setor', 
         component: SetorComponent
       },

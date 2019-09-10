@@ -304,4 +304,13 @@ export class DocumentoComponent implements OnInit {
     this.htmlSelectString += '</select>';
   }
 
+  editar(id, tipoDocId){
+
+    //OFICIO
+    if(tipoDocId == 1){
+      this.router.navigate(['/sisdoc/oficio-add/'+id]);
+    }
+
+  }
+
 }
