@@ -193,7 +193,7 @@ export class DocumentoService {
 
     downloadTipo(idDocumento, tipo){
 
-        return this.httpClient.get(this.apiUrl+'documento/'+tipo+'/'+idDocumento,
+        return this.httpClient.get(this.apiUrl+'documento/'+tipo+'/'+idDocumento+'?cargoId='+localStorage.getItem("userOfficeId"),
                     {headers: 
                         {
                             Authorization: localStorage.getItem("token")

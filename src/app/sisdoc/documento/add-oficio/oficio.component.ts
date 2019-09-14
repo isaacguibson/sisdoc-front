@@ -5,7 +5,8 @@ import { UsuarioService } from '../../../../services/usuario.service';
 import { ActivatedRoute } from "@angular/router";
 
 //Services
-import { DocumentoService } from '../../../../services/documento.service'
+import { DocumentoService } from '../../../../services/documento.service';
+import { SetorService } from '../../../../services/setor.service'
 
 // Interfaces
 import { Documento } from '../../../../models/documento.model'
@@ -25,16 +26,24 @@ export class OficioComponent implements OnInit {
 
   documento: Documento;
 
+  objectsForList;
   usersForList;
+  setoresForList;
   allUsersSelect = false;
+  tipoEnvio;
+  placeHoldEnvio;
 
   constructor(
     public httpClient: HttpClient,
     public documentoService: DocumentoService,
+    public setorService: SetorService,
     public router: Router,
     public usuarioService: UsuarioService,
     public activeRoute: ActivatedRoute
   ) {
+
+    this.tipoEnvio = 0;
+    this.placeHoldEnvio = "Escolha o tipo de envio antes de selecionar os destinatários!";
 
     this.documento = this.newOficio();
     let id = this.activeRoute.snapshot.paramMap.get("id");
@@ -44,7 +53,15 @@ export class OficioComponent implements OnInit {
 
         console.log(data);
         this.documento.conteudo = data['conteudo'];
-        this.documento.destinatariosIds = data['destinatariosIds'];
+
+        if(this.documento.enviada === true){
+          this.allUsersSelect = true;
+          this.documento.destinatariosIds = [];
+        } else {
+          this.allUsersSelect = false;
+          this.documento.destinatariosIds = data['destinatariosIds'];
+        }
+        
         this.documento.id = data['id'];
         
       });
@@ -53,7 +70,10 @@ export class OficioComponent implements OnInit {
     }
     
     this.usersForList=[];
+    this.setoresForList = [];
+    this.objectsForList=[];
     this.initUsersForList();
+    
    }
 
   ngOnInit() {
@@ -64,8 +84,16 @@ export class OficioComponent implements OnInit {
     this.usuarioService.listAllForList().then(result => {
       this.usersForList = result;
     }).catch(error => {
-      this.usersForList = error;
+      this.usersForList = [];
     })
+  }
+
+  initSetoresForList(){
+    this.setorService.listAll().then(result => {
+      this.setoresForList = result;
+    }).catch(error => {
+      this.setoresForList = [];
+    });
   }
 
   newOficio(): Documento{
@@ -76,12 +104,21 @@ export class OficioComponent implements OnInit {
       dataInicial: null,
       dataFinal: null,
       tipoDocumentoId: null,
+      enviada: false,
+      mensagemGeral: false,
+      mensagemSetor: false,
+      listSetoresIds: [],
       destinatariosIds: []
     };
   }
 
   salvar(){
   
+    if(this.tipoEnvio === 0 || this.tipoEnvio === "0"){
+      Swal.fire('Oops!', 'Você deve escolher o tipo de envio.', 'error');
+      return;
+    }
+
     if(this.allUsersSelect === false && this.documento.destinatariosIds.length === 0){
       Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de escolher pelo menos uma pessoa para enviar este documento.', 'error');
       return;
@@ -89,6 +126,8 @@ export class OficioComponent implements OnInit {
 
     if (this.allUsersSelect === true){
       this.documento.destinatariosIds = [];
+
+      this.documento.mensagemGeral = true;
     }
 
     this.documentoService.save(this.documento, 'oficio');
@@ -101,8 +140,31 @@ export class OficioComponent implements OnInit {
   selectAllUsers(){
 
     if(this.allUsersSelect === true){
-
+      this.documento.mensagemGeral = true;
     } else {
+      this.documento.mensagemGeral = false;
+    }
+  }
+
+  alterarTipoEnvio(){
+
+    if(this.tipoEnvio === 0 || this.tipoEnvio === "0"){
+
+      this.documento.mensagemSetor = false;
+      this.placeHoldEnvio = "Escolha o tipo de envio antes de selecionar os destinatários!";
+      this.objectsForList = [];
+    
+    } else if (this.tipoEnvio === 1 || this.tipoEnvio === "1"){
+      
+      this.documento.mensagemSetor = false;
+      this.placeHoldEnvio = "Para quem vai enviar este documento?";
+      this.objectsForList = this.usersForList;
+
+    } else if(this.tipoEnvio === 2 || this.tipoEnvio === "2"){
+      
+      this.documento.mensagemSetor = true;
+      this.placeHoldEnvio = "Para onde vai enviar este documento?";
+      this.objectsForList = this.setoresForList;
 
     }
   }

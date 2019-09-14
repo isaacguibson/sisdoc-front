@@ -19,20 +19,31 @@
                   <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="all-users" [(ngModel)]="allUsersSelect" (change)="selectAllUsers()">
-                                <label class="custom-control-label" style="vertical-align: middle" for="all-users">Enviar para todos</label>
-                            </div>
+                            <select class="form-control form-control-sm" [(ngModel)]="tipoEnvio" (change)="alterarTipoEnvio()">
+                               <option value="0">Selecione o tipo de envio</option>
+                               <option value="1">Usuario</option>
+                               <option value="2">Setor</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="col-md-10">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <ng-select [items]="usersForList"
+                            <label class="switch">
+                                <input type="checkbox" [(ngModel)]="allUsersSelect" id="all-users" (change)="selectAllUsers()">
+                                <span class="slider round"></span>
+                            </label>
+                            <label style="vertical-align: sub; margin-left: 8%" for="all-users">Enviar para todos</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <ng-select [items]="objectsForList"
                               bindLabel="nome"
                               bindValue="id"
                               [multiple]="true"
-                              placeholder="Para quem vai enviar este documento?"
+                              placeholder="{{placeHoldEnvio}}"
                               [(ngModel)]="documento.destinatariosIds"
                               [disabled]="allUsersSelect">
                            </ng-select>

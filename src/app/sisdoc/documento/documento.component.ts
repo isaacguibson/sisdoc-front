@@ -58,6 +58,10 @@ export class DocumentoComponent implements OnInit {
       dataInicial: null,
       dataFinal: null,
       tipoDocumentoId: null,
+      enviada: false,
+      mensagemGeral: false,
+      mensagemSetor: false,
+      listSetoresIds: [],
       destinatariosIds: []
     };
   }
@@ -79,14 +83,17 @@ export class DocumentoComponent implements OnInit {
       cancelButtonAriaLabel: 'Thumbs down',
     }).then(result => {
 
-      var element = document.getElementById("selectTipoDoc");
-      var value = element['options'][element['selectedIndex']].value;
+      if(result.value){
+        var element = document.getElementById("selectTipoDoc");
+        var value = element['options'][element['selectedIndex']].value;
 
-      switch (value) {
-        case '1': //Oficio
-          this.router.navigate(['/sisdoc/oficio-add']);
-          break;
+        switch (value) {
+          case '1': //Oficio
+            this.router.navigate(['/sisdoc/oficio-add']);
+            break;
+        }
       }
+      
     });
   }
 
