@@ -47,12 +47,13 @@ export class DocumentoComponent implements OnInit {
 
   ngOnInit() {
     /* ON INIT FUNCTION */
-    this.fillTipoDocLit();
+    this.fillTipoDocList();
   }
 
   newDocumento(): Documento{
     return {
       id: null,
+      assunto: null,
       conteudo: null,
       identificador: null,
       dataInicial: null,
@@ -238,7 +239,7 @@ export class DocumentoComponent implements OnInit {
     // });
   }
 
-  fillTipoDocLit(){
+  fillTipoDocList(){
     this.tipoDocumentoService.listar().then(data => {
       this.tipoDocsList = data;
       this.buildHtmlSelect();

@@ -32,6 +32,7 @@ export class OficioComponent implements OnInit {
   allUsersSelect = false;
   tipoEnvio;
   placeHoldEnvio;
+  id = null;
 
   constructor(
     public httpClient: HttpClient,
@@ -41,38 +42,53 @@ export class OficioComponent implements OnInit {
     public usuarioService: UsuarioService,
     public activeRoute: ActivatedRoute
   ) {
-
+    this.allUsersSelect = false;
     this.tipoEnvio = 0;
     this.placeHoldEnvio = "Escolha o tipo de envio antes de selecionar os destinatários!";
 
     this.documento = this.newOficio();
-    let id = this.activeRoute.snapshot.paramMap.get("id");
+    this.id = this.activeRoute.snapshot.paramMap.get("id");
 
-    if(id){
-      this.documentoService.get(id).then(data => {
+    this.usersForList=[];
+    this.setoresForList = [];
+    this.objectsForList=[];
 
-        console.log(data);
+    if(this.id){
+      this.documentoService.get(this.id).then(data => {
+
+        this.documento.assunto = data['assunto'];
         this.documento.conteudo = data['conteudo'];
+        this.documento.mensagemGeral = data['mensagemGeral'];
+        this.documento.mensagemSetor = data['mensagemSetor'];
 
-        if(this.documento.enviada === true){
+        if(this.documento.mensagemSetor === true){
+          this.tipoEnvio = 2;
+        } else {
+          this.tipoEnvio = 1;
+        }
+
+        console.log(this.tipoEnvio);
+
+        if(this.documento.mensagemGeral === true){
           this.allUsersSelect = true;
           this.documento.destinatariosIds = [];
+          console.log(this.allUsersSelect);
         } else {
-          this.allUsersSelect = false;
           this.documento.destinatariosIds = data['destinatariosIds'];
         }
         
         this.documento.id = data['id'];
+
+        this.initUsersForList();
+        this.initSetoresForList();
+
+        console.log(this.documento);
         
       });
     } else {
-
+      this.initUsersForList();
+      this.initSetoresForList();
     }
-    
-    this.usersForList=[];
-    this.setoresForList = [];
-    this.objectsForList=[];
-    this.initUsersForList();
     
    }
 
@@ -83,6 +99,11 @@ export class OficioComponent implements OnInit {
   initUsersForList(){
     this.usuarioService.listAllForList().then(result => {
       this.usersForList = result;
+
+      if(this.documento.mensagemSetor !== true && this.id != null){
+        this.objectsForList = this.usersForList;
+      }
+
     }).catch(error => {
       this.usersForList = [];
     })
@@ -91,6 +112,11 @@ export class OficioComponent implements OnInit {
   initSetoresForList(){
     this.setorService.listAll().then(result => {
       this.setoresForList = result;
+
+      if(this.documento.mensagemSetor === true){
+        this.objectsForList = this.setoresForList;
+      }
+
     }).catch(error => {
       this.setoresForList = [];
     });
@@ -99,6 +125,7 @@ export class OficioComponent implements OnInit {
   newOficio(): Documento{
     return {
       id: null,
+      assunto: null,
       conteudo: null,
       identificador: null,
       dataInicial: null,

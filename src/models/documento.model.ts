@@ -1,5 +1,6 @@
 export interface Documento{
     id?:number;
+    assunto: string;
     conteudo: string;
     identificador:string;
     dataInicial:Date;
