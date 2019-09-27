@@ -59,9 +59,24 @@
                     </div>
                   </div>
                   
-                  <div class="form-group add-new-post">
-                      <ckeditor [(ngModel)]="documento.conteudo" [editor]="Editor"></ckeditor>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="oficio-editor">
+                        <!--  
+                        <p-editor [(ngModel)]="documento.conteudo" [style]="{'min-height':'300px'}" class="oficio-editor"></p-editor>
+                        -->
+                        <ckeditor [(ngModel)]="documento.conteudo" [editor]="Editor"></ckeditor>
+                      </div>
+                    </div>
                   </div>
+                  <!--
+                  <div class="form-group add-new-post oficio-editor">
+                    
+                      <ckeditor [(ngModel)]="documento.conteudo" [editor]="Editor"></ckeditor>
+                    
+                    <p-editor [(ngModel)]="documento.conteudo" [style]="{'min-height':'300px'}" class="oficio-editor"></p-editor>
+                  </div>
+                  -->
                   <button (click)="salvar()" class="btn btn-success mr-2">Salvar</button>
                   <button class="btn btn-light" (click)="cancelar()">Cancelar</button>
                 </div>

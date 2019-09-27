@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {EditorModule} from 'primeng/editor';
+
 // SERVICES
 import { LoginService } from 'src/services/login.service';
 import { DocumentoService } from '../services/documento.service';
@@ -54,8 +57,10 @@ import { PerfilComponent } from './sisdoc/perfil/perfil.component';
   imports: [
     NgSelectModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    EditorModule,
 
     /* TEXT EDITOR */ CKEditorModule,
 

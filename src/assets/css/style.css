@@ -16310,4 +16310,5 @@ ul {
 /* ESTILOS ADICIONADOS PARA O TEMPLATE*/
 .add-new-post {
     min-height: 50%;
+    max-width: 100%;
 }

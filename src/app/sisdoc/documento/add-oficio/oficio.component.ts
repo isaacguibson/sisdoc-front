@@ -12,6 +12,7 @@ import { SetorService } from '../../../../services/setor.service'
 import { Documento } from '../../../../models/documento.model'
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {EditorModule} from 'primeng/editor';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 import Swal from 'sweetalert2';
 
