@@ -1,4 +1,9 @@
 <div class="content-wrapper">
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
 
   <div class="row">
 
@@ -35,7 +40,7 @@
                     </div>
                   </div>
                 </div>
-                <button (click)="pesquisar(0, 'ambos')" class="btn btn-info mr-2">Pesquisar</button>
+                <button (click)="pesquisar(0, 'ambos')" class="btn btn-primary mr-2">Pesquisar</button>
                 <button (click)="adicionarNovo()" class="btn btn-success">Adicionar +</button>
               </div>
             </div>
@@ -101,15 +106,25 @@
                               <td>{{item.tipoDocumento.nome}}</td>
                               <td>{{item.dataCriacao | date:"dd/MM/yyyy HH:mm:ss"}}</td>
                               <td>
-                                  <button type="button" class="btn btn-sm btn-outline-info" 
+                                  <button type="button" class="btn btn-sm btn-outline-info" data-toggle="tooltip" title="Download"
                                           style="padding: 1px; text-align: center; margin-right: 4%"
                                           (click)="downloadDocument(item.tipoDocumento.id, item.id, item.tipoDocumento.nome)">
                                       <i class="mdi mdi-file-pdf" style="margin: 0; text-align: center;"></i>
                                   </button>
-                                  <button class="btn btn-sm btn-info" style="padding: 1px; text-align: center; margin-right: 4%" (click)="editar(item.id, item.tipoDocumento.id)">
+                                  <button class="btn btn-sm btn-info" style="padding: 1px; text-align: center; margin-right: 4%"
+                                          (click)="editar(item.id, item.tipoDocumento.id)" data-toggle="tooltip" title="Editar">
                                     <i class="mdi mdi-tooltip-edit" style="margin: 0; text-align: center;"></i>
                                   </button>
-                                  <button class="btn btn-sm btn-danger" style="padding: 1px; text-align: center;" (click)="deletar(item.id)">
+                                  <button *ngIf="!item.enviada" class="btn btn-sm btn-primary" style="padding: 1px; text-align: center; margin-right: 4%"
+                                          data-toggle="tooltip" title="Enviar" (click)="enviar(item.id)">
+                                    <i class="mdi mdi-telegram" style="margin: 0; text-align: center;"></i>
+                                  </button>
+                                  <button *ngIf="item.enviada" class="btn btn-sm btn-primary" style="padding: 1px; text-align: center; margin-right: 4%"
+                                          data-toggle="tooltip" title="Cancelar Envio" (click)="cancelarEnvio(item.id)">
+                                    <i class="mdi mdi-close-circle-outline" style="margin: 0; text-align: center;"></i>
+                                  </button>
+                                  <button class="btn btn-sm btn-danger" style="padding: 1px; text-align: center;"
+                                          (click)="deletar(item.id)" data-toggle="tooltip" title="Deletar">
                                       <i class="mdi mdi-delete" style="margin: 0; text-align: center;"></i>
                                   </button>
                               </td>

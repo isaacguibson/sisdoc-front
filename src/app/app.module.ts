@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {EditorModule} from 'primeng/editor';
+import { QuillModule } from 'ngx-quill';
 
 // SERVICES
 import { LoginService } from 'src/services/login.service';
@@ -61,6 +62,7 @@ import { PerfilComponent } from './sisdoc/perfil/perfil.component';
     AppRoutingModule,
     FormsModule,
     EditorModule,
+    QuillModule.forRoot(),
 
     /* TEXT EDITOR */ CKEditorModule,
 

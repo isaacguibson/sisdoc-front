@@ -321,4 +321,34 @@ export class DocumentoComponent implements OnInit {
 
   }
 
+  enviar(id){
+    Swal.showLoading();
+
+    this.documentoService.enviar(id).then(response => {
+      
+      if(response == true){
+        this.contentList.find(x => x.id == id).enviada=true;
+      }
+
+      Swal.close();
+    }).catch(erro => {
+      Swal.close();
+    });
+  }
+
+  cancelarEnvio(id){
+    Swal.showLoading();
+    
+    this.documentoService.cancelarEnvio(id).then(response => {
+      
+      if(response == true){
+        this.contentList.find(x => x.id == id).enviada=false;
+      }
+
+      Swal.close();
+    }).catch(erro => {
+      Swal.close();
+    });
+  }
+
 }

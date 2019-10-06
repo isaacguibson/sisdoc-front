@@ -178,6 +178,22 @@ export class DocumentoService {
         .toPromise();
     }
 
+    enviar(id){
+        return this.httpClient.put(this.apiUrl+'documento/send/'+id, null,
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        })
+        .toPromise();
+    }
+
+    cancelarEnvio(id){
+        return this.httpClient.put(this.apiUrl+'documento/cancelsend/'+id, null,
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        })
+        .toPromise();
+    }
+
     download(idTipoDocumento, idDocumento){
 
         switch (idTipoDocumento) {
