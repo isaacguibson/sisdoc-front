@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://ec2-18-217-191-119.us-east-2.compute.amazonaws.com:8082/sisdoc-0.0.1-SNAPSHOT/',
+  apiUrl: 'http://ec2-18-190-131-55.us-east-2.compute.amazonaws.com:8082/sisdoc-0.0.1-SNAPSHOT/',
   appName: 'Sistema de Gerenciamento de Documentos',
   appAlias: 'sisdoc',
   appUUID: 'ea393197-8ef3-4298-82b6-b03a46080518'
