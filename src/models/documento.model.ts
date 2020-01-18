@@ -1,3 +1,5 @@
+import { GenericListObject } from './generic-list-object.model';
+
 export interface Documento{
     id?:number;
     assunto: string;
@@ -11,4 +13,9 @@ export interface Documento{
     mensagemSetor: boolean; //indica se eh uma mensagem para setores
     listSetoresIds: [];
     destinatariosIds: [];
+    requerido: number;
+    vinculo: number;
+    rotinas: number[];
+    outrasRotinas: GenericListObject[];
+    informacoes: GenericListObject[];
 }

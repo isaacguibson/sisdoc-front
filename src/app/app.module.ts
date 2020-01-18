@@ -39,6 +39,10 @@ import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component';
 import { CargoComponent } from './sisdoc/cargo/cargo.component';
 import { CargoAddComponent } from './sisdoc/cargo/add/add.component';
 import { PerfilComponent } from './sisdoc/perfil/perfil.component';
+import { AddPortariaComponent } from './sisdoc/documento/add-portaria/add-portaria.component';
+import { AddDeclaracaoComponent } from './sisdoc/documento/add-declaracao/add-declaracao.component';
+import { AddDespachoComponent } from './sisdoc/documento/add-despacho/add-despacho.component';
+import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/add-requerimento.component';
 
 @NgModule({
   
@@ -53,7 +57,11 @@ import { PerfilComponent } from './sisdoc/perfil/perfil.component';
     OficioComponent,
     CargoComponent,
     CargoAddComponent,
-    PerfilComponent
+    PerfilComponent,
+    AddPortariaComponent,
+    AddDeclaracaoComponent,
+    AddDespachoComponent,
+    AddRequerimentoComponent
   ],
   imports: [
     NgSelectModule,

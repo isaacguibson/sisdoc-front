@@ -22,7 +22,7 @@
                     <div class="col-md-3">
                         <label>Tipo</label>
                         <select class="custom-select form-control" [(ngModel)]="documentoSearch.tipoDocumentoId">
-                            <option [ngValue]="">Selecione</option>
+                            <option [ngValue]="null">Selecione</option>
                             <option *ngFor="let item of tipoDocsList" [ngValue]="item.id">{{item.nome}}</option>
                         </select>
                     </div>

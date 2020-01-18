@@ -36,7 +36,7 @@ export class SetorAddComponent implements OnInit {
 
         this.setor.id=data["id"];
         this.setor.nome=data["nome"];
-        
+        this.setor.sigla=data["sigla"];
       });
     } else {
       this.setor = this.newSetor();
@@ -51,7 +51,8 @@ export class SetorAddComponent implements OnInit {
 
     return {
       id: null,
-      nome: null
+      nome: null,
+      sigla: null
     }
 
   }
@@ -62,9 +63,7 @@ export class SetorAddComponent implements OnInit {
     
     this.router.navigate(['/sisdoc/setor']);
   }
-
   
-
   voltar(){
     this.router.navigate(['/sisdoc/setor']);
   }

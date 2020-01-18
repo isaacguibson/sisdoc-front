@@ -63,17 +63,14 @@ export class OficioComponent implements OnInit {
         this.documento.mensagemSetor = data['mensagemSetor'];
 
         if(this.documento.mensagemSetor === true){
-          this.tipoEnvio = 2;
+          this.tipoEnvio = 2; //Tipo de envio para setor
         } else {
-          this.tipoEnvio = 1;
+          this.tipoEnvio = 1; //Tipo de envio para usuario
         }
-
-        console.log(this.tipoEnvio);
 
         if(this.documento.mensagemGeral === true){
           this.allUsersSelect = true;
           this.documento.destinatariosIds = [];
-          console.log(this.allUsersSelect);
         } else {
           this.documento.destinatariosIds = data['destinatariosIds'];
         }
@@ -82,8 +79,6 @@ export class OficioComponent implements OnInit {
 
         this.initUsersForList();
         this.initSetoresForList();
-
-        console.log(this.documento);
         
       });
     } else {
@@ -124,20 +119,7 @@ export class OficioComponent implements OnInit {
   }
 
   newOficio(): Documento{
-    return {
-      id: null,
-      assunto: null,
-      conteudo: null,
-      identificador: null,
-      dataInicial: null,
-      dataFinal: null,
-      tipoDocumentoId: null,
-      enviada: false,
-      mensagemGeral: false,
-      mensagemSetor: false,
-      listSetoresIds: [],
-      destinatariosIds: []
-    };
+    return this.documentoService.newDocumento();
   }
 
   salvar(){

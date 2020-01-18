@@ -17,6 +17,28 @@ export class DocumentoService {
           
     }
 
+    newDocumento(): Documento{
+        return {
+          id: null,
+          assunto: null,
+          conteudo: null,
+          identificador: null,
+          dataInicial: null,
+          dataFinal: null,
+          tipoDocumentoId: null,
+          enviada: false,
+          mensagemGeral: false,
+          mensagemSetor: false,
+          listSetoresIds: [],
+          destinatariosIds: [],
+          requerido: null,
+          vinculo: null,
+          rotinas: [],
+          outrasRotinas: [],
+          informacoes: []
+        };
+      }
+
     showLoad(){
         swal.fire({
             title: 'Aguarde...',
@@ -33,6 +55,26 @@ export class DocumentoService {
 
         if(tipo === 'oficio'){
             documento.tipoDocumentoId = 1;
+        }
+
+        if(tipo === 'portaria'){
+            documento.tipoDocumentoId = 3;
+        }
+
+        if(tipo === 'requerimento'){
+            documento.tipoDocumentoId = 4;
+        }
+        
+        if(tipo === 'despacho'){
+            documento.tipoDocumentoId = 5;
+        }
+
+        if(tipo === 'declaracao'){
+            documento.tipoDocumentoId = 6;
+        }
+
+        if(tipo === 'ata'){
+            documento.tipoDocumentoId = 7;
         }
 
         documento.usuarioId = localStorage.getItem("userId");
@@ -199,6 +241,16 @@ export class DocumentoService {
         switch (idTipoDocumento) {
             case 1: //Oficio
                 return this.downloadTipo(idDocumento, 'oficio');
+            case 3:
+                return this.downloadTipo(idDocumento, 'portaria');
+            case 4:
+                return this.downloadTipo(idDocumento, 'requerimento');
+            case 5:
+                return this.downloadTipo(idDocumento, 'despacho');
+            case 6:
+                return this.downloadTipo(idDocumento, 'declaracao');
+            case 7:
+                return this.downloadTipo(idDocumento, 'ata');
             default:
                 break;
         }

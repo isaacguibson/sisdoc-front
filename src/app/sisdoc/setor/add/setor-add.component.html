@@ -15,8 +15,16 @@
             <div class="card-body">
               <div class="forms-sample">
                 <div class="form-group">
-                    <label for="exampleInputName1">Nome</label>
-                    <input type="text" class="form-control" [(ngModel)]="setor.nome" placeholder="Name">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="exampleInputName1">Nome</label>
+                      <input type="text" class="form-control" [(ngModel)]="setor.nome" placeholder="Nome">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="exampleInputName2">Sigla</label>
+                      <input type="text" class="form-control" [(ngModel)]="setor.sigla" placeholder="Sigla">
+                    </div>
+                  </div>
                 </div>
                 <button (click)="salvar()" class="btn btn-success mr-2">Salvar</button>
                 <button (click)="voltar()" class="btn btn-light">Cancelar</button>

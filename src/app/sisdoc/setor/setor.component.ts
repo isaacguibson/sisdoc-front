@@ -47,7 +47,8 @@ export class SetorComponent implements OnInit {
 
     return {
       id: null,
-      nome: null
+      nome: null,
+      sigla: null
     }
 
   }

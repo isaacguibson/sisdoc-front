@@ -12,6 +12,10 @@ import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.c
 import { CargoComponent } from './sisdoc/cargo/cargo.component';
 import { CargoAddComponent } from './sisdoc/cargo/add/add.component';
 import { PerfilComponent } from './sisdoc/perfil/perfil.component';
+import { AddPortariaComponent } from './sisdoc/documento/add-portaria/add-portaria.component';
+import { AddDeclaracaoComponent } from './sisdoc/documento/add-declaracao/add-declaracao.component';
+import { AddDespachoComponent } from './sisdoc/documento/add-despacho/add-despacho.component';
+import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/add-requerimento.component';
 
 const routes: Routes = [
   
@@ -27,51 +31,63 @@ const routes: Routes = [
     children: [
 
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-
       { path: 'dashboard', 
         component: DashboardComponent
       },
-
       { path: 'documento', 
         component: DocumentoComponent
       },
-
       { path: 'oficio-add', 
         component: OficioComponent
       },
-
+      { path: 'portaria-add', 
+        component: AddPortariaComponent
+      },
+      { path: 'declaracao-add', 
+        component: AddDeclaracaoComponent
+      },
+      { path: 'despacho-add', 
+        component: AddDespachoComponent
+      },
+      { path: 'requerimento-add', 
+        component: AddRequerimentoComponent
+      },
       { path: 'oficio-add/:id', 
         component: OficioComponent
       },
-
+      { path: 'declaracao-add/:id', 
+        component: AddDeclaracaoComponent
+      },
+      { path: 'portaria-add/:id', 
+        component: AddPortariaComponent
+      },
+      { path: 'despacho-add/:id', 
+        component: AddDespachoComponent
+      },
+      { path: 'requerimento-add/:id', 
+        component: AddRequerimentoComponent
+      },
       { path: 'setor', 
         component: SetorComponent
       },
-
       { path: 'cargo', 
         component: CargoComponent
       },
-
       { path: 'setor-edit/:id', 
         component: SetorAddComponent
       },
-
       { path: 'setor-add', 
         component: SetorAddComponent
       },
-
       { path: 'cargo-add', 
         component: CargoAddComponent
       },
-
       { path: 'cargo-edit/:id', 
         component: CargoAddComponent
       },
-      
       { path: 'tipo-doc', 
         component: TipoDocumentoComponent
       },
-
       { path: 'perfil', 
         component: PerfilComponent
       }

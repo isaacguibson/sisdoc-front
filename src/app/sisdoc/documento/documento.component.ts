@@ -51,20 +51,7 @@ export class DocumentoComponent implements OnInit {
   }
 
   newDocumento(): Documento{
-    return {
-      id: null,
-      assunto: null,
-      conteudo: null,
-      identificador: null,
-      dataInicial: null,
-      dataFinal: null,
-      tipoDocumentoId: null,
-      enviada: false,
-      mensagemGeral: false,
-      mensagemSetor: false,
-      listSetoresIds: [],
-      destinatariosIds: []
-    };
+    return this.documentoService.newDocumento();
   }
 
   adicionarNovo(){
@@ -91,6 +78,18 @@ export class DocumentoComponent implements OnInit {
         switch (value) {
           case '1': //Oficio
             this.router.navigate(['/sisdoc/oficio-add']);
+            break;
+          case '3': //PORTARIA
+            this.router.navigate(['/sisdoc/portaria-add']);
+            break;
+          case '4': //REQUERIMENTO
+            this.router.navigate(['/sisdoc/requerimento-add']);
+            break;
+          case '5': //DECLARAÇÃO
+            this.router.navigate(['/sisdoc/despacho-add']);
+            break;
+          case '6': //DECLARAÇÃO
+            this.router.navigate(['/sisdoc/declaracao-add']);
             break;
         }
       }
@@ -220,23 +219,6 @@ export class DocumentoComponent implements OnInit {
     }
 
     this.pesquisarEnviados(this.paginator.currentPage);
-
-    // this.documentoService.pesquisar(this.paginator.currentPage, this.paginator.size).then(data => {
-          
-    //   this.searchResult = data;
-    //   this.contentList = this.searchResult['content'];
-
-    //     this.paginator 
-    //       = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
-    //                                           this.searchResult['totalElements'],
-    //                                           this.paginator.currentPage,
-    //                                           this.paginator.size);
-    //     Swal.close();
-    //     this.documentoService.showDeletedMessage();
-    // }).catch(error =>{
-        
-    //     this.contentList = [];
-    // });
   }
 
   fillTipoDocList(){
@@ -317,6 +299,14 @@ export class DocumentoComponent implements OnInit {
     //OFICIO
     if(tipoDocId == 1){
       this.router.navigate(['/sisdoc/oficio-add/'+id]);
+    } else if (tipoDocId == 3) {
+      this.router.navigate(['/sisdoc/portaria-add/'+id]);
+    } else if(tipoDocId === 5){
+      this.router.navigate(['/sisdoc/despacho-add/'+id]);
+    } else if(tipoDocId === 4){
+      this.router.navigate(['/sisdoc/requerimento-add/'+id]);
+    } else if (tipoDocId == 6) {
+      this.router.navigate(['/sisdoc/declaracao-add/'+id]);
     }
 
   }

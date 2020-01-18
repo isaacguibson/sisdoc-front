@@ -11,14 +11,16 @@ import { Location } from '@angular/common';
 export class SisdocComponent {
 
   usuario :Usuario
-
+  admin = false;
   constructor(
     public router: Router,
     public location: Location
   ) { 
 
     this.usuario = this.getUserLogado();
-
+    if(this.usuario.nomeCargo === 'Administrador(a)') {
+      this.admin = true;
+    }
   }
 
   getUserLogado(){
