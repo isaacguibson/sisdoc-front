@@ -1,6 +1,6 @@
 import { GenericListObject } from './generic-list-object.model';
 
-export interface Documento{
+export class Documento{
     id?:number;
     assunto: string;
     conteudo: string;

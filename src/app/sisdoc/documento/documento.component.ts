@@ -91,6 +91,9 @@ export class DocumentoComponent implements OnInit {
           case '6': //DECLARAÇÃO
             this.router.navigate(['/sisdoc/declaracao-add']);
             break;
+          case '7': //ATA
+            this.router.navigate(['/sisdoc/ata-add']);
+            break;
         }
       }
       

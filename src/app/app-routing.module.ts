@@ -16,6 +16,7 @@ import { AddPortariaComponent } from './sisdoc/documento/add-portaria/add-portar
 import { AddDeclaracaoComponent } from './sisdoc/documento/add-declaracao/add-declaracao.component';
 import { AddDespachoComponent } from './sisdoc/documento/add-despacho/add-despacho.component';
 import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/add-requerimento.component';
+import { AddAtaComponent } from './sisdoc/documento/add-ata/add-ata.component';
 
 const routes: Routes = [
   
@@ -51,6 +52,9 @@ const routes: Routes = [
       },
       { path: 'requerimento-add', 
         component: AddRequerimentoComponent
+      },
+      { path: 'ata-add', 
+        component: AddAtaComponent
       },
       { path: 'oficio-add/:id', 
         component: OficioComponent

@@ -17,6 +17,7 @@ import { PaginatorService } from '../services/paginator.service';
 import { SetorService } from 'src/services/setor.service';
 import { CargoService } from 'src/services/cargo.service';
 import { UsuarioService } from 'src/services/usuario.service';
+import { ColegiadoService } from 'src/services/colegiado.service';
 import { TipoDocumentoService } from 'src/services/tipo-documento.service';
 import { AuthGuardService } from 'src/services/auth-guard.service';
 import { AuthService } from 'src/services/auth.service';
@@ -43,6 +44,7 @@ import { AddPortariaComponent } from './sisdoc/documento/add-portaria/add-portar
 import { AddDeclaracaoComponent } from './sisdoc/documento/add-declaracao/add-declaracao.component';
 import { AddDespachoComponent } from './sisdoc/documento/add-despacho/add-despacho.component';
 import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/add-requerimento.component';
+import { AddAtaComponent } from './sisdoc/documento/add-ata/add-ata.component';
 
 @NgModule({
   
@@ -61,7 +63,8 @@ import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/ad
     AddPortariaComponent,
     AddDeclaracaoComponent,
     AddDespachoComponent,
-    AddRequerimentoComponent
+    AddRequerimentoComponent,
+    AddAtaComponent
   ],
   imports: [
     NgSelectModule,
@@ -90,6 +93,7 @@ import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/ad
     CargoService,
     SetorService,
     UsuarioService,
+    ColegiadoService,
     TipoDocumentoService,
     AuthGuardService,
     AuthService,
