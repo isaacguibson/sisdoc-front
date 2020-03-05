@@ -19,7 +19,7 @@
                 <div class="row">
                   <div class="col-md-3">
                       <div class="form-group">
-                          <select class="form-control form-control-sm"
+                          <select class="form-control form-control-sm" [(ngModel)]="idColegiadoSelecionado"
                            (change)="alterarColegiado($event)">
                             <option value="{{null}}">Selecione o colegiado</option>
                              <option *ngFor="let colegiado of colegiados"
@@ -55,7 +55,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="oficio-editor">
-                      <quill-editor></quill-editor>
+                      <quill-editor [(ngModel)]="documento.conteudo"></quill-editor>
                     </div>
                   </div>
                 </div>

@@ -119,7 +119,7 @@ export class OficioComponent implements OnInit {
   }
 
   newOficio(): Documento{
-    return this.documentoService.newDocumento();
+    return new Documento();
   }
 
   salvar(){

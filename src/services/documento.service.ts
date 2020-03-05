@@ -17,28 +17,6 @@ export class DocumentoService {
           
     }
 
-    newDocumento(): Documento{
-        return {
-          id: null,
-          assunto: null,
-          conteudo: null,
-          identificador: null,
-          dataInicial: null,
-          dataFinal: null,
-          tipoDocumentoId: null,
-          enviada: false,
-          mensagemGeral: false,
-          mensagemSetor: false,
-          listSetoresIds: [],
-          destinatariosIds: [],
-          requerido: null,
-          vinculo: null,
-          rotinas: [],
-          outrasRotinas: [],
-          informacoes: []
-        };
-      }
-
     showLoad(){
         swal.fire({
             title: 'Aguarde...',
@@ -158,19 +136,19 @@ export class DocumentoService {
             apiURLPaginated = apiURLPaginated + 'page='+page+'&size='+size;
         }
 
-        if(documento.identificador !== null && documento.identificador !== ""){
+        if(documento.identificador && documento.identificador !== ""){
             apiURLPaginated = apiURLPaginated + '&identificador='+documento.identificador;
         }
 
-        if(documento.dataInicial !== null){
+        if(documento.dataInicial){
             apiURLPaginated = apiURLPaginated + '&dataInicial='+documento.dataInicial;
         }
 
-        if(documento.dataFinal !== null){
+        if(documento.dataFinal){
             apiURLPaginated = apiURLPaginated + '&dataFinal='+documento.dataFinal;
         }
 
-        if(documento.tipoDocumentoId !== null){
+        if(documento.tipoDocumentoId){
             apiURLPaginated = apiURLPaginated + '&tipoDocumentoId='+documento.tipoDocumentoId;
         }
         
@@ -191,15 +169,15 @@ export class DocumentoService {
             apiURLPaginated = apiURLPaginated + '&identificador='+documento.identificador;
         }
 
-        if(documento.dataInicial !== null){
+        if(documento.dataInicial){
             apiURLPaginated = apiURLPaginated + '&dataInicial='+documento.dataInicial;
         }
 
-        if(documento.dataFinal !== null){
+        if(documento.dataFinal){
             apiURLPaginated = apiURLPaginated + '&dataFinal='+documento.dataFinal;
         }
 
-        if(documento.tipoDocumentoId !== null){
+        if(documento.tipoDocumentoId){
             apiURLPaginated = apiURLPaginated + '&tipoDocumentoId='+documento.tipoDocumentoId;
         }
         

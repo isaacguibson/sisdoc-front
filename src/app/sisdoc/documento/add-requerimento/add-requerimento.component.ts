@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { DocumentoService } from '../../../../services/documento.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { borderTopRightRadius } from 'html2canvas/dist/types/css/property-descriptors/border-radius';
+import { Documento } from 'src/models/documento.model';
 
 @Component({
   selector: 'app-add-requerimento',
@@ -160,7 +161,7 @@ export class AddRequerimentoComponent implements OnInit {
       }
     }
 
-    let documentoToSave = this.documentoService.newDocumento();
+    let documentoToSave = new Documento();
     if(this.requerimentoObject.id) {
       documentoToSave.id = this.requerimentoObject.id;
     }

@@ -51,7 +51,7 @@ export class DocumentoComponent implements OnInit {
   }
 
   newDocumento(): Documento{
-    return this.documentoService.newDocumento();
+    return new Documento();
   }
 
   adicionarNovo(){
@@ -116,16 +116,13 @@ export class DocumentoComponent implements OnInit {
 
     switch (tipoLista) {
       case 'ambos':
-        console.log('AMBOS');
         this.pesquisarEnviados(page);
         this.pesquisarRecebidos(page);
         break;
       case 'enviados':
-        console.log('ENVIADOS');
         this.pesquisarEnviados(page);
         break;
       case 'recebidos':
-        console.log('RECEBIDOS');
         this.pesquisarRecebidos(page);
         break;
       default:
@@ -310,6 +307,8 @@ export class DocumentoComponent implements OnInit {
       this.router.navigate(['/sisdoc/requerimento-add/'+id]);
     } else if (tipoDocId == 6) {
       this.router.navigate(['/sisdoc/declaracao-add/'+id]);
+    } else if (tipoDocId == 7) {
+      this.router.navigate(['/sisdoc/ata-add/'+id]);
     }
 
   }

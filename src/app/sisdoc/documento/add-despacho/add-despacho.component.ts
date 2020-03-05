@@ -26,7 +26,7 @@ export class AddDespachoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.documento = this.documentoService.newDocumento();
+    this.documento = new Documento();
 
     this.id = this.activeRoute.snapshot.paramMap.get("id");
 

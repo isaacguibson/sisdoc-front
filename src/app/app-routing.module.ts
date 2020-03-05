@@ -71,6 +71,9 @@ const routes: Routes = [
       { path: 'requerimento-add/:id', 
         component: AddRequerimentoComponent
       },
+      { path: 'ata-add/:id', 
+        component: AddAtaComponent
+      },
       { path: 'setor', 
         component: SetorComponent
       },

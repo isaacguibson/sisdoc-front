@@ -1,5 +1,6 @@
 import { GenericListObject } from './generic-list-object.model';
-
+import { Reuniao } from './reuniao.model';
+ 
 export class Documento{
     id?:number;
     assunto: string;
@@ -18,4 +19,5 @@ export class Documento{
     rotinas: number[];
     outrasRotinas: GenericListObject[];
     informacoes: GenericListObject[];
+    reuniao: Reuniao;
 }

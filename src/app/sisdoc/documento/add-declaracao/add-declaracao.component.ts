@@ -24,7 +24,7 @@ export class AddDeclaracaoComponent implements OnInit {
               public activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.documento = this.documentoService.newDocumento();
+    this.documento = new Documento();
     this.usersForList=[];
 
     this.id = this.activeRoute.snapshot.paramMap.get("id");

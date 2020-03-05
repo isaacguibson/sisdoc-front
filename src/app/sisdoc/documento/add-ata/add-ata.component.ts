@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Documento } from 'src/models/documento.model';
 import { ColegiadoService } from '../../../../services/colegiado.service';
+import { DocumentoService } from '../../../../services/documento.service';
 import { Colegiado } from 'src/models/colegiado.model';
+import Swal from 'sweetalert2';
+import { Reuniao } from 'src/models/reuniao.model';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-add-ata',
@@ -17,10 +21,14 @@ export class AddAtaComponent implements OnInit {
   documento: Documento = new Documento();
   allUsersSelect = false;
   colegiados: Colegiado[] = [];
-  colegiadoSelecionado: Colegiado;
-  placeHoldMembros = 'Selecione os membros do colegiado'
+  colegiadoSelecionado: Colegiado = new Colegiado();
+  idColegiadoSelecionado: number;
+  placeHoldMembros = 'Selecione os membros do colegiado';
+  id = null; // Caso venha de edição
 
-  constructor(public colegiadoService: ColegiadoService) { }
+  constructor(public colegiadoService: ColegiadoService,
+    public documentoService: DocumentoService,
+    public activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.colegiadoSelecionado = new Colegiado();
@@ -30,6 +38,30 @@ export class AddAtaComponent implements OnInit {
   initColegiados() {
     this.colegiadoService.findAll().then(res => {
       this.colegiados = res;
+      
+      this.id = this.activeRoute.snapshot.paramMap.get("id");
+
+      if(this.id){ 
+        this.documentoService.get(this.id).then(data => {
+          this.documento.conteudo = data['conteudo'];
+          this.documento.mensagemGeral = data['mensagemGeral'];
+          this.idColegiadoSelecionado = data['reuniao']['colegiadoId'];
+          this.documento.reuniao = data['reuniao'];
+
+          if(this.documento.mensagemGeral === true){
+            this.allUsersSelect = true;
+            this.documento.destinatariosIds = [];
+          } else {
+            this.documento.destinatariosIds = data['destinatariosIds'];
+          }
+          
+          this.documento.id = data['id'];
+
+          this.colegiadoService.getMembros(this.idColegiadoSelecionado).then(res => {
+            this.objectsForList = res;
+          });
+        });
+      }
     });
   }
 
@@ -43,14 +75,42 @@ export class AddAtaComponent implements OnInit {
   }
 
   alterarColegiado(event) {
+    console.log(event.target.value);
     if (event.target.value) {
       this.colegiadoSelecionado = this.colegiados.find(col => col.id == event.target.value);
       this.colegiadoService.getMembros(this.colegiadoSelecionado.id).then(res => {
         this.objectsForList = res;
-      })
+      });
     } else {
       this.colegiadoSelecionado = new Colegiado();
+      this.idColegiadoSelecionado = null;
     }
     
+  }
+
+  salvar() {
+
+    if (!this.colegiadoSelecionado) {
+      Swal.fire('Oops!', 'Selecione o colegiado', 'error');
+      return;
+    } else {
+      if(!this.id) { // Caso não seja uma edição
+        this.documento.reuniao = new Reuniao();
+        this.documento.reuniao.colegiadoId = this.colegiadoSelecionado.id;
+      }
+    }
+
+    if(this.allUsersSelect === false && this.documento.destinatariosIds.length === 0){
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de escolher pelo menos uma pessoa para enviar este documento.', 'error');
+      return;
+    }
+
+    if (this.allUsersSelect === true){
+      this.documento.destinatariosIds = [];
+
+      this.documento.mensagemGeral = true;
+    }
+
+    this.documentoService.save(this.documento, 'ata');
   }
 }

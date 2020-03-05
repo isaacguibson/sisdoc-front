@@ -28,7 +28,7 @@ export class AddPortariaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.documento = this.documentoService.newDocumento();
+    this.documento = new Documento();
     this.id = this.activeRoute.snapshot.paramMap.get("id");
     if(this.id){
       this.documentoService.get(this.id).then(data => {
