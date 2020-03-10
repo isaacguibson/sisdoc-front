@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Documento } from 'src/models/documento.model';
 import { ColegiadoService } from '../../../../services/colegiado.service';
@@ -7,6 +7,7 @@ import { Colegiado } from 'src/models/colegiado.model';
 import Swal from 'sweetalert2';
 import { Reuniao } from 'src/models/reuniao.model';
 import { ActivatedRoute } from "@angular/router";
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-add-ata',
@@ -16,6 +17,8 @@ import { ActivatedRoute } from "@angular/router";
 export class AddAtaComponent implements OnInit {
 
   public Editor = ClassicEditor;
+
+  @ViewChild(NgSelectComponent) ngSelectComponent: NgSelectComponent;
 
   objectsForList = [];
   documento: Documento = new Documento();
@@ -75,7 +78,9 @@ export class AddAtaComponent implements OnInit {
   }
 
   alterarColegiado(event) {
-    console.log(event.target.value);
+    this.objectsForList = [];
+    this.documento.destinatariosIds = [];
+    this.ngSelectComponent.handleClearClick();
     if (event.target.value) {
       this.colegiadoSelecionado = this.colegiados.find(col => col.id == event.target.value);
       this.colegiadoService.getMembros(this.colegiadoSelecionado.id).then(res => {
@@ -96,8 +101,11 @@ export class AddAtaComponent implements OnInit {
     } else {
       if(!this.id) { // Caso não seja uma edição
         this.documento.reuniao = new Reuniao();
+      }
+      if (this.colegiadoSelecionado.id) {
         this.documento.reuniao.colegiadoId = this.colegiadoSelecionado.id;
       }
+      
     }
 
     if(this.allUsersSelect === false && this.documento.destinatariosIds.length === 0){
@@ -110,7 +118,7 @@ export class AddAtaComponent implements OnInit {
 
       this.documento.mensagemGeral = true;
     }
-
+    console.log(this.documento);
     this.documentoService.save(this.documento, 'ata');
   }
 }
