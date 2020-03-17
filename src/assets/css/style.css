@@ -14239,6 +14239,14 @@ html {
   font-weight: bold;
 }
 
+.primary-div {
+  background: #bbe1f0;
+  padding: 2%;
+  border-width:4px !important;
+  text-align: center;
+  font-weight: bold;
+}
+
 .container-scroller {
   overflow: hidden; }
 

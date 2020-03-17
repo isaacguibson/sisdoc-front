@@ -115,6 +115,11 @@ export class AddAtaComponent implements OnInit {
       return;
     }
 
+    if(!this.documento.assunto || this.documento.assunto === '') {
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de informar o título da ATA.', 'error');
+      return;
+    }
+
     if (this.allUsersSelect === true){
       this.documento.destinatariosIds = [];
 
