@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { Reuniao } from 'src/models/reuniao.model';
 import { ActivatedRoute } from "@angular/router";
 import { NgSelectComponent } from '@ng-select/ng-select';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-ata',
@@ -31,7 +32,8 @@ export class AddAtaComponent implements OnInit {
 
   constructor(public colegiadoService: ColegiadoService,
     public documentoService: DocumentoService,
-    public activeRoute: ActivatedRoute) { }
+    public activeRoute: ActivatedRoute,
+    public router: Router) { }
 
   ngOnInit() {
     this.colegiadoSelecionado = new Colegiado();
@@ -120,5 +122,9 @@ export class AddAtaComponent implements OnInit {
     }
     console.log(this.documento);
     this.documentoService.save(this.documento, 'ata');
+  }
+
+  cancelar() {
+    this.router.navigate(['/sisdoc/documento']);
   }
 }
