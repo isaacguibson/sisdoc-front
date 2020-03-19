@@ -216,8 +216,6 @@ export class DocumentoService {
 
     download(idTipoDocumento, idDocumento){
 
-        idTipoDocumento = 7; //RETIRAR ISSO PLMD
-
         switch (idTipoDocumento) {
             case 1: //Oficio
                 return this.downloadTipo(idDocumento, 'oficio');

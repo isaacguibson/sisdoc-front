@@ -52,6 +52,7 @@ export class AddAtaComponent implements OnInit {
           this.documento.mensagemGeral = data['mensagemGeral'];
           this.idColegiadoSelecionado = data['reuniao']['colegiadoId'];
           this.documento.reuniao = data['reuniao'];
+          this.documento.assunto = data['assunto'];
 
           if(this.documento.mensagemGeral === true){
             this.allUsersSelect = true;
