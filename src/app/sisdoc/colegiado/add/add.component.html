@@ -1,0 +1,54 @@
+<div class="content-wrapper" style="height: 100%; width: 100%;">
+  <div class="row">
+    <!-- Inicio do conteudo do documento -->
+    <div class="col-lg-12 d-flex align-items-stretch grid-margin">
+      <div class="row flex-grow">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Adicionar novo setor</h4>
+                <p class="card-description">
+                  
+                </p>
+            </div>
+            <div class="card-body">
+              <div class="forms-sample">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="exampleInputName1">Nome</label>
+                      <input type="text" class="form-control" placeholder="Nome"
+                      style="text-transform:uppercase" [(ngModel)]="colegiadoToSave.nome">
+                    </div>
+                    <div class="col-md-6">
+                      <label for="exampleInputName2">Descrição</label>
+                      <input type="text" class="form-control" placeholder="Descrição" [(ngModel)]="colegiadoToSave.descricao">
+                    </div>
+                  </div>
+                  <br />
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="exampleInputName1">Membros do Colegiado</label>
+                      <div class="form-group">
+                        <ng-select [items]="objectsForList"
+                            bindLabel="nome"
+                            bindValue="id"
+                            [multiple]="true"
+                            placeholder="{{placeHoldMembros}}"
+                            [(ngModel)]="colegiadoToSave.membrosIds">
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button (click)="salvar()" class="btn btn-success mr-2">Salvar</button>
+                <button (click)="voltar()" class="btn btn-light">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Fim do conteudo do documento -->
+  </div>
+</div>

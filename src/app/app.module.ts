@@ -45,6 +45,8 @@ import { AddDeclaracaoComponent } from './sisdoc/documento/add-declaracao/add-de
 import { AddDespachoComponent } from './sisdoc/documento/add-despacho/add-despacho.component';
 import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/add-requerimento.component';
 import { AddAtaComponent } from './sisdoc/documento/add-ata/add-ata.component';
+import { ColegiadoComponent } from './sisdoc/colegiado/colegiado.component';
+import { ColegiadoAddComponent } from './sisdoc/colegiado/add/add.component';
 
 @NgModule({
   
@@ -64,7 +66,9 @@ import { AddAtaComponent } from './sisdoc/documento/add-ata/add-ata.component';
     AddDeclaracaoComponent,
     AddDespachoComponent,
     AddRequerimentoComponent,
-    AddAtaComponent
+    AddAtaComponent,
+    ColegiadoComponent,
+    ColegiadoAddComponent
   ],
   imports: [
     NgSelectModule,

@@ -8,7 +8,7 @@ import { SetorService } from '../../../services/setor.service'
 // Interfaces
 import { Setor } from '../../../models/setor.model'
 
-import {Router} from "@angular/router"
+import {Router} from "@angular/router";
 
 import { PaginatorService } from '../../../services/paginator.service';
 import Swal from 'sweetalert2';
@@ -71,7 +71,6 @@ export class SetorComponent implements OnInit {
     });
 
     this.setorService.pesquisar(this.paginator.currentPage, this.paginator.size, this.setorSearch).then(data => {
-          console.log(data);
           this.searchResult = data;
           this.contentList = this.searchResult['content'];
 

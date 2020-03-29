@@ -190,8 +190,14 @@ export class DocumentoComponent implements OnInit {
         this.documentoService.deletar(id).then(data => {
             
           Swal.close();
-          this.pesquisaAposDelecao();
-          
+          Swal.fire({
+            title: 'Registro deletado',
+            text: 'Operação de deleção realizada com sucesso',
+            type: 'success',
+            confirmButtonText: 'OK'
+          }).then(value => {
+            this.pesquisaAposDelecao();
+          });
       }).catch(error =>{
           Swal.close();
           this.documentoService.showErrorMessage();

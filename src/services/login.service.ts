@@ -41,7 +41,7 @@ export class LoginService {
                 text: 'Login realizado com sucesso',
                 type: 'success',
                 confirmButtonText: 'OK'
-            }).then(value => {
+            }).then(val => {
 
                 if(data['usuario']['cargos'].length > 1){
                     this.buildHtmlSelect(data['usuario']['cargos']);

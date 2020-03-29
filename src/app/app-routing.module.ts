@@ -8,6 +8,8 @@ import { DocumentoComponent } from './sisdoc/documento/documento.component';
 import { OficioComponent } from './sisdoc/documento/add-oficio/oficio.component';
 import { SetorComponent } from './sisdoc/setor/setor.component';
 import { SetorAddComponent } from './sisdoc/setor/add/setor-add.component';
+import { ColegiadoComponent } from './sisdoc/colegiado/colegiado.component';
+import { ColegiadoAddComponent } from './sisdoc/colegiado/add/add.component';
 import { TipoDocumentoComponent } from './sisdoc/tipo-documento/tipo-documento.component';
 import { CargoComponent } from './sisdoc/cargo/cargo.component';
 import { CargoAddComponent } from './sisdoc/cargo/add/add.component';
@@ -77,6 +79,9 @@ const routes: Routes = [
       { path: 'setor', 
         component: SetorComponent
       },
+      { path: 'colegiado', 
+        component: ColegiadoComponent
+      },
       { path: 'cargo', 
         component: CargoComponent
       },
@@ -85,6 +90,12 @@ const routes: Routes = [
       },
       { path: 'setor-add', 
         component: SetorAddComponent
+      },
+      { path: 'colegiado-add', 
+        component: ColegiadoAddComponent
+      },
+      { path: 'colegiado-edit/:id', 
+        component: ColegiadoAddComponent
       },
       { path: 'cargo-add', 
         component: CargoAddComponent
