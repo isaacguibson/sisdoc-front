@@ -124,6 +124,28 @@ export class ColegiadoService {
         }
     }
 
+    deletar(id){
+
+        this.showLoad();
+
+        return this.httpClient.delete(this.apiUrl+'colegiado/'+id,
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        })
+        .toPromise();
+    }
+
+    showLoad(){
+        swal.fire({
+            title: 'Aguarde...',
+            onBeforeOpen: () => {
+              swal.showLoading();
+            },
+            allowOutsideClick: false,
+            showConfirmButton: false
+          });
+    }
+
     showSavedMessage(){
         swal.fire('Registro Salvo', 'Um novo colegiado foi criado com sucesso', 'success');
     }

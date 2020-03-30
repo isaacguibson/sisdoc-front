@@ -66,4 +66,48 @@ export class ColegiadoComponent implements OnInit {
     this.router.navigate(['/sisdoc/colegiado-edit/'+id]);
   }
 
+  deletar(id){
+
+    Swal.fire({
+      title: 'Tem certeza, que deseja deletar este registro?',
+      text: "Esta operação não pode ser desfeita",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!',
+      cancelButtonText: 'Não'
+    }).then((result) => {
+
+      //Delete apenas se usuario clicar em sim
+      if(result.dismiss != Swal.DismissReason.cancel){
+        this.colegiadoService.deletar(id)
+        .then(data => {
+            
+            Swal.close();
+            this.colegiadoService.showDeletedMessage();
+            this.pesquisaAposDelecao();
+            
+        }).catch(error =>{
+            console.log(error);
+            Swal.close();
+            this.colegiadoService.showErrorMessage();
+        });
+      }
+    });
+
+  }
+
+  pesquisaAposDelecao(){
+    if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
+      if((this.paginator.totalElements % this.paginator.size) == 1){
+        this.pesquisar(this.paginator.currentPage - 1);
+      } else {
+        this.pesquisar(this.paginator.currentPage);
+      }
+    } else {
+      this.pesquisar(this.paginator.currentPage);
+    }
+  }
+
 }
