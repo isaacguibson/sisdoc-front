@@ -165,7 +165,9 @@ export class DocumentoService {
             apiURLPaginated = apiURLPaginated + 'page='+page+'&size='+size;
         }
 
-        if(documento.identificador !== null && documento.identificador !== ""){
+        console.log(documento.identificador);
+        
+        if(documento.identificador && documento.identificador !== ""){
             apiURLPaginated = apiURLPaginated + '&identificador='+documento.identificador;
         }
 
