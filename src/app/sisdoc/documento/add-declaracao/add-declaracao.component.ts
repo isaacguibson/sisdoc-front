@@ -46,10 +46,10 @@ export class AddDeclaracaoComponent implements OnInit {
         
         this.documento.id = data['id'];
 
-        this.initUsersForList();
-        
       });
     }
+
+    this.initUsersForList();
   }
 
   cancelar(){
@@ -62,10 +62,7 @@ export class AddDeclaracaoComponent implements OnInit {
 
   initUsersForList(){
     this.usuarioService.listAllForList().then(result => {
-      console.log(result);
-      if(this.id != null){
-        this.usersForList = result;
-      }
+      this.usersForList = result;
 
     }).catch(error => {
       this.usersForList = [];
