@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {EditorModule} from 'primeng/editor';
 import { QuillModule } from 'ngx-quill';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 
 // SERVICES
 import { LoginService } from 'src/services/login.service';
@@ -22,6 +23,7 @@ import { TipoDocumentoService } from 'src/services/tipo-documento.service';
 import { AuthGuardService } from 'src/services/auth-guard.service';
 import { AuthService } from 'src/services/auth.service';
 import { JwtHelperService, JwtModule} from '@auth0/angular-jwt';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // HttpClient
 import { HttpClientModule } from '@angular/common/http';
@@ -77,6 +79,8 @@ import { ColegiadoAddComponent } from './sisdoc/colegiado/add/add.component';
     AppRoutingModule,
     FormsModule,
     EditorModule,
+    PdfJsViewerModule,
+    PdfViewerModule,
     QuillModule.forRoot(),
 
     /* TEXT EDITOR */ CKEditorModule,

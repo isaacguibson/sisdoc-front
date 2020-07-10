@@ -6,6 +6,7 @@ export class Documento{
     assunto: string;
     conteudo: string;
     identificador:string;
+    dataCriacao:string;
     dataInicial:Date;
     dataFinal:Date;
     tipoDocumentoId:number;
@@ -13,7 +14,7 @@ export class Documento{
     mensagemGeral: boolean; //indica se eh enviada para todos
     mensagemSetor: boolean; //indica se eh uma mensagem para setores
     listSetoresIds: [];
-    destinatariosIds: [];
+    destinatariosIds: any[];
     requerido: number;
     vinculo: number;
     rotinas: number[];

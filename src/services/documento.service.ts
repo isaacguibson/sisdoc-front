@@ -28,6 +28,50 @@ export class DocumentoService {
           });
     }
 
+    noBackSave(documento, tipo): Promise<any> {
+        if(tipo === 'oficio'){
+            documento.tipoDocumentoId = 1;
+        }
+
+        if(tipo === 'portaria'){
+            documento.tipoDocumentoId = 3;
+        }
+
+        if(tipo === 'requerimento'){
+            documento.tipoDocumentoId = 4;
+        }
+        
+        if(tipo === 'despacho'){
+            documento.tipoDocumentoId = 5;
+        }
+
+        if(tipo === 'declaracao'){
+            documento.tipoDocumentoId = 6;
+        }
+
+        if(tipo === 'ata'){
+            documento.tipoDocumentoId = 7;
+        }
+
+        documento.usuarioId = localStorage.getItem("userId");
+
+        if(documento.id){
+            //EDITANDO
+           return this.httpClient.put(this.apiUrl+'documento', documento,
+                {headers:
+                    {'Authorization':localStorage.getItem("token")}
+                })
+                .toPromise();
+        } else {
+            //INSERINDO
+            return this.httpClient.post(this.apiUrl+'documento/'+tipo, documento,
+                {headers:
+                    {'Authorization':localStorage.getItem("token")}
+                })
+                .toPromise();
+        }
+    }
+
     save(documento, tipo){
 
 

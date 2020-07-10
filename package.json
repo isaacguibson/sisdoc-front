@@ -38,6 +38,8 @@
     "jquery": "3.2.1",
     "jspdf": "^1.5.3",
     "mdi": "2.1.19",
+    "ng2-pdf-viewer": "^6.3.2",
+    "ng2-pdfjs-viewer": "^5.0.7",
     "ngx-bootstrap": "^3.2.0",
     "ngx-editor": "^4.1.0",
     "ngx-quill": "^7.3.1",

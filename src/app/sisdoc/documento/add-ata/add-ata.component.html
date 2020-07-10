@@ -2,7 +2,7 @@
     
   <div class="row">
     <!-- Inicio do conteudo do documento -->
-    <div class="col-lg-12 d-flex align-items-stretch grid-margin">
+    <div class="col-lg-8 col-md-12 d-flex align-items-stretch grid-margin">
       <div class="row flex-grow">
         <div class="col-12">
           <div class="card">
@@ -17,10 +17,16 @@
               <div class="forms-sample">
 
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-8">
                     <div class="form-group">
                       <input type="text" class="form-control" placeholder="Título"
                       [(ngModel)]="documento.assunto" style="text-transform: uppercase">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <input type="date" class="form-control date" placeholder="Data" [(ngModel)]="documento.dataCriacao">
                     </div>
                   </div>
                 </div>
@@ -69,10 +75,24 @@
                   </div>
                 </div>
                 <button (click)="salvar()" class="btn btn-primary mr-2">Salvar</button>
-                <button class="btn btn-light" (click)="cancelar()">Cancelar</button>
+                <button (click)="render()" class="btn btn-info mr-2">Renderizar</button>
+                <button class="btn btn-light" (click)="cancelar()">Sair</button>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-12" style="padding: 8px !important; background: gray; height: 760px;">
+      <div style="height: 744px; text-align: center;">
+        <pdf-viewer [src]="urlPdf"
+        [fit-to-page]="true" [show-all]="true"
+        *ngIf="id"></pdf-viewer>
+        <div *ngIf="!id" style="background-color: white; height: 100%;">
+          <a style="text-align: center; top: 50%; position: relative; cursor: pointer;"
+            (click)="render()">
+            Clique aqui para renderizar o documento.
+          </a>
         </div>
       </div>
     </div>

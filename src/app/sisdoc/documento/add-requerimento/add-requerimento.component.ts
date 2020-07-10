@@ -4,6 +4,8 @@ import { DocumentoService } from '../../../../services/documento.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { borderTopRightRadius } from 'html2canvas/dist/types/css/property-descriptors/border-radius';
 import { Documento } from 'src/models/documento.model';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DocumentCloner } from 'html2canvas/dist/types/dom/document-cloner';
 
 @Component({
   selector: 'app-add-requerimento',
@@ -26,10 +28,15 @@ export class AddRequerimentoComponent implements OnInit {
     outrasInformacoes: []
   };
   id = null;
+  urlPdf;
+  urlDocumento: SafeResourceUrl;
+  TIPO_REQUERIMENTO: Number = 4;
+  dataCriacao: string;
+
   constructor(public documentoService: DocumentoService,
               public activeRoute: ActivatedRoute,
+              public sanitizer: DomSanitizer,
               public router: Router) {
-
     this.id = this.activeRoute.snapshot.paramMap.get("id");
     if(this.id){
       this.documentoService.get(this.id).then(data => {
@@ -41,8 +48,13 @@ export class AddRequerimentoComponent implements OnInit {
         this.requerimentoObject.outrasRotinas = data['outrasRotinas'];
         this.outrasInformacoes = data['informacoes'];
         this.requerimentoObject.outrasInformacoes = data['informacoes'];
+        this.dataCriacao = data['dataCriacao'];
+        this.initialRender();
       });
-    }      
+    } else {
+      const today = new Date();
+      this.dataCriacao = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+    }
   }
 
   ngOnInit() {
@@ -125,10 +137,8 @@ export class AddRequerimentoComponent implements OnInit {
     this.outrasInformacoes.splice(this.outrasInformacoes.indexOf(this.outrasInformacoes.find(rot => rot.value == index)), 1);
   }
 
-  salvar() {
-    this.requerimentoObject.outrasRotinas = this.outrasRotinas;
-    this.requerimentoObject.outrasInformacoes = this.outrasInformacoes;
-    console.log(this.requerimentoObject);
+  validarSalvar(): Boolean {
+
     if(this.requerimentoObject.requerAo == null || this.requerimentoObject.requerAo === 0){
       Swal.fire({
         title: 'Erro',
@@ -136,7 +146,7 @@ export class AddRequerimentoComponent implements OnInit {
         type: 'error',
         confirmButtonText: 'OK'
       });
-      return;
+      return false;
     }
 
     if(this.requerimentoObject.vinculo == null || this.requerimentoObject.vinculo === 0){
@@ -146,7 +156,7 @@ export class AddRequerimentoComponent implements OnInit {
         type: 'error',
         confirmButtonText: 'OK'
       });
-      return;
+      return false;
     }
 
     if(this.requerimentoObject.rotinas == null || this.requerimentoObject.rotinas.length === 0){
@@ -157,10 +167,15 @@ export class AddRequerimentoComponent implements OnInit {
           type: 'error',
           confirmButtonText: 'OK'
         });
-        return;
+        return false;
       }
     }
 
+    return true;
+
+  }
+
+  gerarDocumentoParaSalvar(): Documento {
     let documentoToSave = new Documento();
     if(this.requerimentoObject.id) {
       documentoToSave.id = this.requerimentoObject.id;
@@ -170,11 +185,68 @@ export class AddRequerimentoComponent implements OnInit {
     documentoToSave.rotinas = this.requerimentoObject.rotinas;
     documentoToSave.outrasRotinas = this.requerimentoObject.outrasRotinas;
     documentoToSave.informacoes = this.requerimentoObject.outrasInformacoes;
-    this.documentoService.save(documentoToSave, 'requerimento');
+    documentoToSave.dataCriacao = this.dataCriacao;
+    return documentoToSave;
+  }
+
+  salvar() {
+    this.requerimentoObject.outrasRotinas = this.outrasRotinas;
+    this.requerimentoObject.outrasInformacoes = this.outrasInformacoes;
+    
+    if(!this.validarSalvar()){
+      return;
+    }
+
+    this.documentoService.save(this.gerarDocumentoParaSalvar(), 'requerimento');
   }
 
   cancelar(){
     this.router.navigate(['/sisdoc/documento']);
+  }
+
+  initialRender(){
+
+    if(this.id) {
+      console.log(this.id);
+      this.documentoService.download(this.TIPO_REQUERIMENTO, this.id).then(response => {
+        const newBlob = new Blob([response], { type: "application/pdf" });
+        this.urlPdf = window.URL.createObjectURL(newBlob);
+        this.urlDocumento = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(newBlob));
+      }).catch(error =>{
+        console.log(error);
+      });
+    }
+    
+  }
+
+  render() {
+    if(!this.validarSalvar()){
+      return;
+    }
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+
+    const noBackSave: Promise<any> = this.documentoService.noBackSave(this.gerarDocumentoParaSalvar(), 'requerimento');
+    
+    if(noBackSave) {
+      noBackSave.then(data => {
+        console.log(data);
+        this.id = data['id'];
+        this.requerimentoObject.id = this.id;
+        this.initialRender();
+        Swal.close();
+      }).catch(error => {
+        console.log(error);
+        Swal.close();
+      });
+    }
   }
 
 }

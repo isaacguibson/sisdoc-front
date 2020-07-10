@@ -10,6 +10,7 @@ import { Documento } from '../../../../models/documento.model';
 
 //Services
 import { DocumentoService } from '../../../../services/documento.service';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-add-portaria',
@@ -20,9 +21,13 @@ export class AddPortariaComponent implements OnInit {
 
   documento: Documento;
   id = null;
+  urlPdf;
+  urlDocumento: SafeResourceUrl;
+  TIPO_PORTARIA: Number = 3;
 
   constructor(public documentoService: DocumentoService,
               public router: Router,
+              public sanitizer: DomSanitizer,
               public activeRoute: ActivatedRoute) {
     
   }
@@ -37,10 +42,14 @@ export class AddPortariaComponent implements OnInit {
         this.documento.conteudo = data['conteudo'];
         this.documento.mensagemGeral = data['mensagemGeral'];
         this.documento.mensagemSetor = data['mensagemSetor'];
+        this.documento.dataCriacao = data['dataCriacao'];
         
         this.documento.id = data['id'];
-        
+        this.initialRender();
       });
+    } else {
+      const today = new Date();
+    this.documento.dataCriacao = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
     }
   }
 
@@ -89,6 +98,47 @@ export class AddPortariaComponent implements OnInit {
           resolve(true);
         }, ms);
     });
+  }
+
+  initialRender(){
+
+    if(this.id) {
+      console.log(this.id);
+      this.documentoService.download(this.TIPO_PORTARIA, this.id).then(response => {
+        const newBlob = new Blob([response], { type: "application/pdf" });
+        this.urlPdf = window.URL.createObjectURL(newBlob);
+        this.urlDocumento = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(newBlob));
+      }).catch(error =>{
+        console.log(error);
+      });
+    }
+    
+  }
+
+  render() {
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+  });
+
+    const noBackSave: Promise<any> = this.documentoService.noBackSave(this.documento, 'portaria');
+    
+    if(noBackSave) {
+      noBackSave.then(data => {
+        this.id = data['id'];
+        this.documento.id = this.id;
+        this.initialRender();
+        Swal.close();
+      }).catch(error => {
+        console.log(error);
+        Swal.close();
+      });
+    }
   }
 
 }

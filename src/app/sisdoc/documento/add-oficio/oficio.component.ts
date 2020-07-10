@@ -15,6 +15,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {EditorModule} from 'primeng/editor';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 import Swal from 'sweetalert2';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-oficio',
@@ -34,6 +35,9 @@ export class OficioComponent implements OnInit {
   tipoEnvio;
   placeHoldEnvio;
   id = null;
+  urlPdf;
+  urlDocumento: SafeResourceUrl;
+  TIPO_OFICIO: Number = 1;
 
   constructor(
     public httpClient: HttpClient,
@@ -41,7 +45,8 @@ export class OficioComponent implements OnInit {
     public setorService: SetorService,
     public router: Router,
     public usuarioService: UsuarioService,
-    public activeRoute: ActivatedRoute
+    public activeRoute: ActivatedRoute,
+    public sanitizer: DomSanitizer
   ) {
     this.allUsersSelect = false;
     this.tipoEnvio = 0;
@@ -61,6 +66,7 @@ export class OficioComponent implements OnInit {
         this.documento.conteudo = data['conteudo'];
         this.documento.mensagemGeral = data['mensagemGeral'];
         this.documento.mensagemSetor = data['mensagemSetor'];
+        this.documento.dataCriacao = data['dataCriacao'];
 
         if(this.documento.mensagemSetor === true){
           this.tipoEnvio = 2; //Tipo de envio para setor
@@ -79,11 +85,15 @@ export class OficioComponent implements OnInit {
 
         this.initUsersForList();
         this.initSetoresForList();
-        
+        this.initialRender();
       });
     } else {
       this.initUsersForList();
       this.initSetoresForList();
+
+      const today = new Date();
+      this.documento.dataCriacao = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+
     }
     
    }
@@ -122,22 +132,34 @@ export class OficioComponent implements OnInit {
     return new Documento();
   }
 
-  salvar(){
-  
+  validarSalvar(): boolean {
     if(this.tipoEnvio === 0 || this.tipoEnvio === "0"){
       Swal.fire('Oops!', 'Você deve escolher o tipo de envio.', 'error');
-      return;
+      return false;
     }
 
     if(this.allUsersSelect === false && this.documento.destinatariosIds.length === 0){
       Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de escolher pelo menos uma pessoa para enviar este documento.', 'error');
-      return;
+      return false;
     }
 
-    if (this.allUsersSelect === true){
-      this.documento.destinatariosIds = [];
+    if(this.tipoEnvio === 0 || this.tipoEnvio === "0"){
+      Swal.fire('Oops!', 'Você deve escolher o tipo de envio.', 'error');
+      return false;
+    }
 
-      this.documento.mensagemGeral = true;
+    if(this.allUsersSelect === false && this.documento.destinatariosIds.length === 0){
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de escolher pelo menos uma pessoa para enviar este documento.', 'error');
+      return false;
+    }
+
+    return true;
+  }
+  
+  salvar(){
+  
+    if(!this.validarSalvar()){
+      return;
     }
 
     this.documentoService.save(this.documento, 'oficio');
@@ -176,6 +198,56 @@ export class OficioComponent implements OnInit {
       this.placeHoldEnvio = "Para onde vai enviar este documento?";
       this.objectsForList = this.setoresForList;
 
+    }
+  }
+
+  initialRender(){
+
+    if(this.id) {
+      console.log(this.id);
+      this.documentoService.download(this.TIPO_OFICIO, this.id).then(response => {
+        const newBlob = new Blob([response], { type: "application/pdf" });
+        this.urlPdf = window.URL.createObjectURL(newBlob);
+        this.urlDocumento = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(newBlob));
+      }).catch(error =>{
+        console.log(error);
+      });
+    }
+    
+  }
+
+  render() {
+    if(!this.validarSalvar()){
+      return;
+    }
+
+    if (this.allUsersSelect === true){
+      this.documento.destinatariosIds = [];
+
+      this.documento.mensagemGeral = true;
+    }
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+  });
+
+    const noBackSave: Promise<any> = this.documentoService.noBackSave(this.documento, 'oficio');
+    
+    if(noBackSave) {
+      noBackSave.then(data => {
+        this.id = data['id'];
+        this.documento.id = this.id;
+        this.initialRender();
+        Swal.close();
+      }).catch(error => {
+        console.log(error);
+        Swal.close();
+      });
     }
   }
 

@@ -43,6 +43,7 @@ export class DocumentoComponent implements OnInit {
     this.documentoSearch = this.newDocumento();
     this.paginator = this.paginatorService.newPaginator();
     this.paginatorRecebidos = this.paginatorService.newPaginator();
+    this.pesquisar(0, 'ambos');
    }
 
   ngOnInit() {
