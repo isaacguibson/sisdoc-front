@@ -173,6 +173,47 @@ export class DocumentoComponent implements OnInit {
     });
   }
 
+  downloadDocumentWord(idTipoDocumento, idDocumento, tipoDocumentoNome){
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+
+    this.documentoService.downloadDocWord(idDocumento, idTipoDocumento).then(response => {
+      
+      var newBlob = new Blob([response], { type: "application/msword" });
+
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(newBlob);
+          return;
+      }
+
+      const data = window.URL.createObjectURL(newBlob);
+
+      var link = document.createElement('a');
+      link.href = data;
+      link.download = "Documento_"+tipoDocumentoNome+"_"+idDocumento+".doc";
+      
+      // this is necessary as link.click() does not work on the latest firefox
+      link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+      setTimeout(function () {
+          // For Firefox it is necessary to delay revoking the ObjectURL
+          window.URL.revokeObjectURL(data);
+          link.remove();
+      }, 150);
+
+      Swal.close();
+    }).catch(error =>{
+      console.log(error);
+    });
+  }
+
   deletar(id){
 
     Swal.fire({

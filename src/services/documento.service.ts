@@ -283,6 +283,18 @@ export class DocumentoService {
         
     }
 
+    downloadDocWord(idDocumento, tipoDocumento){
+
+        return this.httpClient.get(this.apiUrl+'documento/word/'+idDocumento+'?cargoId='+localStorage.getItem("userOfficeId")+'&tipoDocumento='+tipoDocumento,
+                    {headers: 
+                        {
+                            Authorization: localStorage.getItem("token")
+                        },
+                        responseType: 'blob'
+                    })
+                .toPromise();
+    }
+
     downloadTipo(idDocumento, tipo){
 
         return this.httpClient.get(this.apiUrl+'documento/'+tipo+'/'+idDocumento+'?cargoId='+localStorage.getItem("userOfficeId"),

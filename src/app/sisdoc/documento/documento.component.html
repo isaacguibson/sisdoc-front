@@ -111,6 +111,11 @@
                                           (click)="downloadDocument(item.tipoDocumento.id, item.id, item.tipoDocumento.nome)">
                                       <i class="mdi mdi-file-pdf" style="margin: 0; text-align: center;"></i>
                                   </button>
+                                  <button type="button" class="btn btn-sm btn-outline-info" data-toggle="tooltip" title="Download"
+                                          style="padding: 1px; text-align: center; margin-right: 4%"
+                                          (click)="downloadDocumentWord(item.tipoDocumento.id, item.id, item.tipoDocumento.nome)">
+                                      <i class="mdi mdi-file-word" style="margin: 0; text-align: center;"></i>
+                                  </button>
                                   <button class="btn btn-sm btn-info" style="padding: 1px; text-align: center; margin-right: 4%"
                                           (click)="editar(item.id, item.tipoDocumento.id)" data-toggle="tooltip" title="Editar">
                                     <i class="mdi mdi-tooltip-edit" style="margin: 0; text-align: center;"></i>
