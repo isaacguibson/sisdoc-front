@@ -41,7 +41,7 @@ export class CargoComponent implements OnInit {
     this.cargoSearch = this.newCargo();
     // this.pesquisar();
     this.paginator = this.paginatorService.newPaginator();
-
+    this.pesquisar(0);
   }
 
   newCargo(){

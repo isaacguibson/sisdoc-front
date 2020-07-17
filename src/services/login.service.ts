@@ -64,34 +64,74 @@ export class LoginService {
                         var value = element['options'][element['selectedIndex']].value;
 
                         if(value != null && value !== '' && value != undefined){
-                            localStorage.setItem("token", data['JWT']);
-                            localStorage.setItem("userId", data['usuario']["id"]);
-                            localStorage.setItem("userEmail", data['usuario']["email"]);
-                            localStorage.setItem("userName", data['usuario']["nome"]);
-                            localStorage.setItem("userTreatment", data['usuario']["tratamento"]);
-                            localStorage.setItem("userOfficeId", data['usuario']['cargos'][value]['cargoId']);
-                            localStorage.setItem("userDepartmentId", data['usuario']['cargos'][value]['setor']['setorId']);
-                            localStorage.setItem("userOffice", data['usuario']['cargos'][value]['cargoNome']);
-                            localStorage.setItem("userDepartment", data['usuario']['cargos'][value]['setor']['setorNome']);
-                        
-                            this.router.navigate(['/sisdoc/dashboard']);
+                            
+                            let permissoes: any = [];
+                            this.httpClient.get(this.apiUrl+'permissao/obterPermissoesPeloCargo/'+data['usuario']['cargos'][value]['cargoId'],
+                            {headers:
+                                {'Authorization':data['JWT']}
+                            }).toPromise().then(permissoesRetorno=>{
+                                console.log(data['usuario']['cargos'][value]['cargoId']);
+                                console.log(permissoesRetorno);
+                                permissoes = permissoesRetorno;
+
+                                localStorage.setItem("token", data['JWT']);
+                                localStorage.setItem("userId", data['usuario']["id"]);
+                                localStorage.setItem("userEmail", data['usuario']["email"]);
+                                localStorage.setItem("userName", data['usuario']["nome"]);
+                                localStorage.setItem("userTreatment", data['usuario']["tratamento"]);
+                                localStorage.setItem("userOfficeId", data['usuario']['cargos'][value]['cargoId']);
+                                localStorage.setItem("userDepartmentId", data['usuario']['cargos'][value]['setor']['setorId']);
+                                localStorage.setItem("userOffice", data['usuario']['cargos'][value]['cargoNome']);
+                                localStorage.setItem("userDepartment", data['usuario']['cargos'][value]['setor']['setorNome']);
+                                localStorage.setItem("permissions", permissoes);
+
+                                this.router.navigate(['/sisdoc/dashboard']);
+                            }).catch(error => {
+                                Swal.fire({
+                                    title: 'Erro',
+                                    text: 'Não foi possível realizar login',
+                                    type: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
+
+                            
                         } else {
                             return;
                         }
                     });
 
                 } else {
-                    localStorage.setItem("token", data['JWT']);
-                    localStorage.setItem("userId", data['usuario']["id"]);
-                    localStorage.setItem("userEmail", data['usuario']["email"]);
-                    localStorage.setItem("userName", data['usuario']["nome"]);
-                    localStorage.setItem("userTreatment", data['usuario']["tratamento"]);
-                    localStorage.setItem("userOfficeId", data['usuario']['cargos'][0]['cargoId']);
-                    localStorage.setItem("userDepartmentId", data['usuario']['cargos'][0]['setor']['setorId']);
-                    localStorage.setItem("userOffice", data['usuario']['cargos'][0]['cargoNome']);
-                    localStorage.setItem("userDepartment", data['usuario']['cargos'][0]['setor']['setorNome']);
-                
-                    this.router.navigate(['/sisdoc/dashboard']);
+
+                    let permissoes: any = [];
+                            this.httpClient.get(this.apiUrl+'permissao/obterPermissoesPeloCargo/'+data['usuario']['cargos'][0]['cargoId'],
+                            {headers:
+                                {'Authorization':data['JWT']}
+                            }).toPromise().then(permissoesRetorno=>{
+                                console.log(data['usuario']['cargos'][0]['cargoId']);
+                                console.log(permissoesRetorno);
+                                permissoes = permissoesRetorno;
+
+                                localStorage.setItem("token", data['JWT']);
+                                localStorage.setItem("userId", data['usuario']["id"]);
+                                localStorage.setItem("userEmail", data['usuario']["email"]);
+                                localStorage.setItem("userName", data['usuario']["nome"]);
+                                localStorage.setItem("userTreatment", data['usuario']["tratamento"]);
+                                localStorage.setItem("userOfficeId", data['usuario']['cargos'][0]['cargoId']);
+                                localStorage.setItem("userDepartmentId", data['usuario']['cargos'][0]['setor']['setorId']);
+                                localStorage.setItem("userOffice", data['usuario']['cargos'][0]['cargoNome']);
+                                localStorage.setItem("userDepartment", data['usuario']['cargos'][0]['setor']['setorNome']);
+                                localStorage.setItem("permissions", permissoes);
+                            
+                                this.router.navigate(['/sisdoc/dashboard']);
+                            }).catch(error => {
+                                Swal.fire({
+                                    title: 'Erro',
+                                    text: 'Não foi possível realizar login',
+                                    type: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            });
                 }
             })
 

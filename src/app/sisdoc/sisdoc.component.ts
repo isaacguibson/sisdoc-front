@@ -12,10 +12,15 @@ export class SisdocComponent {
 
   usuario :Usuario
   admin = false;
+  permissoes = [];
   constructor(
     public router: Router,
     public location: Location
   ) { 
+
+    (localStorage.getItem('permissions').split(',')).forEach(permissao => {
+      this.permissoes.push(Number.parseInt(permissao));
+    });
 
     this.usuario = this.getUserLogado();
     if(this.usuario.nomeCargo === 'Administrador(a)') {
@@ -39,6 +44,15 @@ export class SisdocComponent {
   logout() {
     localStorage.clear();
     location.reload();
+  }
+
+  containsPermission(permissao: number): boolean {
+
+    if(this.permissoes.includes(permissao)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

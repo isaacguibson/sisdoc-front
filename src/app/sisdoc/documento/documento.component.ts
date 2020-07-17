@@ -31,6 +31,7 @@ export class DocumentoComponent implements OnInit {
 
   paginator = null;
   paginatorRecebidos = null;
+  permissoes = [];
 
   constructor(
     public httpClient: HttpClient,
@@ -39,6 +40,10 @@ export class DocumentoComponent implements OnInit {
     public tipoDocumentoService: TipoDocumentoService,
     public router: Router
   ) {
+    (localStorage.getItem('permissions').split(',')).forEach(permissao => {
+      this.permissoes.push(Number.parseInt(permissao));
+    });
+    console.log(this.permissoes);
     this.documento = this.newDocumento();
     this.documentoSearch = this.newDocumento();
     this.paginator = this.paginatorService.newPaginator();
@@ -312,8 +317,6 @@ export class DocumentoComponent implements OnInit {
         this.searchResult = data;
         this.contentReceivedList = this.searchResult['content'];
 
-        console.log(this.searchResult['content']);
-
         this.paginatorRecebidos
           = this.paginatorService.fillPaginator(this.searchResult['totalPages'],
                                                 this.searchResult['totalElements'],
@@ -332,11 +335,59 @@ export class DocumentoComponent implements OnInit {
 
   buildHtmlSelect(){
 
+    
     this.htmlSelectString = '<select id="selectTipoDoc" class="custom-select">';
     this.htmlSelectString += '<option value="">Selecione</option>';
 
+    let incluir: boolean = false;
     for (let index in this.tipoDocsList){
-      this.htmlSelectString += '<option value="'+this.tipoDocsList[index]['id']+'">'+this.tipoDocsList[index]['nome']+'</option>';
+
+      incluir = false;
+      //OFICIO
+      if(this.tipoDocsList[index]['id'] == 1) {
+        if(this.permissoes.includes(1)){
+          incluir = true;
+        }
+      }
+
+      //PORTARIA
+      if(this.tipoDocsList[index]['id'] == 3) {
+        if(this.permissoes.includes(2)){
+          incluir = true;
+        }
+      }
+
+      //REQUERIMENTO
+      if(this.tipoDocsList[index]['id'] == 4) {
+        if(this.permissoes.includes(3)){
+          incluir = true;
+        }
+      }
+
+      //DESPACHO
+      if(this.tipoDocsList[index]['id'] == 5) {
+        if(this.permissoes.includes(4)){
+          incluir = true;
+        }
+      }
+
+      //DECLARACAO
+      if(this.tipoDocsList[index]['id'] == 6) {
+        if(this.permissoes.includes(5)){
+          incluir = true;
+        }
+      }
+
+      //ATA
+      if(this.tipoDocsList[index]['id'] == 7) {
+        if(this.permissoes.includes(6)){
+          incluir = true;
+        }
+      }
+
+      if(incluir) {
+        this.htmlSelectString += '<option value="'+this.tipoDocsList[index]['id']+'">'+this.tipoDocsList[index]['nome']+'</option>';
+      }
     }
 
     this.htmlSelectString += '</select>';

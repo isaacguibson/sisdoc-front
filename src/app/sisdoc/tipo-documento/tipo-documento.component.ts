@@ -38,6 +38,7 @@ export class TipoDocumentoComponent implements OnInit {
     this.tipoDocumentoSearch = this.newTipoDocumento();
 
     this.paginator = this.paginatorService.newPaginator();
+    this.pesquisar(0);
 
   }
 

@@ -38,6 +38,7 @@ export class SetorComponent implements OnInit {
     this.setorSearch = this.newSetor();
     // this.pesquisar();
     this.paginator = this.paginatorService.newPaginator();
+    this.pesquisar(0);
    }
 
    ngOnInit() {

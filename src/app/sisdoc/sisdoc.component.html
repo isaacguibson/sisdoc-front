@@ -63,19 +63,19 @@
             <span class="menu-title">Documentos</span>
           </a>
         </li>
-        <li class="nav-item" *ngIf="admin">
+        <li class="nav-item" *ngIf="containsPermission(7)">
           <a class="nav-link" href="sisdoc/setor">
             <i class="menu-icon mdi mdi-library"></i>
             <span class="menu-title">Setor</span>
           </a>
         </li>
-        <li class="nav-item" *ngIf="admin">
+        <li class="nav-item" *ngIf="containsPermission(8)">
           <a class="nav-link" href="sisdoc/cargo">
             <i class="menu-icon mdi mdi-tie"></i>
             <span class="menu-title">Cargo</span>
           </a>
         </li>
-        <li class="nav-item" *ngIf="admin">
+        <li class="nav-item" *ngIf="containsPermission(9)">
           <a class="nav-link" href="sisdoc/colegiado">
             <i class="menu-icon mdi mdi-account-switch"></i>
             <span class="menu-title">Colegiado</span>

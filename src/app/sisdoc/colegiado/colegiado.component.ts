@@ -21,6 +21,7 @@ export class ColegiadoComponent implements OnInit {
               public router: Router) {
 
       this.paginator = this.paginatorService.newPaginator();
+      this.pesquisar(0);
 
   }
 
