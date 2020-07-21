@@ -14,6 +14,7 @@ export class ColegiadoAddComponent implements OnInit {
 
   colegiadoToSave;
   objectsForList;
+  placeHoldMembros;
   constructor(public usuarioService: UsuarioService,
               public colegiadoService: ColegiadoService,
               public router: Router,
@@ -21,6 +22,7 @@ export class ColegiadoAddComponent implements OnInit {
     this.colegiadoToSave = new Colegiado();                
     this.objectsForList = [];
     this.initObjects();
+    this.placeHoldMembros = 'Selecione os Membros'
   }
 
   ngOnInit() {

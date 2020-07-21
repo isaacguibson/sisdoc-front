@@ -82,16 +82,11 @@ import { ColegiadoAddComponent } from './sisdoc/colegiado/add/add.component';
     PdfJsViewerModule,
     PdfViewerModule,
     QuillModule.forRoot(),
-
-    /* TEXT EDITOR */ CKEditorModule,
-
-    /* Http Client */ HttpClientModule,
-
+    CKEditorModule,
+    HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return localStorage.getItem('token');
-        }
+        tokenGetter: jwtTokenGetter
       }
     })
   ],
@@ -108,4 +103,9 @@ import { ColegiadoAddComponent } from './sisdoc/colegiado/add/add.component';
     JwtHelperService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
+export function jwtTokenGetter() {
+  return localStorage.getItem('token');
+}

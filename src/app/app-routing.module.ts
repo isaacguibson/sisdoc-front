@@ -22,7 +22,7 @@ import { AddAtaComponent } from './sisdoc/documento/add-ata/add-ata.component';
 
 const routes: Routes = [
   
-  { path: '', redirectTo: 'sisdoc', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   {
     path: 'login',
