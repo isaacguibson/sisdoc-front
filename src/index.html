@@ -26,10 +26,12 @@
   <!-- css files -->
   <link href="/assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
   <link href="/assets/css/login-style.css" rel="stylesheet" type="text/css" media="all"/>
+  <link rel="stylesheet" href="/assets/css/style-starter.css">
   <!-- //css files -->
 
   <!-- google fonts -->
   <link href="//fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="//fonts.googleapis.com/css?family=Hind:400,500,600,700&display=swap" rel="stylesheet">
   <!-- //google fonts -->
 
   <!-- For text editor imports -->
@@ -63,7 +65,49 @@
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="/assets/js/dashboard.js"></script>
+  <script src="/assets/js/aos.js"></script>
+  <script src="/assets/js/aosindex.js"></script>
+  <!-- //aos -->
   <!-- End custom js for this page-->
+
+  <script src="/assets/js/jquery-3.3.1.min.js"></script>
+  <!-- disable body scroll which navbar is in active -->
+
+  <!--//-->
+  <script>
+    $(function () {
+      $('.navbar-toggler').click(function () {
+        $('body').toggleClass('noscroll');
+      })
+    });
+  </script>
+  <!--/MENU-JS-->
+  <script>
+    $(window).on("scroll", function () {
+      var scroll = $(window).scrollTop();
+
+      if (scroll >= 80) {
+        $("#site-header").addClass("nav-fixed");
+      } else {
+        $("#site-header").removeClass("nav-fixed");
+      }
+    });
+
+    //Main navigation Active Class Add Remove
+    $(".navbar-toggler").on("click", function () {
+      $("header").toggleClass("active");
+    });
+    $(document).on("ready", function () {
+      if ($(window).width() > 991) {
+        $("header").removeClass("active");
+      }
+      $(window).on("resize", function () {
+        if ($(window).width() > 991) {
+          $("header").removeClass("active");
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
