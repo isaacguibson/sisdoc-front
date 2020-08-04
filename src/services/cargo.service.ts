@@ -94,6 +94,14 @@ export class CargoService {
         .toPromise();
     }
 
+    cargosPorSetor(id) {
+        return this.httpClient.get<any[]>(this.apiUrl+'cargo/setor/'+id,
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        })
+        .toPromise();
+    }
+
     pesquisar(page, size, cargo: Cargo){
 
         let apiURLPaginated = this.apiUrl+'cargo?';

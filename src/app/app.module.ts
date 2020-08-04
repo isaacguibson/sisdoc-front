@@ -49,6 +49,8 @@ import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/ad
 import { AddAtaComponent } from './sisdoc/documento/add-ata/add-ata.component';
 import { ColegiadoComponent } from './sisdoc/colegiado/colegiado.component';
 import { ColegiadoAddComponent } from './sisdoc/colegiado/add/add.component';
+import { UsuarioComponent } from './sisdoc/usuario/usuario.component';
+import { UsuarioAddComponent } from './sisdoc/usuario/usuario-add/usuario-add.component';
 
 @NgModule({
   
@@ -70,7 +72,9 @@ import { ColegiadoAddComponent } from './sisdoc/colegiado/add/add.component';
     AddRequerimentoComponent,
     AddAtaComponent,
     ColegiadoComponent,
-    ColegiadoAddComponent
+    ColegiadoAddComponent,
+    UsuarioComponent,
+    UsuarioAddComponent
   ],
   imports: [
     NgSelectModule,

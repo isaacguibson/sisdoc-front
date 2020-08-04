@@ -19,6 +19,8 @@ import { AddDeclaracaoComponent } from './sisdoc/documento/add-declaracao/add-de
 import { AddDespachoComponent } from './sisdoc/documento/add-despacho/add-despacho.component';
 import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/add-requerimento.component';
 import { AddAtaComponent } from './sisdoc/documento/add-ata/add-ata.component';
+import { UsuarioComponent } from './sisdoc/usuario/usuario.component';
+import { UsuarioAddComponent } from './sisdoc/usuario/usuario-add/usuario-add.component';
 
 const routes: Routes = [
   
@@ -108,6 +110,15 @@ const routes: Routes = [
       },
       { path: 'perfil', 
         component: PerfilComponent
+      },
+      { path: 'usuario', 
+        component: UsuarioComponent
+      },
+      { path: 'usuario-add', 
+        component: UsuarioAddComponent
+      },
+      { path: 'usuario-edit/:id', 
+        component: UsuarioAddComponent
       }
     ]
     , canActivate: [AuthGuard]

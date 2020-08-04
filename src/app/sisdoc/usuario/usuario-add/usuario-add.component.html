@@ -1,0 +1,88 @@
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-lg-12 d-flex align-items-stretch grid-margin">
+      <div class="row flex-grow">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Formulário de Usuário</h4>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-8">
+                  <label>Nome*</label>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="col-4">
+                  <label>Tratamento*</label>
+                  <select class="custom-select form-control">
+                    <option disabled [ngValue]="null">Selecione</option>
+                    <option value="Al.">Aluno (Al.)</option>
+                    <option value="Bib.">Bibliotecário(a) (Bib.)</option>
+                    <option value="DD.">Digníssimo (DD.)</option>
+                    <option value="D.ra">Doutora (D.ra)</option>
+                    <option value="Dr.">Doutor (Dr.)</option>
+                    <option value="Ex.ª">Excelência (Ex.ª)</option>
+                    <option value="Me.">Mestre (Me.)</option>
+                    <option value="Prof.">Professor (Prof.)</option>
+                    <option value="Prof.ª">Professora (Prof.ª)</option>
+                    <option value="Sec.">Secretário (Sec.)</option>
+                    <option value="Secr.">Secretária (Secr.)</option>
+                    <option value="S.">Seu/Sua (S.)</option>
+                    <option value="Sr.">Senhor (Sr.)</option>
+                    <option value="Sr.ª">Senhora (Sr.ª)</option>
+                    <option value="Srt.ª">Senhorita (Srt.ª)</option>
+                    <option value="V. Ex.ª">Vossa Excelência (V. Ex.ª)</option>
+                    <option value="V. Mag.ª">Vossa Magnificência (V. Mag.ª)</option>
+                    <option value="V. S.ª">Vossa Senhoria (V. S.ª)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>E-mail*</label>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="col-4">
+                  <label>Senha*</label>
+                  <input type="text" class="form-control" [(ngModel)]="usuario.senha" readonly>
+                </div>
+                <div class="col-4">
+                  <label>Curso</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Matrícula</label>
+                  <input type="text" class="form-control">
+                </div>
+                <div class="col-4">
+                  <label>Setor*</label>
+                  <select class="custom-select form-control" [(ngModel)]="setorSelecionado" (change)="changeSetor()">
+                    <option disabled [ngValue]="null">Selecione</option>
+                    <option *ngFor="let item of setores" [ngValue]="item.id">{{item.nome}}</option>
+                  </select>
+                </div>
+                <div class="col-4">
+                  <label>Cargo*</label>
+                  <select class="custom-select form-control" [disabled]="cargos.length == 0"
+                    [(ngModel)]="cargoSelecionado" (change)="changeSetor()">
+                    <option disabled [ngValue]="null">Selecione</option>
+                    <option *ngFor="let item of cargos" [ngValue]="item.id">{{item.nome}}</option>
+                  </select>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-12" style="text-align: end;">
+                  <button class="btn btn-primary mr-2">Salvar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

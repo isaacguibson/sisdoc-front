@@ -33,6 +33,7 @@ export class SisdocComponent {
       id: parseInt(localStorage.getItem("userId")),
       nome: localStorage.getItem("userName"),
       email: localStorage.getItem("userEmail"),
+      senha: null,
       setor: null,
       cargo: null,
       tratamento: localStorage.getItem("userTreatment"),

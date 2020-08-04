@@ -89,6 +89,12 @@
             <span class="menu-title">Tipos de Documento</span>
           </a>
         </li>
+        <li class="nav-item" *ngIf="admin">
+          <a class="nav-link" href="sisdoc/usuario">
+            <i class="menu-icon mdi mdi-library-books"></i>
+            <span class="menu-title">Criar Usuário</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#" (click)="logout()">
             <i class="menu-icon mdi mdi-restart"></i>
