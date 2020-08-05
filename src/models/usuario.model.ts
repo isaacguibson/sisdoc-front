@@ -3,9 +3,10 @@ export class Usuario{
     nome: string;
     email: string;
     senha: string;
-    setor?: number;
-    cargo?: number;
+    setorId?: number;
+    cargoId?: number;
     tratamento: string;
+    matricula: string;
     nomeSetor: string;
     nomeCargo: string;
 }

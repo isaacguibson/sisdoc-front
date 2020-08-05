@@ -75,7 +75,6 @@ export class CargoComponent implements OnInit {
       showConfirmButton: false
     });
 
-    console.log(this.cargoSearch);
     this.cargoService.pesquisar(this.paginator.currentPage, this.paginator.size, this.cargoSearch).then(data => {
           
           this.searchResult = data;

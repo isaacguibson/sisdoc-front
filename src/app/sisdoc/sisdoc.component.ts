@@ -36,6 +36,7 @@ export class SisdocComponent {
       senha: null,
       setor: null,
       cargo: null,
+      matricula: null,
       tratamento: localStorage.getItem("userTreatment"),
       nomeSetor: localStorage.getItem("userDepartment"),
       nomeCargo: localStorage.getItem("userOffice")

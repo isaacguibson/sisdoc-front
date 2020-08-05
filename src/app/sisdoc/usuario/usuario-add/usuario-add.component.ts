@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/models/usuario.model';
 import { SetorService } from '../../../../services/setor.service';
 import { CargoService } from '../../../../services/cargo.service';
+import { UsuarioService } from '../../../../services/usuario.service';
+import {Router} from "@angular/router";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario-add',
@@ -16,7 +19,9 @@ export class UsuarioAddComponent implements OnInit {
   setorSelecionado = null;
   cargoSelecionado = null;
   constructor(public setorService: SetorService,
-              public cargoService: CargoService) { 
+              public cargoService: CargoService,
+              public usuarioService: UsuarioService,
+              public router: Router) { 
     this.usuario = new Usuario();
     this.usuario.senha = this.gerarSenha();
     this.obterTodosSetores();
@@ -25,6 +30,50 @@ export class UsuarioAddComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  validarSalvar(): boolean {
+    console.log(this.usuario);
+
+    if(!this.usuario.nome || this.usuario.nome === ''){
+      Swal.fire('Oops!', 'Você deve informar o nome.', 'error');
+      return false;
+    }
+
+    if(!this.usuario.tratamento || this.usuario.nome === ''){
+      Swal.fire('Oops!', 'Você deve informar o tratamento.', 'error');
+      return false;
+    }
+
+    if(!this.usuario.email || this.usuario.nome === ''){
+      Swal.fire('Oops!', 'Você deve informar o email.', 'error');
+      return false;
+    }
+
+    if(!this.usuario.setorId){
+      Swal.fire('Oops!', 'Você deve informar o setor.', 'error');
+      return false;
+    }
+
+    if(!this.usuario.cargoId){
+      Swal.fire('Oops!', 'Você deve informar o cargo.', 'error');
+      return false;
+    }
+
+    return true;
+  }
+
+  salvar(){
+
+    this.usuario.cargoId = this.cargoSelecionado;
+    this.usuario.setorId = this.setorSelecionado;
+
+    if(!this.validarSalvar()){
+      return;
+    }
+
+    this.usuarioService.save(this.usuario);
+
   }
 
   obterTodosSetores() {
@@ -66,6 +115,10 @@ export class UsuarioAddComponent implements OnInit {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  voltar(){
+    this.router.navigate(['/sisdoc/usuario']);
   }
 
 }
