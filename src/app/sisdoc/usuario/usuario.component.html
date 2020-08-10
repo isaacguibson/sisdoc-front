@@ -60,7 +60,7 @@
                   <td scope="row">{{item.nome}}</td>
                   <td scope="row">{{item.email}}</td>
                   <td>
-                    <button class="btn btn-sm btn-danger" style="padding: 1px; text-align: center;">
+                    <button class="btn btn-sm btn-danger" style="padding: 1px; text-align: center;" (click)="deletar(item.id)">
                       <i class="mdi mdi-delete" style="margin: 0; text-align: center;"></i>
                     </button>
                 </td>
