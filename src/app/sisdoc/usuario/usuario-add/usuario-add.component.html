@@ -45,7 +45,10 @@
                 </div>
                 <div class="col-4">
                   <label>Senha*</label>
-                  <input type="text" class="form-control" [(ngModel)]="usuario.senha" readonly>
+                  <input type="text" class="form-control" [(ngModel)]="usuario.senha"
+                  [readonly]="id == null" *ngIf="showSenha">
+                  <button class="btn btn-outline-danger btn-block btn-sm mr-2" 
+                  (click)="toogleSenha()" *ngIf="!showSenha">Alterar Senha</button>
                 </div>
                 <div class="col-4">
                   <label>Curso</label>
@@ -66,7 +69,7 @@
                 </div>
                 <div class="col-4">
                   <label>Cargo*</label>
-                  <select class="custom-select form-control" [disabled]="cargos.length == 0"
+                  <select class="custom-select form-control" [disabled]="cargos.length == 0 && id == null"
                     [(ngModel)]="cargoSelecionado" (change)="changeSetor()">
                     <option disabled [ngValue]="null">Selecione</option>
                     <option *ngFor="let item of cargos" [ngValue]="item.id">{{item.nome}}</option>

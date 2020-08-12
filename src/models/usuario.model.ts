@@ -9,4 +9,5 @@ export class Usuario{
     matricula: string;
     nomeSetor: string;
     nomeCargo: string;
+    curso: string;
 }

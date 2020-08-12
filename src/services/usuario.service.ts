@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Usuario } from '../models/usuario.model';
+import {Router} from "@angular/router";
 import swal from 'sweetalert2';
 
 @Injectable()
@@ -10,7 +11,8 @@ export class UsuarioService {
     apiUrl = environment.apiUrl;
 
     constructor(
-        public httpClient: HttpClient
+        public httpClient: HttpClient,
+        public router: Router
     ) { 
         
     }
@@ -43,6 +45,14 @@ export class UsuarioService {
         }).toPromise();
     }
 
+    get(id){
+        return this.httpClient.get(this.apiUrl+'usuario/'+id,
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        })
+        .toPromise();
+    }
+
     save(usuario){
 
         swal.fire({
@@ -64,7 +74,6 @@ export class UsuarioService {
                 .then(data => {
                     swal.close();
                     this.showEditedMessage();
-                    
                 }).catch(error =>{
                     console.log(error);
                     swal.close();
@@ -80,7 +89,6 @@ export class UsuarioService {
                 .then(data => {
                     swal.close();
                     this.showSavedMessage();
-                    
                 }).catch(error =>{
                     console.log(error);
                     swal.close();
@@ -113,11 +121,15 @@ export class UsuarioService {
     }
 
     showSavedMessage(){
-        swal.fire('Registro Salvo', 'Um novo usuário foi criado com sucesso', 'success');
+        swal.fire('Registro Salvo', 'Um novo usuário foi criado com sucesso', 'success').then(res => {
+            this.router.navigate(['/sisdoc/usuario']);
+        });
     }
 
     showEditedMessage(){
-        swal.fire('Registro Salvo', 'Usuário editado sucesso', 'success');
+        swal.fire('Registro Salvo', 'Usuário editado sucesso', 'success').then(res => {
+            this.router.navigate(['/sisdoc/perfil']);
+        });
     }
 
     showDeletedMessage(){

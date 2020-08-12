@@ -3,6 +3,7 @@ import { Usuario } from 'src/models/usuario.model';
 import { SetorService } from '../../../../services/setor.service';
 import { CargoService } from '../../../../services/cargo.service';
 import { UsuarioService } from '../../../../services/usuario.service';
+import { ActivatedRoute } from "@angular/router";
 import {Router} from "@angular/router";
 import Swal from 'sweetalert2';
 
@@ -17,16 +18,36 @@ export class UsuarioAddComponent implements OnInit {
   setores;
   cargos: any[];
   setorSelecionado = null;
-  cargoSelecionado = null;
+  cargoSelecionado = null; 
+  id = null;
+  showSenha = true;
   constructor(public setorService: SetorService,
               public cargoService: CargoService,
               public usuarioService: UsuarioService,
+              public activeRoute: ActivatedRoute,
               public router: Router) { 
     this.usuario = new Usuario();
     this.usuario.senha = this.gerarSenha();
     this.obterTodosSetores();
     this.cargos = [];
     console.log(this.cargos.length);
+
+    this.id = this.activeRoute.snapshot.paramMap.get("id");
+
+    if(this.id){
+      this.showSenha = false;
+      this.usuarioService.get(this.id).then(data => {
+
+        console.log(data);
+        this.usuario.nome = data['nome'];
+        this.usuario.tratamento = data['tratamento'];
+        this.usuario.email = data['email'];
+        this.usuario.curso = data['curso'];
+        this.usuario.matricula = data['matricula'];
+        this.usuario.senha = null;
+        this.usuario.id = this.id;
+      });
+    }
   }
 
   ngOnInit() {
@@ -60,6 +81,13 @@ export class UsuarioAddComponent implements OnInit {
       return false;
     }
 
+    if(this.showSenha){
+      if(this.usuario.senha == null || this.usuario.senha == ''){
+        Swal.fire('Oops!', 'Você deve informar a senha.', 'error');
+        return false;
+      }
+    }
+
     return true;
   }
 
@@ -79,6 +107,12 @@ export class UsuarioAddComponent implements OnInit {
   obterTodosSetores() {
     this.setorService.listAll().then(res => {
       this.setores = res;
+      if(this.id) {
+        this.setorSelecionado = Number.parseInt(localStorage.getItem("userDepartmentId"));
+      }
+      if(this.setorSelecionado) {
+        this.obterCargosDoSetor(this.setorSelecionado);
+      }
     }).catch(err => {
       console.log(err);
     })
@@ -93,6 +127,9 @@ export class UsuarioAddComponent implements OnInit {
   obterCargosDoSetor(id) {
     this.cargoService.cargosPorSetor(id).then(res => {
       this.cargos = res;
+      if(this.id) {
+        this.cargoSelecionado = Number.parseInt(localStorage.getItem("userOfficeId"));
+      }
     }).catch(err => {
       console.log(err);
     });
@@ -118,7 +155,14 @@ export class UsuarioAddComponent implements OnInit {
   }
 
   voltar(){
-    this.router.navigate(['/sisdoc/usuario']);
+    if(this.id) {
+      this.router.navigate(['/sisdoc/perfil']);
+    } else {
+      this.router.navigate(['/sisdoc/usuario']);
+    }
   }
 
+  toogleSenha(){
+    this.showSenha = !this.showSenha;
+  }
 }
