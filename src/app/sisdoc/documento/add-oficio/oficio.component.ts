@@ -157,7 +157,6 @@ export class OficioComponent implements OnInit {
   }
   
   salvar(){
-  
     if(!this.validarSalvar()){
       return;
     }
@@ -166,11 +165,30 @@ export class OficioComponent implements OnInit {
   }
 
   cancelar(){
-    this.router.navigate(['/sisdoc/documento']);
+
+    Swal.fire({
+      title: 'Salvar alterações',
+      text: "Deseja salvar o documento antes de sair?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, salvar!',
+      cancelButtonText: 'Não, apenas sair.'
+    }).then((result) => {
+
+      //Delete apenas se usuario clicar em sim
+      if(result.dismiss != Swal.DismissReason.cancel){
+        this.salvar();
+      } else {
+        this.router.navigate(['/sisdoc/documento']);
+      }
+    });
   }
 
   selectAllUsers(){
 
+    this.documento.destinatariosIds = [];
     if(this.allUsersSelect === true){
       this.documento.mensagemGeral = true;
     } else {
@@ -179,7 +197,7 @@ export class OficioComponent implements OnInit {
   }
 
   alterarTipoEnvio(){
-
+    this.documento.destinatariosIds = [];
     if(this.tipoEnvio === 0 || this.tipoEnvio === "0"){
 
       this.documento.mensagemSetor = false;
@@ -234,21 +252,66 @@ export class OficioComponent implements OnInit {
       },
       allowOutsideClick: false,
       showConfirmButton: false
-  });
+    });
 
     const noBackSave: Promise<any> = this.documentoService.noBackSave(this.documento, 'oficio');
     
     if(noBackSave) {
       noBackSave.then(data => {
-        this.id = data['id'];
-        this.documento.id = this.id;
-        this.initialRender();
-        Swal.close();
+        if(data['mensagem']) {
+          this.showSpecificErrorMessage(data['mensagem']);
+        } else {
+          this.id = data['id'];
+          this.documento.id = this.id;
+          this.initialRender();
+          Swal.close();
+        }
       }).catch(error => {
         console.log(error);
         Swal.close();
       });
     }
   }
+
+  noSaveRender() {
+
+    this.documento.usuarioId = Number.parseInt(localStorage.getItem("userId"));
+    this.documento.tipoDocumentoId = this.TIPO_OFICIO;
+
+    if(!this.validarSalvar()){
+      return;
+    }
+
+    if (this.allUsersSelect === true){
+      this.documento.destinatariosIds = [];
+
+      this.documento.mensagemGeral = true;
+    }
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+    
+
+    this.documentoService.render(this.documento).then(response => {
+      const newBlob = new Blob([response], { type: "application/pdf" });
+        this.urlPdf = window.URL.createObjectURL(newBlob);
+        this.urlDocumento = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(newBlob));
+        this.id = -1; // Apenas para renderizar
+        Swal.close();
+      }).catch(error => {
+      console.log(error);
+      Swal.close();
+    });
+  }
+
+  showSpecificErrorMessage(mensagem){
+    Swal.fire('Oops!', mensagem, 'error');
+}
 
 }

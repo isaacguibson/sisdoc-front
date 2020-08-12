@@ -9,7 +9,7 @@ export class Documento{
     dataCriacao:string;
     dataInicial:Date;
     dataFinal:Date;
-    tipoDocumentoId:number;
+    tipoDocumentoId:Number;
     enviada: boolean;
     mensagemGeral: boolean; //indica se eh enviada para todos
     mensagemSetor: boolean; //indica se eh uma mensagem para setores
@@ -21,4 +21,5 @@ export class Documento{
     outrasRotinas: GenericListObject[];
     informacoes: GenericListObject[];
     reuniao: Reuniao;
+    usuarioId: number;
 }

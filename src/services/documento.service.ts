@@ -119,8 +119,13 @@ export class DocumentoService {
                 .toPromise()
                 .then(data => {
                     swal.close();
-                    this.showEditedMessage(tipo);
-                    this.router.navigate(['/sisdoc/documento']);
+
+                    if(data['mensagem']) {
+                        this.showSpecificErrorMessage(data['mensagem']);
+                    } else {
+                        this.showEditedMessage(tipo);
+                        this.router.navigate(['/sisdoc/documento']);
+                    }
                     
                 }).catch(error =>{
                     console.log(error);
@@ -136,9 +141,14 @@ export class DocumentoService {
                 })
                 .toPromise()
                 .then(data => {
-                    swal.close();
-                    this.showSavedMessage(tipo);
-                    this.router.navigate(['/sisdoc/documento']);
+                    if(data['mensagem']) {
+                        console.log(data);
+                        this.showSpecificErrorMessage(data['mensagem']);
+                    } else {
+                        swal.close();
+                        this.showSavedMessage(tipo);
+                        this.router.navigate(['/sisdoc/documento']);
+                    }
                     
                 }).catch(error =>{
                     console.log(error);
@@ -307,6 +317,17 @@ export class DocumentoService {
                 .toPromise();
     }
 
+    render(documento: Documento){
+
+        return this.httpClient.post(this.apiUrl+'documento/render?cargoId='+localStorage.getItem("userOfficeId"), documento,
+                    {headers: 
+                        {
+                            Authorization: localStorage.getItem("token")
+                        },
+                        responseType: 'blob'
+                    })
+                .toPromise();
+    }
 
     showSavedMessage(tipo){
         swal.fire('Registro Salvo', 'Um novo ' + tipo + ' foi criado com sucesso', 'success');
@@ -322,6 +343,10 @@ export class DocumentoService {
 
     showErrorMessage(){
         swal.fire('Oops!', 'Algo de errado aconteceu.', 'error');
+    }
+
+    showSpecificErrorMessage(mensagem){
+        swal.fire('Oops!', mensagem, 'error');
     }
 
 }

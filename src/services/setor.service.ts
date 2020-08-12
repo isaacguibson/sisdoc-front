@@ -83,6 +83,15 @@ export class SetorService {
         .toPromise();
     }
 
+    existemUsuariosPrincipais(id){
+
+        return this.httpClient.delete(this.apiUrl+'setor/check-existem-usuarios/'+id,
+        {headers:
+            {'Authorization':localStorage.getItem("token")}
+        })
+        .toPromise();
+    }
+
     get(id){
         return this.httpClient.get(this.apiUrl+'setor/'+id,
         {headers:
