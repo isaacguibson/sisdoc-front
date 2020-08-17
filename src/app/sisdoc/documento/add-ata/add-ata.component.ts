@@ -27,7 +27,7 @@ export class AddAtaComponent implements OnInit {
   allUsersSelect = false;
   colegiados: Colegiado[] = [];
   colegiadoSelecionado: Colegiado = new Colegiado();
-  idColegiadoSelecionado: number;
+  idColegiadoSelecionado: number = null;
   placeHoldMembros = 'Selecione os membros do colegiado';
   id = null; // Caso venha de edição
   urlPdf;
@@ -83,7 +83,7 @@ export class AddAtaComponent implements OnInit {
   }
 
   selectAllUsers(){
-
+    this.documento.destinatariosIds = [];
     if(this.allUsersSelect === true){
       this.documento.mensagemGeral = true;
     } else {
@@ -156,7 +156,24 @@ export class AddAtaComponent implements OnInit {
   }
 
   cancelar() {
-    this.router.navigate(['/sisdoc/documento']);
+    Swal.fire({
+      title: 'Salvar alterações',
+      text: "Deseja salvar o documento antes de sair?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, salvar!',
+      cancelButtonText: 'Não, apenas sair.'
+    }).then((result) => {
+
+      //Delete apenas se usuario clicar em sim
+      if(result.dismiss != Swal.DismissReason.cancel){
+        this.salvar();
+      } else {
+        this.router.navigate(['/sisdoc/documento']);
+      }
+    });
   }
 
   initialRender(){
@@ -220,5 +237,55 @@ export class AddAtaComponent implements OnInit {
         Swal.close();
       });
     }
+  }
+
+  noSaveRender() {
+
+    this.documento.usuarioId = Number.parseInt(localStorage.getItem("userId"));
+    this.documento.tipoDocumentoId = this.TIPO_ATA;
+
+    if(!this.validarSalvar()){
+      return;
+    }
+
+    if (!this.colegiadoSelecionado) {
+      Swal.fire('Oops!', 'Selecione o colegiado', 'error');
+      return;
+    } else {
+      if(!this.id) { // Caso não seja uma edição
+        this.documento.reuniao = new Reuniao();
+      }
+      if (this.colegiadoSelecionado.id) {
+        this.documento.reuniao.colegiadoId = this.colegiadoSelecionado.id;
+      }
+      
+    }
+
+    if (this.allUsersSelect === true){
+      this.documento.destinatariosIds = [];
+
+      this.documento.mensagemGeral = true;
+    }
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+    
+
+    this.documentoService.render(this.documento).then(response => {
+      const newBlob = new Blob([response], { type: "application/pdf" });
+        this.urlPdf = window.URL.createObjectURL(newBlob);
+        this.urlDocumento = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(newBlob));
+        this.id = -1; // Apenas para renderizar
+        Swal.close();
+      }).catch(error => {
+      console.log(error);
+      Swal.close();
+    });
   }
 }

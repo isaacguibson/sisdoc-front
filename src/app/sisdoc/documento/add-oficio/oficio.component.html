@@ -7,9 +7,9 @@
           <div class="col-lg-8 col-md-12">
             <div class="card">
               <div class="card-header">
-                  <h4 class="card-title">Novo Ofício</h4>
+                  <h4 class="card-title">Informações de ifício</h4>
                   <p class="card-description">
-                    Para gerar um novo ofício, basta inserir o corpo do texto,
+                    Para gerar um novo ofício ou editar um existente, basta inserir o corpo do texto,
                     as demais informações são geradas automaticamente.
                   </p>
               </div>
@@ -31,7 +31,7 @@
                     <div class="col-md-2">
                         <div class="form-group">
                             <select class="form-control form-control-sm" [(ngModel)]="tipoEnvio" (change)="alterarTipoEnvio()">
-                               <option value="0">Selecione o tipo de envio</option>
+                               <option value="0" disabled selected>Selecione o tipo de envio</option>
                                <option value="1">Usuario</option>
                                <option value="2">Setor</option>
                             </select>

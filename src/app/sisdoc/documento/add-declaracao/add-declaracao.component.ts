@@ -63,7 +63,24 @@ export class AddDeclaracaoComponent implements OnInit {
   }
 
   cancelar(){
-    this.router.navigate(['/sisdoc/documento']);
+    Swal.fire({
+      title: 'Salvar alterações',
+      text: "Deseja salvar o documento antes de sair?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, salvar!',
+      cancelButtonText: 'Não, apenas sair.'
+    }).then((result) => {
+
+      //Delete apenas se usuario clicar em sim
+      if(result.dismiss != Swal.DismissReason.cancel){
+        this.salvar();
+      } else {
+        this.router.navigate(['/sisdoc/documento']);
+      }
+    });
   }
 
   salvar() {
@@ -133,6 +150,39 @@ export class AddDeclaracaoComponent implements OnInit {
         Swal.close();
       });
     }
+  }
+
+  noSaveRender() {
+
+    this.documento.usuarioId = Number.parseInt(localStorage.getItem("userId"));
+    this.documento.tipoDocumentoId = this.TIPO_DECLARACAO;
+
+    if (this.allUsersSelect === true){
+      this.documento.destinatariosIds = [];
+
+      this.documento.mensagemGeral = true;
+    }
+
+    Swal.fire({
+      title: 'Aguarde...',
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false,
+      showConfirmButton: false
+    });
+    
+
+    this.documentoService.render(this.documento).then(response => {
+      const newBlob = new Blob([response], { type: "application/pdf" });
+        this.urlPdf = window.URL.createObjectURL(newBlob);
+        this.urlDocumento = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(newBlob));
+        this.id = -1; // Apenas para renderizar
+        Swal.close();
+      }).catch(error => {
+      console.log(error);
+      Swal.close();
+    });
   }
 
 }

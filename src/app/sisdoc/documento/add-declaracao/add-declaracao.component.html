@@ -5,9 +5,9 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Nova Declaração</h4>
+                <h4 class="card-title">Informações da declaração</h4>
                 <p class="card-description">
-                  Para gerar uma nova declaração, basta inserir o corpo do texto,
+                  Para gerar uma nova declaração ou editar uma existente, basta inserir o corpo do texto,
                   as demais informações são geradas automaticamente.
                 </p>
             </div>
@@ -53,7 +53,7 @@
                   </div>
                 </div>
                 <button (click)="salvar()" class="btn btn-primary mr-2">Salvar</button>
-                <button (click)="render()" class="btn btn-info mr-2">Renderizar</button>
+                <button (click)="noSaveRender()" class="btn btn-info mr-2">Renderizar</button>
                 <button class="btn btn-light" (click)="cancelar()">Sair</button>
               </div>
             </div>
@@ -68,7 +68,7 @@
         *ngIf="id"></pdf-viewer>
         <div *ngIf="!id" style="background-color: white; height: 100%;">
           <a style="text-align: center; top: 50%; position: relative; cursor: pointer;"
-            (click)="render()">
+            (click)="noSaveRender()">
             Clique aqui para renderizar o documento.
           </a>
         </div>
