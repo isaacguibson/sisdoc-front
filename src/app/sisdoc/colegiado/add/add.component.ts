@@ -4,6 +4,7 @@ import { ColegiadoService } from '../../../../services/colegiado.service';
 import {Router} from "@angular/router";
 import {Colegiado} from "../../../../models/colegiado.model";
 import { ActivatedRoute } from "@angular/router";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add',
@@ -57,9 +58,33 @@ export class ColegiadoAddComponent implements OnInit {
   }
 
   salvar(){
+
+    if(!this.validar()) {
+      return;
+    }
+
     this.colegiadoService.save(this.colegiadoToSave);
     
     this.router.navigate(['/sisdoc/colegiado']);
+  }
+
+  validar(): Boolean {
+    if (!this.colegiadoToSave.nome || this.colegiadoToSave.nome === '') {
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de informar o nome.', 'error');
+      return false;
+    }
+
+    if (!this.colegiadoToSave.descricao || this.colegiadoToSave.descricao === '') {
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de informar a descrição.', 'error');
+      return false;
+    }
+
+    if (!this.colegiadoToSave.membrosIds || this.colegiadoToSave.membrosIds.length == 0) {
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de informar pelo menos um membro.', 'error');
+      return false;
+    }
+
+    return true;
   }
 
   voltar() {

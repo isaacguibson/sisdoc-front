@@ -10,7 +10,7 @@ import { Setor } from '../../../../models/setor.model'
 
 import {Router} from "@angular/router";
 import { ActivatedRoute } from "@angular/router";
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-setor-add',
@@ -59,9 +59,22 @@ export class SetorAddComponent implements OnInit {
 
   salvar(){
 
+    if(!this.validar()){
+      return;
+    }
+    
     this.setorService.save(this.setor);
     
     this.router.navigate(['/sisdoc/setor']);
+  }
+
+  validar(): Boolean {
+    if (!this.setor.nome || this.setor.nome === '') {
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de informar o nome.', 'error');
+      return false;
+    }
+
+    return true;
   }
   
   voltar(){

@@ -124,6 +124,7 @@ export class CargoComponent implements OnInit {
         this.cargoService.deletar(id).then(data => {
             
           Swal.close();
+          this.cargoService.showDeletedMessage();
           this.pesquisaAposDelecao();
           
       }).catch(error =>{
@@ -137,8 +138,10 @@ export class CargoComponent implements OnInit {
 
   pesquisaAposDelecao(){
     if(this.paginator.currentPage == this.paginator.totalPages - 1 ){
-      if((this.paginator.totalElements % this.paginator.size) == 1){
+     if((this.paginator.totalElements % this.paginator.size) == 1){
         this.pesquisar(this.paginator.currentPage - 1);
+      } else {
+        this.pesquisar(this.paginator.currentPage);
       }
     } else {
       this.pesquisar(this.paginator.currentPage);
@@ -150,5 +153,10 @@ export class CargoComponent implements OnInit {
       
       this.listSetores = data;
     });
+  }
+
+  limpar() {
+    this.cargoSearch = this.newCargo();
+    this.pesquisar(0);
   }
 }

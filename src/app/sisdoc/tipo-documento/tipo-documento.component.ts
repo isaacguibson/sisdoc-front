@@ -122,4 +122,9 @@ export class TipoDocumentoComponent implements OnInit {
 
   }
 
+  limpar() {
+    this.tipoDocumentoSearch = this.newTipoDocumento();
+    this.pesquisar(0);
+  }
+
 }

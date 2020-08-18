@@ -442,4 +442,9 @@ export class DocumentoComponent implements OnInit {
     });
   }
 
+  limpar() {
+    this.documentoSearch = this.newDocumento();
+    this.pesquisar(0, 'ambos');
+  }
+
 }

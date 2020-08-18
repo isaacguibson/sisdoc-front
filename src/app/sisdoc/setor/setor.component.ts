@@ -145,4 +145,9 @@ export class SetorComponent implements OnInit {
     }
   }
 
+  limpar() {
+    this.setorSearch = this.newSetor();
+    this.pesquisar(0);
+  }
+
 }

@@ -8,6 +8,7 @@ import { ActivatedRoute } from "@angular/router";
 import { CargoService } from '../../../../services/cargo.service';
 import { SetorService } from '../../../../services/setor.service';
 import { Cargo } from 'src/models/cargo.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add',
@@ -66,11 +67,30 @@ export class CargoAddComponent implements OnInit {
 
   salvar(){
 
+    if(!this.validar()){
+      return;
+    }
+
     this.cargoService.save(this.cargo);
 
     this.cargo = this.newCargo();
     
     this.router.navigate(['/sisdoc/cargo']);
+  }
+
+  validar(): Boolean {
+    console.log(this.cargo);
+    if (!this.cargo.nome || this.cargo.nome === '') {
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de informar o nome.', 'error');
+      return false;
+    }
+
+    if (!this.cargo.setorId) {
+      Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de informar o setor.', 'error');
+      return false;
+    }
+
+    return true;
   }
 
   voltar(){

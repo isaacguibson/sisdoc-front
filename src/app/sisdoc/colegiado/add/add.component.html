@@ -16,19 +16,19 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-md-6">
-                      <label for="exampleInputName1">Nome</label>
+                      <label for="exampleInputName1">Nome*</label>
                       <input type="text" class="form-control" placeholder="Nome"
                       style="text-transform:uppercase" [(ngModel)]="colegiadoToSave.nome">
                     </div>
                     <div class="col-md-6">
-                      <label for="exampleInputName2">Descrição</label>
+                      <label for="exampleInputName2">Descrição*</label>
                       <input type="text" class="form-control" placeholder="Descrição" [(ngModel)]="colegiadoToSave.descricao">
                     </div>
                   </div>
                   <br />
                   <div class="row">
                     <div class="col-md-12">
-                      <label for="exampleInputName1">Membros do Colegiado</label>
+                      <label for="exampleInputName1">Membros do Colegiado*</label>
                       <div class="form-group">
                         <ng-select [items]="objectsForList"
                             bindLabel="nome"

@@ -17,11 +17,11 @@
                 <div class="form-group">
                   <div class="row">
                       <div class="col-6">
-                          <label>Nome</label>
+                          <label>Nome*</label>
                           <input type="text" class="form-control" [(ngModel)]="cargo.nome" placeholder="Name">
                       </div>
                       <div class="col-6">
-                          <label>Setor</label>
+                          <label>Setor*</label>
                           <select class="custom-select" [(ngModel)]="cargo.setorId">
                               <option value="null">Selecione</option>
                               <option *ngFor="let item of listSetores" value="{{item.id}}">{{item.nome}}</option>

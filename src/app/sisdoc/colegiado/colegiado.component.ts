@@ -111,4 +111,9 @@ export class ColegiadoComponent implements OnInit {
     }
   }
 
+  limpar() {
+    this.colegiadoSearch = new Colegiado();
+    this.pesquisar(0);
+  }
+
 }

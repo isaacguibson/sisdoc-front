@@ -112,4 +112,11 @@ export class UsuarioComponent implements OnInit {
     }
   }
 
+  limpar() {
+    this.usuarioSearch = new Usuario();
+    this.usuarioSearch.nome = null;
+    this.usuarioSearch.email = null;
+    this.pesquisar(0);
+  }
+
 }
