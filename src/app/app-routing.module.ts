@@ -19,6 +19,7 @@ import { AddDeclaracaoComponent } from './sisdoc/documento/add-declaracao/add-de
 import { AddDespachoComponent } from './sisdoc/documento/add-despacho/add-despacho.component';
 import { AddRequerimentoComponent } from './sisdoc/documento/add-requerimento/add-requerimento.component';
 import { AddAtaComponent } from './sisdoc/documento/add-ata/add-ata.component';
+import { AddParecerComponent } from './sisdoc/documento/add-parecer/add-parecer.component';
 import { UsuarioComponent } from './sisdoc/usuario/usuario.component';
 import { UsuarioAddComponent } from './sisdoc/usuario/usuario-add/usuario-add.component';
 
@@ -60,6 +61,9 @@ const routes: Routes = [
       { path: 'ata-add', 
         component: AddAtaComponent
       },
+      { path: 'parecer-add', 
+        component: AddParecerComponent
+      },
       { path: 'oficio-add/:id', 
         component: OficioComponent
       },
@@ -77,6 +81,9 @@ const routes: Routes = [
       },
       { path: 'ata-add/:id', 
         component: AddAtaComponent
+      },
+      { path: 'parecer-add/:id', 
+        component: AddParecerComponent
       },
       { path: 'setor', 
         component: SetorComponent

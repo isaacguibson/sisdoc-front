@@ -27,7 +27,7 @@
                   </div>
                   <br />
                   <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                       <label for="exampleInputName1">Membros do Colegiado*</label>
                       <div class="form-group">
                         <ng-select [items]="objectsForList"
@@ -38,6 +38,13 @@
                             [(ngModel)]="colegiadoToSave.membrosIds">
                         </ng-select>
                       </div>
+                    </div>
+                    <div class="col-md-4">
+                      <label>Setor</label>
+                      <select class="custom-select" [(ngModel)]="colegiadoToSave.setorId">
+                          <option value="null">Selecione</option>
+                          <option *ngFor="let item of listSetores" value="{{item.id}}">{{item.nome}}</option>
+                      </select>  
                     </div>
                   </div>
                 </div>

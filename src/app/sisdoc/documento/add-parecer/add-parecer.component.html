@@ -1,0 +1,91 @@
+<div class="content-wrapper">
+  <div class="row">
+    <div class="col-lg-8 col-md-12 d-flex align-items-stretch grid-margin">
+      <div class="row flex-grow">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Informações de parecer</h4>
+                <p class="card-description">
+                  Para gerar uma novo parecer ou editar um existente, basta inserir o corpo do texto,
+                  o assunto e a origem, as demais informações são geradas automaticamente.
+                </p>
+            </div>
+            <div class="card-body">
+              <div class="forms-sample">
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                        <label class="switch">
+                            <input type="checkbox" id="all-users" [(ngModel)]="allUsersSelect" (change)="selectAllUsers()">
+                            <span class="slider round"></span>
+                        </label>
+                        <label style="vertical-align: sub; margin-left: 8%" for="all-users">Enviar para todos</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-9">
+                    <div class="form-group">
+                      <ng-select [items]="objectsForList"
+                        bindLabel="nome"
+                        bindValue="id"
+                        [multiple]="true"
+                        placeholder="Selecione"
+                        [(ngModel)]="documento.destinatariosIds"
+                        [disabled]="allUsersSelect">
+                      </ng-select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Assunto" [(ngModel)]="documento.assunto">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Origem" [(ngModel)]="documento.origem">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <input type="date" class="form-control date" placeholder="Data" [(ngModel)]="documento.dataCriacao">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="despacho-editor">
+                      <quill-editor [(ngModel)]="documento.conteudo"></quill-editor>
+                    </div>
+                  </div>
+                </div>
+
+                <button (click)="salvar()" class="btn btn-primary mr-2">Salvar</button>
+                <button (click)="noSaveRender()" class="btn btn-info mr-2">Renderizar</button>
+                <button class="btn btn-light" (click)="cancelar()">Sair</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-12" style="padding: 8px !important; background: gray; height: 718px;">
+      <div style="height: 702px; text-align: center;">
+        <pdf-viewer [src]="urlPdf"
+        [fit-to-page]="true" [show-all]="true"
+        *ngIf="id"></pdf-viewer>
+        <div *ngIf="!id" style="background-color: white; height: 100%;">
+          <a style="text-align: center; top: 50%; position: relative; cursor: pointer;"
+            (click)="noSaveRender()">
+            Clique aqui para renderizar o documento.
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

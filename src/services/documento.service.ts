@@ -99,6 +99,11 @@ export class DocumentoService {
             documento.tipoDocumentoId = 7;
         }
 
+        if(tipo === 'parecer'){
+            documento.tipoDocumentoId = 8;
+        }
+
+
         documento.usuarioId = localStorage.getItem("userId");
 
         swal.fire({
@@ -285,6 +290,8 @@ export class DocumentoService {
                 return this.downloadTipo(idDocumento, 'declaracao');
             case 7:
                 return this.downloadTipo(idDocumento, 'ata');
+            case 8:
+                return this.downloadTipo(idDocumento, 'parecer');
             default:
                 break;
         }

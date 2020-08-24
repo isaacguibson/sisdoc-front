@@ -17,6 +17,28 @@
               <div class="forms-sample">
 
                 <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <input type="number" class="form-control" placeholder="Número da reunião" [(ngModel)]="documento.reuniao.numero">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <select class="form-control form-control-sm" [(ngModel)]="documento.reuniao.tipo" (change)="alterarTipoEnvio()">
+                        <option value="0" disabled selected>Selecione o tipo da reunião</option>
+                        <option value="1">Ordinária</option>
+                        <option value="2">Extraordinária</option>
+                     </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <input type="time" class="form-control" placeholder="Selecione a hora da reunião" [(ngModel)]="documento.reuniao.hora">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
                   <div class="col-md-8">
                     <div class="form-group">
                       <input type="text" class="form-control" placeholder="Título"
@@ -32,7 +54,7 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-md-12">
                       <div class="form-group">
                           <select class="form-control form-control-sm" [(ngModel)]="idColegiadoSelecionado"
                            (change)="alterarColegiado($event)">
@@ -42,28 +64,46 @@
                           </select>
                       </div>
                   </div>
+                </div>
 
+                <div class="row">
                   <div class="col-md-2">
-                      <div class="form-group">
-                          <label class="switch">
-                              <input type="checkbox" id="all-users" [(ngModel)]="allUsersSelect" (change)="selectAllUsers()">
-                              <span class="slider round"></span>
-                          </label>
-                          <label style="vertical-align: sub; margin-left: 8%" for="all-users">Selecionar todos</label>
-                      </div>
+                    <div class="form-group">
+                        <label style="vertical-align: sub; margin-left: 8%" for="all-users">Todos</label>
+                        <label class="switch">
+                            <input type="checkbox" id="all-users" [(ngModel)]="allUsersSelect" (change)="selectAllUsers()">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
                   </div>
 
-                  <div class="col-md-7">
-                      <div class="form-group">
-                          <ng-select [items]="objectsForList"
-                            bindLabel="nome"
-                            bindValue="id"
-                            [multiple]="true"
-                            placeholder="{{placeHoldMembros}}"
-                            [(ngModel)]="documento.destinatariosIds"
-                            [disabled]="allUsersSelect">
-                         </ng-select>
-                      </div>
+                  <div class="col-md-10">
+                    <div class="form-group">
+                        <label>Comparecimentos</label>
+                        <ng-select [items]="objectsForList"
+                          bindLabel="nome"
+                          bindValue="id"
+                          [multiple]="true"
+                          placeholder="{{placeHoldMembros}}"
+                          [(ngModel)]="documento.destinatariosIds"
+                          [disabled]="allUsersSelect">
+                       </ng-select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Faltas Justificadas</label>
+                        <ng-select [items]="objectsForList"
+                          bindLabel="nome"
+                          bindValue="id"
+                          [multiple]="true"
+                          placeholder="Selecione as faltas justificadas."
+                          [(ngModel)]="documento.faltasIds">
+                       </ng-select>
+                    </div>
                   </div>
                 </div>
                 

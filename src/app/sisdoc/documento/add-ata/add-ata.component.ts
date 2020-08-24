@@ -43,6 +43,8 @@ export class AddAtaComponent implements OnInit {
   ngOnInit() {
     this.colegiadoSelecionado = new Colegiado();
     this.documento.destinatariosIds = [];
+    this.documento.faltasIds = [];
+    this.documento.reuniao = new Reuniao();
     this.initColegiados();
   }
 
@@ -54,12 +56,15 @@ export class AddAtaComponent implements OnInit {
 
       if(this.id){ 
         this.documentoService.get(this.id).then(data => {
+          console.log(data);
+          
           this.documento.conteudo = data['conteudo'];
           this.documento.mensagemGeral = data['mensagemGeral'];
           this.idColegiadoSelecionado = data['reuniao']['colegiadoId'];
           this.documento.reuniao = data['reuniao'];
           this.documento.assunto = data['assunto'];
           this.documento.dataCriacao = data['dataCriacao'];
+          this.documento.faltasIds = data['faltasIds'];
 
           if(this.documento.mensagemGeral === true){
             this.allUsersSelect = true;
@@ -78,6 +83,7 @@ export class AddAtaComponent implements OnInit {
       } else {
         const today = new Date();
         this.documento.dataCriacao = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
+        this.documento.conteudo = "<p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) SESSÃO:</p><p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /></p><p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) APROVAÇÃO DA ATA ANTERIOR:</p><p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /></p><p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3) INFORMES:</p><p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br /></p><p align='justify'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4) ORDEM DO DIA:</p>";
       }
     });
   }
@@ -121,6 +127,21 @@ export class AddAtaComponent implements OnInit {
 
     if(!this.documento.assunto || this.documento.assunto === '') {
       Swal.fire('Oops!', 'Estou vendo aqui que você esqueceu de informar o título da ATA.', 'error');
+      return false;
+    }
+
+    if(!this.documento.reuniao.numero || this.documento.reuniao.numero <= 0) {
+      Swal.fire('Oops!', 'Você deve escolher o número da reunião e deve ser maior que 0.', 'error');
+      return false;
+    }
+
+    if(!this.documento.reuniao.tipo || this.documento.reuniao.tipo == '') {
+      Swal.fire('Oops!', 'Você deve escolher o tipo da reunião.', 'error');
+      return false;
+    }
+
+    if(!this.documento.reuniao.hora || this.documento.reuniao.hora == '') {
+      Swal.fire('Oops!', 'Você deve escolher a hora da reunião.', 'error');
       return false;
     }
 
@@ -240,7 +261,8 @@ export class AddAtaComponent implements OnInit {
   }
 
   noSaveRender() {
-
+    console.log(this.documento);
+    
     this.documento.usuarioId = Number.parseInt(localStorage.getItem("userId"));
     this.documento.tipoDocumentoId = this.TIPO_ATA;
 
@@ -252,9 +274,6 @@ export class AddAtaComponent implements OnInit {
       Swal.fire('Oops!', 'Selecione o colegiado', 'error');
       return;
     } else {
-      if(!this.id) { // Caso não seja uma edição
-        this.documento.reuniao = new Reuniao();
-      }
       if (this.colegiadoSelecionado.id) {
         this.documento.reuniao.colegiadoId = this.colegiadoSelecionado.id;
       }

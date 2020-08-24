@@ -4,6 +4,7 @@ import { ColegiadoService } from '../../../../services/colegiado.service';
 import {Router} from "@angular/router";
 import {Colegiado} from "../../../../models/colegiado.model";
 import { ActivatedRoute } from "@angular/router";
+import { SetorService } from '../../../../services/setor.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,8 +17,10 @@ export class ColegiadoAddComponent implements OnInit {
   colegiadoToSave;
   objectsForList;
   placeHoldMembros;
+  listSetores;
   constructor(public usuarioService: UsuarioService,
               public colegiadoService: ColegiadoService,
+              public setorService: SetorService,
               public router: Router,
               public activeRoute: ActivatedRoute) {
     this.colegiadoToSave = new Colegiado();                
@@ -27,7 +30,7 @@ export class ColegiadoAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.loadListSetores();
   }
 
   initUsuariosList(){
@@ -44,11 +47,13 @@ export class ColegiadoAddComponent implements OnInit {
 
     if(id){
       this.colegiadoService.getDTO(id).then(data => {
+        console.log(data);
+        
         this.colegiadoToSave.id=data["id"];
         this.colegiadoToSave.nome=data["nome"];
         this.colegiadoToSave.descricao=data["descricao"];
         this.colegiadoToSave.membrosIds=data["membrosIds"];
-        console.log(this.colegiadoToSave);
+        this.colegiadoToSave.setorId=data["setorId"];
         
         this.initUsuariosList();
       });
@@ -89,6 +94,13 @@ export class ColegiadoAddComponent implements OnInit {
 
   voltar() {
     this.router.navigate(['/sisdoc/colegiado']);
+  }
+
+  loadListSetores(){
+    this.setorService.listAll().then(data => {
+      
+      this.listSetores = data;
+    });
   }
 
 }

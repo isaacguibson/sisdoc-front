@@ -71,7 +71,7 @@ export class TipoDocumentoComponent implements OnInit {
       showConfirmButton: false
     });
     
-    this.tipoDocumentoService.pesquisar(this.paginator.currentPage, this.paginator.size, this.tipoDocumentoSearch).then(data => {
+    this.tipoDocumentoService.pesquisar(this.paginator.currentPage, 10, this.tipoDocumentoSearch).then(data => {
           
           this.searchResult = data;
           this.contentList = this.searchResult['content'];

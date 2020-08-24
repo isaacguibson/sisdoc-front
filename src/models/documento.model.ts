@@ -15,6 +15,7 @@ export class Documento{
     mensagemSetor: boolean; //indica se eh uma mensagem para setores
     listSetoresIds: [];
     destinatariosIds: any[];
+    faltasIds: any[];
     requerido: number;
     vinculo: number;
     rotinas: number[];
@@ -22,4 +23,5 @@ export class Documento{
     informacoes: GenericListObject[];
     reuniao: Reuniao;
     usuarioId: number;
+    origem: String;
 }

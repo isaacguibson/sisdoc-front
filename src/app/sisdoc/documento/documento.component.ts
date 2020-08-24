@@ -80,7 +80,7 @@ export class DocumentoComponent implements OnInit {
       if(result.value){
         var element = document.getElementById("selectTipoDoc");
         var value = element['options'][element['selectedIndex']].value;
-
+        
         switch (value) {
           case '1': //Oficio
             this.router.navigate(['/sisdoc/oficio-add']);
@@ -99,6 +99,9 @@ export class DocumentoComponent implements OnInit {
             break;
           case '7': //ATA
             this.router.navigate(['/sisdoc/ata-add']);
+            break;
+          case '8': //PARECER
+            this.router.navigate(['/sisdoc/parecer-add']);
             break;
         }
       }
@@ -335,6 +338,7 @@ export class DocumentoComponent implements OnInit {
 
   buildHtmlSelect(){
 
+    console.log(this.tipoDocsList);
     
     this.htmlSelectString = '<select id="selectTipoDoc" class="custom-select">';
     this.htmlSelectString += '<option value="">Selecione</option>';
@@ -385,6 +389,13 @@ export class DocumentoComponent implements OnInit {
         }
       }
 
+      //PARECER
+      if(this.tipoDocsList[index]['id'] == 8) {
+        if(this.permissoes.includes(10)){
+          incluir = true;
+        }
+      }
+
       if(incluir) {
         this.htmlSelectString += '<option value="'+this.tipoDocsList[index]['id']+'">'+this.tipoDocsList[index]['nome']+'</option>';
       }
@@ -408,6 +419,8 @@ export class DocumentoComponent implements OnInit {
       this.router.navigate(['/sisdoc/declaracao-add/'+id]);
     } else if (tipoDocId == 7) {
       this.router.navigate(['/sisdoc/ata-add/'+id]);
+    } else if (tipoDocId == 8) {
+      this.router.navigate(['/sisdoc/parecer-add/'+id]);
     }
 
   }

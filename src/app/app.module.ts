@@ -51,6 +51,7 @@ import { ColegiadoComponent } from './sisdoc/colegiado/colegiado.component';
 import { ColegiadoAddComponent } from './sisdoc/colegiado/add/add.component';
 import { UsuarioComponent } from './sisdoc/usuario/usuario.component';
 import { UsuarioAddComponent } from './sisdoc/usuario/usuario-add/usuario-add.component';
+import { AddParecerComponent } from './sisdoc/documento/add-parecer/add-parecer.component';
 
 @NgModule({
   
@@ -74,7 +75,8 @@ import { UsuarioAddComponent } from './sisdoc/usuario/usuario-add/usuario-add.co
     ColegiadoComponent,
     ColegiadoAddComponent,
     UsuarioComponent,
-    UsuarioAddComponent
+    UsuarioAddComponent,
+    AddParecerComponent
   ],
   imports: [
     NgSelectModule,
